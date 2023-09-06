@@ -1,0 +1,171 @@
+/* Custom CSS for Navigation Bar */
+.navbar {
+    background-color: #333;
+  }
+  
+  .navbar-brand {
+    font-size: 3.5rem;
+    font-weight: bold;
+    color: #d62729 !important;
+  }
+  
+  .navbar-nav .nav-item .nav-link {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2c2d59 !important;
+  }
+  
+  .navbar-nav .nav-item .nav-link:hover {
+    color: #ffcc00 !important;
+  }
+  
+  /* Custom CSS for Sections */
+  section {
+    padding: 5px 0;
+  }
+  
+  section h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  section p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #555;
+  }
+  
+  /* Custom CSS for Totaller Section */
+  #totaller form {
+    margin-bottom: 20px;
+  }
+  
+  #totaller table {
+    margin-top: 20px;
+  }
+  
+  #totaller table td {
+    padding: 10px;
+  }
+  #box,#userChars{
+text-transform: uppercase;
+  }
+  
+  #footer {
+    font-size: 0.8rem;
+    color: #999;
+  }
+  
+  /* Custom CSS for Range Section */
+  #range form {
+    margin-bottom: 20px;
+  }
+  
+  #range .btn-secondary {
+    margin-bottom: 20px;
+  }
+  
+  #range #div {
+    border: 1px solid #ddd;
+    padding: 20px;
+    background-color: #f8f9fa;
+  }
+  
+  #range #i {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  #range #result {
+    font-size: 1.2rem;
+    color: #555;
+  }
+  
+  /* Custom CSS for Fullno Section */
+  #fullno form {
+    margin-bottom: 20px;
+  }
+  
+  #fullno .btn-secondary {
+    margin-bottom: 20px;
+  }
+  
+  #fullno #printableArea {
+    border: 1px solid #ddd;
+    padding: 20px;
+    background-color: #f8f9fa;
+    width: fit-content !important;
+  }
+  
+  #fullno h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  #fullno #generatedCodes {
+    font-size: 1.2rem;
+    color: #555;
+  }
+  
+  /* Custom CSS for Authentic Color Scheme */
+  body {
+    background-color: #f8f8f8;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    color: #333;
+  }
+  
+  p {
+    color: #555;
+  }
+  
+  .btn-primary {
+    background-color: #2c2d59;
+    border-color: #0056b3;
+  }
+  
+  .btn-primary:hover {
+    background-color: #e21480;
+    border-color: #0056b3;
+  }
+  
+  .btn-secondary {
+    background-color: #0d70b6;
+    border-color: #6c757d;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #e21480;
+    border-color: #4e555a;
+  }
+  
+  .table {
+    background-color: #fff;
+  }
+  
+  .table th, .table td {
+    border-color: #ddd;
+  }
+
+
+  .text {
+    font-size: 3rem;
+    color: #d62729;
+    text-transform: uppercase;
+    font-family: Arial, sans-serif;
+    position: relative;
+    animation: lighting 2s infinite alternate;
+}
+
+@keyframes lighting {
+    0% {
+        text-shadow: 0 0 10px #0056b3;
+    }
+    100% {
+        text-shadow: 0 0 30px rgba(255, 255, 255, 1);
+    }
+}
