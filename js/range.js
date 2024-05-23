@@ -13,7 +13,7 @@ var fancy = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 22, 33, 44, 55, 66, 77, 88, 99, 
         var maxNumber = parseInt(document.getElementById("maxNumber").value);
         var resultDiv = document.getElementById("result");
         result.innerHTML = "";
-        result.innerHTML += "<center><h1> " + desiredSum + "</h1></center>";
+        result.innerHTML +=desiredSum;
         resultDiv.innerHTML = "";
        
 
