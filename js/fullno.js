@@ -21,7 +21,7 @@ function generate() {
     const maxValue = parseInt(document.getElementById('maxValue').value);
     const userNumber = parseInt(document.getElementById('userNumber').value);
     const h1Content = document.querySelector("#printableArea h1");
-    h1Content.textContent = "THE TOTAL IS " + userNumber;
+    h1Content.textContent = "" + userNumber;
 
     if (!isNaN(minValue) && !isNaN(maxValue) && !isNaN(userNumber)) {
         const outputContainer = document.getElementById('generatedCodes');
