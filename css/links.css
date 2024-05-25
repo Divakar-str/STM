@@ -1,114 +1,217 @@
-
-
 /* Container spacing */
 .container {
-padding-left: 50px;
-width: max-content;}
-.container .ani{
-    padding-left: 100px;
-    width: max-content;
-    
+    padding-left: 50px !important;
+  
+}
+
+/* Center-align text inside the container */
+.text-center {
+    text-align: center;
+}
+
+/* Specific styling for the ani class */
+.ani {
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box; /* Ensure padding is included in the total width */
+}
+
+/* Display class styling */
+.display-4 {
+    font-size: 2.5rem;
+    font-weight: 300;
+    line-height: 1.2;
+}
+
+/* Additional styling to prevent overflow */
+.text {
+    word-wrap: break-word; /* Break long words to prevent overflow */
+    margin: 0; /* Reset margin */
+}
+
+
+/* Row and Column styling */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.col-md-3 {
+    flex: 0 0 25%;
+    max-width: 25%;
+    padding: 0 15px;
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem !important;
 }
 
 /* Custom card styling */
 .custom-card {
-    background: linear-gradient(to bottom, #ffffff, #f2f2f2);
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
-    width: 100%;
-    height: 100%;
-    margin-bottom: 20px; /* Add margin between the cards */
+    background: linear-gradient(to bottom, #ffffff, #f2f2f2) !important;
+    border-radius: 15px !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+    transition: transform 0.3s, box-shadow 0.3s !important;
+    
+    height: 100% !important;
 }
 
 .custom-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px) !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15) !important;
 }
 
 /* Card body styling */
 .custom-card .card-body {
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 15px;
-    
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    border-radius: 15px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    height: 100% !important;
 }
 
 /* Card title styling */
 .custom-card .card-title {
-    color: #333;
-    border-bottom: 2px solid #495057;
-    padding-bottom: 0.75rem;
-    margin-bottom: 1.5rem;
-    font-weight: bold;
-    font-size: 1.25rem;
+    color: #333 !important;
+    border-bottom: 2px solid #495057 !important;
+    padding-bottom: 0.75rem !important;
+    margin-bottom: 1.5rem !important;
+    font-weight: bold !important;
+    font-size: 1.25rem !important;
 }
 
 /* Custom links list styling */
 .custom-links {
-    padding-left: 0;
-    margin-top: auto; /* Pushes the list to the bottom */
+    padding-left: 0 !important;
+    margin-top: auto !important; /* Pushes the list to the bottom */
 }
 
 .custom-links li {
-    margin: 1rem 0;
+    margin: 1rem 0 !important;
 }
 
 /* Custom link styling */
 .custom-links a {
-    display: flex; /* Display link as flex container */
-    align-items: center; /* Align items (icon and text) vertically */
-    padding: 1rem 1.25rem;
-    border-radius: 5px;
-    color: #fff;
-    text-decoration: none;
-    font-weight: bold;
-    transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
-    width: 100%; /* Occupy all available space within the card */
+    display: flex !important; /* Display link as flex container */
+    align-items: center !important; /* Align items (icon and text) vertically */
+    padding: 1rem 1.25rem !important;
+    border-radius: 5px !important;
+    color: #fff !important;
+    text-decoration: none !important;
+    font-weight: bold !important;
+    transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s !important;
+    width: 100% !important; /* Occupy all available space within the card */
 }
 
 .custom-links a:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transform: scale(1.02);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+    transform: scale(1.02) !important;
 }
 
 /* Link color variations */
 .custom-links .link-primary {
-    background-color: #007bff;
+    background-color: #007bff !important;
 }
 
 .custom-links .link-primary:hover {
-    background-color: #0056b3;
+    background-color: #0056b3 !important;
 }
 
 .custom-links .link-success {
-    background-color: #28a745;
+    background-color: #28a745 !important;
 }
 
 .custom-links .link-success:hover {
-    background-color: #218838;
+    background-color: #218838 !important;
 }
 
 .custom-links .link-danger {
-    background-color: #dc3545;
+    background-color: #dc3545 !important;
 }
 
 .custom-links .link-danger:hover {
-    background-color: #c82333;
+    background-color: #c82333 !important;
 }
 
 .custom-links .link-info {
-    background-color: #17a2b8;
+    background-color: #17a2b8 !important;
 }
 
 .custom-links .link-info:hover {
-    background-color: #117a8b;
+    background-color: #117a8b !important;
 }
 
 /* Icon styling */
 .custom-links i {
-    margin-right: 10px; /* Space between icon and text */
+    margin-right: 10px !important; /* Space between icon and text */
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    .container {
+        padding-left: 20px !important;
+    }
+    .col-md-3 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+    .custom-card {
+        margin-bottom: 15px !important;
+    }
+    .custom-card .card-title {
+        font-size: 1rem !important;
+        margin-bottom: 1rem !important;
+    }
+    .custom-links li {
+        margin: 0.5rem 0 !important;
+    }
+    .custom-links a {
+        padding: 0.75rem 1rem !important;
+        font-size: 0.9rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding-left: 10px !important;
+    }
+    .col-md-3 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .custom-card .card-title {
+        font-size: 0.875rem !important;
+    }
+    .custom-links a {
+        padding: 0.5rem 0.75rem !important;
+        font-size: 0.75rem !important;
+    }
+    .custom-links i {
+        margin-right: 5px !important;
+    }
+}
+
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    .ani {
+        padding: 15px;
+        width: 100%;
+    }
+
+    .display-4 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .ani {
+        padding: 10px;
+        width: 100%;
+    }
+
+    .display-4 {
+        font-size: 1.5rem;
+    }
 }

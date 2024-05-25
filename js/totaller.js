@@ -231,3 +231,73 @@ function myFunction() {
     
     }
     
+
+    const constants = [
+      { letter: 'A', value: 1 }, { letter: 'B', value: 2 }, { letter: 'C', value: 3 },
+      { letter: 'D', value: 4 }, { letter: 'E', value: 5 }, { letter: 'F', value: 8 },
+      { letter: 'G', value: 3 }, { letter: 'H', value: 5 }, { letter: 'I', value: 1 },
+      { letter: 'J', value: 1 }, { letter: 'K', value: 2 }, { letter: 'L', value: 3 },
+      { letter: 'M', value: 4 }, { letter: 'N', value: 5 }, { letter: 'O', value: 7 },
+      { letter: 'P', value: 8 }, { letter: 'Q', value: 1 }, { letter: 'R', value: 2 },
+      { letter: 'S', value: 3 }, { letter: 'T', value: 4 }, { letter: 'U', value: 6 },
+      { letter: 'V', value: 6 }, { letter: 'W', value: 6 }, { letter: 'X', value: 5 },
+      { letter: 'Y', value: 1 }, { letter: 'Z', value: 7 }
+    ];
+    
+
+// Function to generate the table dynamically
+function generateTable(className) {
+  const table = document.createElement('table');
+  table.className = className || ''; // Set the custom class name if provided
+  const headerRow = document.createElement('tr');
+  constants.forEach(constant => {
+      const th = document.createElement('th');
+      th.textContent = constant.letter;
+      headerRow.appendChild(th);
+  });
+  table.appendChild(headerRow);
+
+  const valueRow = document.createElement('tr');
+  constants.forEach(constant => {
+      const td = document.createElement('td');
+      td.textContent = constant.value;
+      valueRow.appendChild(td);
+  });
+  table.appendChild(valueRow);
+
+  return table;
+}
+
+window.onload = function() {
+  const customClassName = 'custom-table'; // You can change this to your desired class name
+  const tableContainer = document.getElementById('constantsTableContainer');
+  const table = generateTable(customClassName);
+  tableContainer.appendChild(table);
+};
+
+
+
+// Define arrays
+var migaathirstam = [19, 37, 41, 45];
+var athirstam = [5, 6, 9, 10, 14, 15, 16, 21, 23, 24, 27, 32, 33, 36, 46, 50, 51];
+var thuraathirstam = [7, 8, 11, 13, 17, 18, 22, 28, 31, 40, 42, 49, 58];
+var aathiryaialipathu = [55];
+var sothanai = [25, 34, 43, 47];
+var sumar = [12, 30, 38, 39, 48, 54, 56, 57];
+var aapathu = [20, 26, 29, 35, 44, 53];
+var aamatram = [52];
+
+// Function to fill table data
+function fillTableData(array, id) {
+    document.getElementById(id).textContent = array.join(', ');
+}
+
+// Fill table data
+fillTableData(migaathirstam, 'migaathirstam');
+fillTableData(athirstam, 'athirstam');
+fillTableData(thuraathirstam, 'thuraathirstam');
+fillTableData(aathiryaialipathu, 'aathiryaialipathu');
+fillTableData(sothanai, 'sothanai');
+fillTableData(sumar, 'sumar');
+fillTableData(aapathu, 'aapathu');
+fillTableData(aamatram, 'aamatram');
