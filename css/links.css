@@ -1,0 +1,114 @@
+
+
+/* Container spacing */
+.container {
+padding-left: 50px;
+width: max-content;}
+.container .ani{
+    padding-left: 100px;
+    width: max-content;
+    
+}
+
+/* Custom card styling */
+.custom-card {
+    background: linear-gradient(to bottom, #ffffff, #f2f2f2);
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 20px; /* Add margin between the cards */
+}
+
+.custom-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Card body styling */
+.custom-card .card-body {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+/* Card title styling */
+.custom-card .card-title {
+    color: #333;
+    border-bottom: 2px solid #495057;
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.5rem;
+    font-weight: bold;
+    font-size: 1.25rem;
+}
+
+/* Custom links list styling */
+.custom-links {
+    padding-left: 0;
+    margin-top: auto; /* Pushes the list to the bottom */
+}
+
+.custom-links li {
+    margin: 1rem 0;
+}
+
+/* Custom link styling */
+.custom-links a {
+    display: flex; /* Display link as flex container */
+    align-items: center; /* Align items (icon and text) vertically */
+    padding: 1rem 1.25rem;
+    border-radius: 5px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+    width: 100%; /* Occupy all available space within the card */
+}
+
+.custom-links a:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: scale(1.02);
+}
+
+/* Link color variations */
+.custom-links .link-primary {
+    background-color: #007bff;
+}
+
+.custom-links .link-primary:hover {
+    background-color: #0056b3;
+}
+
+.custom-links .link-success {
+    background-color: #28a745;
+}
+
+.custom-links .link-success:hover {
+    background-color: #218838;
+}
+
+.custom-links .link-danger {
+    background-color: #dc3545;
+}
+
+.custom-links .link-danger:hover {
+    background-color: #c82333;
+}
+
+.custom-links .link-info {
+    background-color: #17a2b8;
+}
+
+.custom-links .link-info:hover {
+    background-color: #117a8b;
+}
+
+/* Icon styling */
+.custom-links i {
+    margin-right: 10px; /* Space between icon and text */
+}
