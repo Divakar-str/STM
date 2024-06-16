@@ -63,7 +63,7 @@ var fancy = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 22, 33, 44, 55, 66, 77, 88, 99, 
 
     function printResult() {
         // Get the content of the <h1> element
-        var h1Content = document.querySelector("#div h1").innerHTML;
+        var h1Content = document.querySelector("#div h2").innerHTML;
     
         // Get the content of the generated codes container
         var generatedCodesContent = document.getElementById("result").innerHTML;
