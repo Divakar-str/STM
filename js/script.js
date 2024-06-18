@@ -13,7 +13,7 @@ const cardData = [
         links: [
             { url: "https://parivahan.gov.in/parivahan/", text: "Parivahan", class: "link-primary", icon: "fas fa-road" },
             { url: "https://vahan.parivahan.gov.in/vahanservice/vahan/ui/statevalidation/homepage.xhtml", text: "Vahan", class: "link-success", icon: "fas fa-truck" },
-            { url: "https://vahan.parivahan.gov.in/nrservices/faces/user/citizen/citizenlogin.xhtml", text: "RC Details", class: "link-danger", icon: "fas fa-id-card" },
+            { url: "https://vahan.parivahan.gov.in/appointment/vahan/ui/userpanel/bookappoinment.xhtml", text: "Appointment", class: "link-danger", icon: "fas fa-id-card" },
             { url: "https://vahan.parivahan.gov.in/vahan/vahan/ui/login/login.xhtml", text: "Online Payment", class: "link-info", icon: "fa fa-money-bill" }
         ]
     },
