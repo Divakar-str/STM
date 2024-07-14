@@ -51,6 +51,10 @@
             <li class="nav-item">
                 <a class="nav-link" href="#fullno" style="color: #333;">Full No</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#desired" style="color: #333;">Desired</a>
+
+            </li>
         </ul>
     </div>
 </nav>
@@ -237,6 +241,72 @@
             </div>
         </section>
         
+    <section id="desired" style="display: none;">
+        <div class="container">
+            <div class="row">
+              <!-- Left Side: Input Boxes -->
+              <div class="col-md-4">
+                <form id="generatorForm">
+                    <div class="form-row mb-3">
+                      <div class="form-group col">
+                        <label for="firstInput">First Criteria:</label>
+                        <input type="text" class="form-control" id="firstInput" maxlength="1">
+                      </div>
+              
+                      <div class="form-group col">
+                        <label for="secondInput">Second Criteria:</label>
+                        <input type="text" class="form-control" id="secondInput" maxlength="1">
+                      </div>
+              
+                      <div class="form-group col">
+                        <label for="thirdInput">Third Criteria:</label>
+                        <input type="text" class="form-control" id="thirdInput" maxlength="1">
+                      </div>
+              
+                      <div class="form-group col">
+                        <label for="fourthInput">Fourth Criteria:</label>
+                        <input type="text" class="form-control" id="fourthInput" maxlength="1">
+                      </div>
+                    </div>
+              
+                    <div class="form-row mb-3">
+                      <div class="form-group col">
+                        <label for="sumInput">Sum Criteria (1-9):</label>
+                        <input type="number" class="form-control" id="sumInput" min="1" max="9">
+                      </div>
+                    </div>
+              
+                    <div class="form-row mb-3">
+                      <div class="form-group col">
+                        <label for="startRange">Start Range:</label>
+                        <input type="number" class="form-control" id="startRange" min="0" value="0">
+                      </div>
+              
+                      <div class="form-group col">
+                        <label for="endRange">End Range:</label>
+                        <input type="number" class="form-control" id="endRange" min="0" value="9999">
+                      </div>
+                    </div>
+              <center>
+                    <button type="button" class="btn btn-primary" onclick="generateNumbers()">Generate Numbers</button>
+                    </center>
+                    <br>
+                    <button type="button" class="btn btn-secondary btn-block printButton" onclick="printNumbers()">Print</button>
+                    
+                  </form>
+                  
+              </div>
+              
+              <!-- Right Side: Generated Numbers -->
+              <div class="col-md-8">
+                <div class="output-container" id="output">
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </section>
         
       
         
@@ -264,6 +334,7 @@
     <script src="js/totaller.js"></script>
     <script src="js/range.js"></script>
     <script src="js/fullno.js"></script>
+    <script src="js/desired.js"></script>
 
 </body>
 <footer class="bg-dark text-white text-center py-3">
