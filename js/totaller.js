@@ -84,12 +84,12 @@ function myFunction() {
     
     
     
-    const migaathirstam= [19,37,41,45];
-    const athirstam = [5,6,9,10,14,15,16,21,23,24,27,32,33,36,46,50,51];
-    const thuraathirstam= [7,8,11,13,17,18,22,28,31,40,42,49,58];
-    const aathiryaialipathu=[55];
+    const migaathirstam= [19,23,37,41,45];
+    const athirstam = [1,3,5,6,9,10,14,15,16,18,21,23,24,27,32,33,36,42,46,50,51];
+    const thuraathirstam= [7,8,11,13,17,22,28,31,40,49,58];
+    const aathiryaialipathu=[20,55];
     const sothanai=[25,34,43,47];
-    const sumar=[12,30,38,39,48,54,56,57];
+    const sumar=[2,12,30,38,39,48,54,56,57];
     const aapathu=[20,26,29,35,44,53];
     const aamatram=[52];
     
@@ -278,14 +278,14 @@ window.onload = function() {
 
 
 // Define arrays
-var migaathirstam = [19, 37, 41, 45];
-var athirstam = [5, 6, 9, 10, 14, 15, 16, 21, 23, 24, 27, 32, 33, 36, 46, 50, 51];
-var thuraathirstam = [7, 8, 11, 13, 17, 18, 22, 28, 31, 40, 42, 49, 58];
-var aathiryaialipathu = [55];
-var sothanai = [25, 34, 43, 47];
-var sumar = [12, 30, 38, 39, 48, 54, 56, 57];
-var aapathu = [20, 26, 29, 35, 44, 53];
-var aamatram = [52];
+const migaathirstam= [19,23,37,41,45];
+const athirstam = [1,3,5,6,9,10,14,15,16,18,21,23,24,27,32,33,36,42,46,50,51];
+const thuraathirstam= [7,8,11,13,17,22,28,31,40,49,58];
+const aathiryaialipathu=[20,55];
+const sothanai=[25,34,43,47];
+const sumar=[2,12,30,38,39,48,54,56,57];
+const aapathu=[20,26,29,35,44,53];
+const aamatram=[52];
 
 // Function to fill table data
 function fillTableData(array, id) {
