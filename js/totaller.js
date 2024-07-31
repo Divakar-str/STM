@@ -1,89 +1,17 @@
 
-function myFunction() {
-    document.getElementById("t1").innerHTML ="";
-    document.getElementById("t2").innerHTML ="";
-    document.getElementById("c1").innerHTML ="";
-    document.getElementById("c2").innerHTML ="";
-    document.getElementById("r1").innerHTML ="";
-    document.getElementById("r2").innerHTML ="";
-    document.getElementById("rr1").innerHTML ="";
-    document.getElementById("rr2").innerHTML ="";
-    const A = I = J = Q = Y = 1;
-    const B= K= R= 2;
-    const C= G =L= S= 3;
-    const D= M =T = 4;
-    const E= H=N= X= 5;
-    const  U=V =W= 6;
-    const  O= Z=7 ;
-    const F= P=8 ;
-    
-    var num = document.getElementById("box").value;
-    
-    let result = num.slice(0,1).toUpperCase();
-    let result1 = num.slice(1,2).toUpperCase() ;
-    
-    if(isNaN(result1)){
-      temp = eval(result1);
-      result5 = num.slice(5,6);
-      half = num.slice(2,6);
-     
-    }
-    else{
-    
-      temp=0;
-      half = num.slice(1,6);
-      result5 = num.slice(1,2);
-    }
-    document.getElementById("t1").innerHTML =half;
-    document.getElementById("t2").innerHTML ="TN52"+num.toUpperCase();
-    
-    
-    let out=eval(result)+eval(temp);
-    
-    
-    let result2 = num.slice(2,3);
-    let result3 = num.slice(3,4);
-    let result4 = num.slice(4,5);
-    let result6= parseInt(result2)+parseInt(result3)+parseInt(result4)+parseInt(result5);
-    
-    
-    let length = result6.toString().length;
-    
-    
-    if (length ==2) {
-      let res1 =result6.toString().slice(0,1);
-      let res2 =result6.toString().slice(1,2);
-      res=parseInt(res1)+parseInt(res2);
-      
-    } else {
-      res=result6;
-    }
-    
-    
-    let out1= out+result6+16;
-    
-    
-    let length1 = out1.toString().length;
-    if (length1 ==2) {
-      let res1 =out1.toString().slice(0,1);
-      let res2 =out1.toString().slice(1,2);
-      out2=parseInt(res1)+parseInt(res2);
-     
-      
-    } else {
-      out2=out1;
-    }
-    
-    
-    
-    document.getElementById("c1").innerHTML =result6 +"<br>" +res;
-    document.getElementById("c2").innerHTML =out1+"<br>"+out2;
-    
-    
-    
-    
-    
-    
+
+// Character to number mapping
+const charToNumberMapping = {
+  'A': 1, 'I': 1, 'J': 1, 'Q': 1, 'Y': 1,
+  'B': 2, 'K': 2, 'R': 2,
+  'C': 3, 'G': 3, 'L': 3, 'S': 3,
+  'D': 4, 'M': 4, 'T': 4,
+  'E': 5, 'N': 5, 'X': 5,
+  'U': 6, 'V': 6, 'W': 6,
+  'O': 7, 'Z': 7,
+  'F': 8, 'P': 8
+};
+
     const migaathirstam= [19,23,37,41,45];
     const athirstam = [1,3,5,6,9,10,14,15,16,18,21,23,24,27,32,33,36,42,46,50,51];
     const thuraathirstam= [7,8,11,13,17,22,28,31,40,49,58];
@@ -92,212 +20,253 @@ function myFunction() {
     const sumar=[2,12,30,38,39,48,54,56,57];
     const aapathu=[20,26,29,35,44,53];
     const aamatram=[52];
-    
-    if(migaathirstam.includes(result6)){
-    document.getElementById("r1").innerHTML ="மிக மிக அதிர்ஸ்டம்";
-    
-    }
-    else if(athirstam.includes(result6)){
-    document.getElementById("r1").innerHTML ="அதிர்ஸ்டம்";
-    
-    }
-    else if(thuraathirstam.includes(result6)){
-    document.getElementById("r1").innerHTML ="துரஅதிர்ஸ்டம்";
-    
-    }
-    else if(aathiryaialipathu.includes(result6)){
-    document.getElementById("r1").innerHTML ="எதிரியை அழிப்பது";
-    
-    }
-    else if(sothanai.includes(result6)){
-    
-    document.getElementById("r1").innerHTML ="சோதனை மிக்கது";
-    }
-    else if(sumar.includes(result6)){
-    document.getElementById("r1").innerHTML ="சுமார்";
-    
-    }
-    else if(aapathu.includes(result6)){
-    
-    document.getElementById("r1").innerHTML ="ஆபத்து";
-    }
-    else if(aamatram.includes(result6)){
-    
-    document.getElementById("r1").innerHTML ="ஏமாற்றம்";
-    }
-    
-    
-    if(migaathirstam.includes(out1)){
-    document.getElementById("r2").innerHTML ="மிக மிக அதிர்ஸ்டம்";
-    
-    }
-    else if(athirstam.includes(out1)){
-    document.getElementById("r2").innerHTML ="அதிர்ஸ்டம்";
-    
-    }
-    else if(thuraathirstam.includes(out1)){
-    document.getElementById("r2").innerHTML ="துரஅதிர்ஸ்டம்";
-    
-    }
-    else if(aathiryaialipathu.includes(out1)){
-    document.getElementById("r2").innerHTML ="எதிரியை அழிப்பது";
-    
-    }
-    else if(sothanai.includes(out1)){
-    
-    document.getElementById("r2").innerHTML ="சோதனை மிக்கது";
-    }
-    else if(sumar.includes(out1)){
-    document.getElementById("r2").innerHTML ="சுமார்";
-    
-    }
-    else if(aapathu.includes(out1)){
-    
-    document.getElementById("r2").innerHTML ="ஆபத்து";
-    }
-    else if(aamatram.includes(out1)){
-    
-    document.getElementById("r2").innerHTML ="ஏமாற்றம்";
-    }
-    
-    
-    if(migaathirstam.includes(res)){
-    document.getElementById("rr1").innerHTML ="மிக மிக அதிர்ஸ்டம்";
-    
-    }
-    else if(athirstam.includes(res)){
-    document.getElementById("rr1").innerHTML ="அதிர்ஸ்டம்";
-    
-    }
-    else if(thuraathirstam.includes(res)){
-    document.getElementById("rr1").innerHTML ="துரஅதிர்ஸ்டம்";
-    
-    }
-    else if(aathiryaialipathu.includes(res)){
-    document.getElementById("rr1").innerHTML ="எதிரியை அழிப்பது";
-    
-    }
-    else if(sothanai.includes(res)){
-    
-    document.getElementById("rr1").innerHTML ="சோதனை மிக்கது";
-    }
-    else if(sumar.includes(res)){
-    document.getElementById("rr1").innerHTML ="சுமார்";
-    
-    }
-    else if(aapathu.includes(res)){
-    
-    document.getElementById("rr1").innerHTML ="ஆபத்து";
-    }
-    else if(aamatram.includes(res)){
-    
-    document.getElementById("rr1").innerHTML ="ஏமாற்றம்";
-    }
-    
-    
-    if(migaathirstam.includes(out2)){
-    document.getElementById("rr2").innerHTML ="மிக மிக அதிர்ஸ்டம்";
-    
-    }
-    else if(athirstam.includes(out2)){
-    document.getElementById("rr2").innerHTML ="அதிர்ஸ்டம்";
-    
-    }
-    else if(thuraathirstam.includes(out2)){
-    document.getElementById("rr2").innerHTML ="துரஅதிர்ஸ்டம்";
-    
-    }
-    else if(aathiryaialipathu.includes(out2)){
-    document.getElementById("rr2").innerHTML ="எதிரியை அழிப்பது";
-    
-    }
-    else if(sothanai.includes(out2)){
-    
-    document.getElementById("rr2").innerHTML ="சோதனை மிக்கது";
-    }
-    else if(sumar.includes(out2)){
-    document.getElementById("rr2").innerHTML ="சுமார்";
-    
-    }
-    else if(aapathu.includes(out2)){
-    
-    document.getElementById("rr2").innerHTML ="ஆபத்து";
-    }
-    else if(aamatram.includes(out2)){
-    
-    document.getElementById("rr2").innerHTML ="ஏமாற்றம்";
-    }
-    
-    
-    }
-    
 
-    const constants = [
-      { letter: 'A', value: 1 }, { letter: 'B', value: 2 }, { letter: 'C', value: 3 },
-      { letter: 'D', value: 4 }, { letter: 'E', value: 5 }, { letter: 'F', value: 8 },
-      { letter: 'G', value: 3 }, { letter: 'H', value: 5 }, { letter: 'I', value: 1 },
-      { letter: 'J', value: 1 }, { letter: 'K', value: 2 }, { letter: 'L', value: 3 },
-      { letter: 'M', value: 4 }, { letter: 'N', value: 5 }, { letter: 'O', value: 7 },
-      { letter: 'P', value: 8 }, { letter: 'Q', value: 1 }, { letter: 'R', value: 2 },
-      { letter: 'S', value: 3 }, { letter: 'T', value: 4 }, { letter: 'U', value: 6 },
-      { letter: 'V', value: 6 }, { letter: 'W', value: 6 }, { letter: 'X', value: 5 },
-      { letter: 'Y', value: 1 }, { letter: 'Z', value: 7 }
-    ];
-    
 
-// Function to generate the table dynamically
-function generateTable(className) {
-  const table = document.createElement('table');
-  table.className = className || ''; // Set the custom class name if provided
-  const headerRow = document.createElement('tr');
-  constants.forEach(constant => {
-      const th = document.createElement('th');
-      th.textContent = constant.letter;
-      headerRow.appendChild(th);
-  });
-  table.appendChild(headerRow);
+    function getCategory(number) {
+      if (migaathirstam.includes(number)) return 'மிக மிக அதிர்ஸ்டம்';
+      if (athirstam.includes(number)) return 'அதிர்ஸ்டம்';
+      if (thuraathirstam.includes(number)) return 'துரஅதிர்ஸ்டம்';
+      if (aathiryaialipathu.includes(number)) return 'எதிரியை அழிப்பது';
+      if (sothanai.includes(number)) return 'சோதனை மிக்கது';
+      if (sumar.includes(number)) return 'சுமார்';
+      if (aapathu.includes(number)) return 'ஆபத்து';
+      if (aamatram.includes(number)) return 'ஏமாற்றம்';
+      return 'unknown';
+  }
+  
+ 
 
-  const valueRow = document.createElement('tr');
-  constants.forEach(constant => {
-      const td = document.createElement('td');
-      td.textContent = constant.value;
-      valueRow.appendChild(td);
-  });
-  table.appendChild(valueRow);
-
-  return table;
-}
-
-window.onload = function() {
-  const customClassName = 'custom-table'; // You can change this to your desired class name
-  const tableContainer = document.getElementById('constantsTableContainer');
-  const table = generateTable(customClassName);
-  tableContainer.appendChild(table);
+  const categoryColorMapping = {
+    'மிக மிக அதிர்ஸ்டம்': '#00FF00', // Green
+    'அதிர்ஸ்டம்': '#7FFF00',         // Light Green
+    'சுமார்': '#FFFF00',              // Yellow (changed)
+    'துரஅதிர்ஸ்டம்': '#FFA500',      // Orange
+    'எதிரியை அழிப்பது': '#FF4500',   // Orange Red
+    'சோதனை மிக்கது': '#FF0000',      // Red
+    'ஆபத்து': '#8B0000',             // Dark Red
+    'ஏமாற்றம்': '#000000'            // Black
 };
 
-
-
-// Define arrays
-const migaathirstam= [19,23,37,41,45];
-const athirstam = [1,3,5,6,9,10,14,15,16,18,21,23,24,27,32,33,36,42,46,50,51];
-const thuraathirstam= [7,8,11,13,17,22,28,31,40,49,58];
-const aathiryaialipathu=[20,55];
-const sothanai=[25,34,43,47];
-const sumar=[2,12,30,38,39,48,54,56,57];
-const aapathu=[20,26,29,35,44,53];
-const aamatram=[52];
-
-// Function to fill table data
-function fillTableData(array, id) {
-    document.getElementById(id).textContent = array.join(', ');
+// Function to move focus to the next input field
+function moveFocus(currentInput, nextInput) {
+  if (currentInput.value.length === currentInput.maxLength) {
+      nextInput.focus();
+  }
 }
 
-// Fill table data
-fillTableData(migaathirstam, 'migaathirstam');
-fillTableData(athirstam, 'athirstam');
-fillTableData(thuraathirstam, 'thuraathirstam');
-fillTableData(aathiryaialipathu, 'aathiryaialipathu');
-fillTableData(sothanai, 'sothanai');
-fillTableData(sumar, 'sumar');
-fillTableData(aapathu, 'aapathu');
-fillTableData(aamatram, 'aamatram');
+// Function to validate input fields based on pattern
+function validateInput(inputElement, pattern) {
+  if (!inputElement.value.match(pattern)) {
+      inputElement.classList.add('error-input');
+  } else {
+      inputElement.classList.remove('error-input');
+  }
+}
+
+// Function to convert a string to its numeric equivalent based on charToNumberMapping
+function calculateNumericValue(inputString) {
+  let total = 0;
+  for (let char of inputString.toUpperCase()) {
+    if (char >= '0' && char <= '9') {
+      // If the character is a number, add its numeric value directly
+      total += parseInt(char);
+    } else if (char in charToNumberMapping) {
+      // If the character is a letter mapped in charToNumberMapping, add its mapped value
+      total += charToNumberMapping[char];
+    }
+  }
+  return total;
+}
+
+
+// Function to update table content with form values
+function updateTableContent() {
+  var box1Value = document.getElementById('box1').value;
+  var box2Value = document.getElementById('box2').value;
+  var box3Value = document.getElementById('box3').value;
+  var box4Value = document.getElementById('box4').value;
+
+  // Calculate numeric values based on the mapping
+  var numericBox1 = calculateNumericValue(box1Value);
+  var numericBox2 = calculateNumericValue(box2Value);
+  var numericBox3 = calculateNumericValue(box3Value);
+  var numericBox4 = calculateNumericValue(box4Value);
+
+  // Prepare strings for Column 1
+  var column1Row1 = `${box1Value}-${box2Value}-${box3Value}`;
+  var column1Row2 = box4Value;
+  var column1Row3 = `${box1Value}-${box2Value}-${box3Value}-${box4Value}`;
+
+  var numberplate =`${box1Value} ${box2Value} ${box3Value} ${box4Value}`;
+
+  // Calculate sums for Column 2
+  var sumRow1 = numericBox1 + numericBox2 + numericBox3;
+  var sumRow2 = numericBox4;
+  var sumRow3 = numericBox1 + numericBox2 + numericBox3 + numericBox4;
+
+
+  function reducesingle(num) {
+    while (num > 9) {
+      num = num.toString().split('').reduce((sum, digit) => sum + parseInt(digit), 0);
+    }
+    return num;
+  }
+
+  var sumRow12 = reducesingle(sumRow1);
+  var sumRow22 = reducesingle(sumRow2);
+  var sumRow32 = reducesingle(sumRow3);
+
+  
+
+  document.getElementById("numberPlate").style.display = "flex";
+  document.getElementById('number').textContent=numberplate;
+
+  // Update table content
+  document.getElementById('content1').textContent = column1Row1;
+
+  document.getElementById('second1').textContent = sumRow1;
+
+
+  document.getElementById('content2').textContent = column1Row2;
+
+  document.getElementById('second2').textContent = sumRow2;
+  document.getElementById('third2').textContent=getCategory(sumRow2);
+
+  document.getElementById('second22').textContent = sumRow22;
+  document.getElementById('third22').textContent=getCategory(sumRow22);
+
+  document.getElementById('content3').textContent = column1Row3;
+
+  document.getElementById('second3').textContent = sumRow3;
+  document.getElementById('third3').textContent=getCategory(sumRow3);
+
+  document.getElementById('second32').textContent = sumRow32;
+  document.getElementById('third32').textContent=getCategory(sumRow32);
+
+  // Apply colors based on category
+  applyCategoryColor('third2c', getCategory(sumRow2));
+  applyCategoryColor('third22c', getCategory(sumRow22));
+  applyCategoryColor('third3c', getCategory(sumRow3));
+  applyCategoryColor('third32c', getCategory(sumRow32));
+}
+
+function applyCategoryColor(elementId, category) {
+  const element = document.getElementById(elementId);
+  const color = categoryColorMapping[category];
+  element.style.background = color;
+  element.style.fontSize = '15px';
+  element.style.fontWeight = 'bolder';
+ 
+}
+
+
+
+// Function to move focus to the previous input field when backspace is pressed
+function moveFocusBack(currentInput, prevInput) {
+  if (currentInput.value.length === 0) {
+    prevInput.focus();
+  }
+}
+// Add event listeners to move focus, handle backspace, and validate inputs
+document.getElementById('box1').addEventListener('input', function() {
+  moveFocus(this, document.getElementById('box2'));
+});
+
+document.getElementById('box2').addEventListener('input', function() {
+  validateInput(this, /^[0-9]{1,2}$/);
+  moveFocus(this, document.getElementById('box3'));
+});
+
+
+
+document.getElementById('box3').addEventListener('input', function() {
+  validateInput(this, /^[A-Za-z]{1,2}$/);
+  moveFocus(this, document.getElementById('box4'));
+});
+
+document.getElementById('box3').addEventListener('keydown', function(event) {
+  if (event.key === 'Backspace') {
+    moveFocusBack(this, document.getElementById('box2'));
+  }
+});
+
+document.getElementById('box4').addEventListener('input', function() {
+  validateInput(this, /^[0-9]{4}$/);
+  moveFocus(this, document.getElementById('submit'));
+});
+
+document.getElementById('box4').addEventListener('keydown', function(event) {
+  if (event.key === 'Backspace') {
+    moveFocusBack(this, document.getElementById('box3'));
+  }
+});
+
+
+
+// Add event listener to form submit
+document.getElementById('myForm').addEventListener('submit', function(event) {
+  event.preventDefault(); // Prevent form submission
+
+  // Validate all input fields before updating table content
+  validateInput(document.getElementById('box2'), /^[0-9]{1,2}$/);
+  validateInput(document.getElementById('box3'), /^[A-Za-z]{0,2}$/);
+  validateInput(document.getElementById('box4'), /^[0-9]{4}$/);
+
+  // Update table content if all inputs are valid
+  if (!document.querySelectorAll('.error-input').length) {
+      updateTableContent();   // Update table content with form values
+  }
+});
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip();
+});
+
+
+
+const charHeaderRow = document.querySelector('#charHeaderRow');
+        const numberHeaderRow = document.querySelector('#numberHeaderRow');
+        const numberCategoryTableBody = document.querySelector('#numberCategoryTable tbody');
+
+        // Sort characters alphabetically
+        const sortedChars = Object.keys(charToNumberMapping).sort();
+
+        // Populate Character to Number Mapping Table
+        sortedChars.forEach(char => {
+            const number = charToNumberMapping[char];
+            
+            const charCell = document.createElement('th');
+            const numberCell = document.createElement('td');
+            
+            charCell.textContent = char;
+            numberCell.textContent = number;
+            
+            charHeaderRow.appendChild(charCell);
+            numberHeaderRow.appendChild(numberCell);
+        });
+
+        // Populate Number to Category Mapping Table
+        const categories = [
+            { name: 'மிக மிக அதிர்ஸ்டம்', numbers: migaathirstam },
+            { name: 'அதிர்ஸ்டம்', numbers: athirstam },
+            { name: 'துரஅதிர்ஸ்டம்', numbers: thuraathirstam },
+            { name: 'எதிரியை அழிப்பது', numbers: aathiryaialipathu },
+            { name: 'சோதனை மிக்கது', numbers: sothanai },
+            { name: 'சுமார்', numbers: sumar },
+            { name: 'ஆபத்து', numbers: aapathu },
+            { name: 'ஏமாற்றம்', numbers: aamatram }
+        ];
+
+        categories.forEach(category => {
+            const row = document.createElement('tr');
+            const categoryCell = document.createElement('th');
+            const numbersCell = document.createElement('td');
+            
+            categoryCell.textContent = category.name;
+            numbersCell.textContent = category.numbers.join(', ');
+            
+            row.appendChild(categoryCell);
+            row.appendChild(numbersCell);
+            numberCategoryTableBody.appendChild(row);
+        });
+
