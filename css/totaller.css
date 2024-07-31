@@ -70,10 +70,20 @@ html, body {
     border: 1px solid red !important;
     color:red;
 }
+
+
 .error-message {
     color: red;
     font-weight: bold;
     margin-top: 10px;
+}
+
+
+
+#myForm{
+
+    padding: 0 !important;
+    
 }
 .table-custom {
     margin-top: 20px;
