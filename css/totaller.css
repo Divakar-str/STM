@@ -118,7 +118,7 @@ html, body {
   margin: 0.1px;
 }
 
-.form-group {
+.grp {
   padding: 0 !important;
   color: #ffffff;
   border: 1.5px solid #343a40 !important;
@@ -127,7 +127,7 @@ html, body {
   border-radius: 5.5px;
 }
 
-.form-group > * {
+.grp > * {
   margin: 0;
   padding: 0;
 }

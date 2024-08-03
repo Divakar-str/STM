@@ -104,24 +104,10 @@
   #fullno .btn-secondary {
     margin-bottom: 20px;
   }
+ 
+ 
   
-  #fullno #printableArea {
-    border: 1px solid #ddd;
-    padding: 20px;
-    background-color: #f8f9fa;
-    width: fit-content !important;
-  }
   
-  #fullno h1 {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: #333;
-  }
-  
-  #fullno #generatedCodes {
-    font-size: 1.2rem;
-    color: #555;
-  }
   
   /* Custom CSS for Authentic Color Scheme */
   body {
@@ -186,32 +172,28 @@
         border-color: #5a6268;
     }
 
-     #generatedCodes {
-        background-color: #ffffff;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
 
-    .code-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: 1px solid #dee2e6;
-        border-radius: 4px;
-        padding: 10px 15px;
-        margin-right: 10px;
-        margin-bottom: 10px;
-        font-size: 16px;
-        transition: background-color 0.3s ease;
-    }
 
-    .code-container:hover {
-        background-color: #f8f9fa;
-    }
+    #generatedCodes {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: start;
+      margin-top: 15px;
+  }
+  
+  .code-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #ddd;
+      padding: 10px;
+      border-radius: 5px;
+      text-align: center;
+      background-color: #f8f9fa;
+      margin: 5px;
+      font-size: 1rem; /* Adjust font size as needed */
+  }
+
 
 
 
@@ -234,3 +216,63 @@
 }
 
 
+
+
+/* Container for output numbers */
+.output-container {
+  padding: 20px;
+  background-color: #f2f2f2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px; /* Space between items */
+  overflow: hidden; /* Ensure child elements do not overflow */
+}
+
+/* Style for each number box */
+.output-number {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 93px; /* Minimum width to ensure numbers are visible */
+  height: 40px; /* Adjust height as needed */
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 15px; /* Adjust font size as needed */
+  padding: 20px; /* Ensure text fits within box */
+  box-sizing: border-box; /* Ensure padding and border are included in the total width and height */
+  background-color: #ffffff; /* Default background color */
+  overflow: hidden; /* Ensure text does not overflow */
+  white-space: nowrap; /* Prevent text from wrapping */
+  text-overflow: ellipsis; /* Add ellipsis if text overflows */
+}
+
+/* Responsive grid for numbers */
+@media (min-width: 1200px) {
+  .output-number {
+      flex: 1 1 calc(16.666% - 10px); /* 6 columns */
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .output-number {
+      flex: 1 1 calc(20% - 10px); /* 5 columns */
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .output-number {
+      flex: 1 1 calc(25% - 10px); /* 4 columns */
+  }
+}
+
+@media (max-width: 767px) {
+  .output-number {
+      flex: 1 1 calc(50% - 10px); /* 2 columns */
+  }
+}
+
+@media (max-width: 479px) {
+  .output-number {
+      flex: 1 1 calc(100% - 10px); /* 1 column */
+  }
+}

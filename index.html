@@ -51,6 +51,10 @@
             <li class="nav-item">
                 <a class="nav-link" href="#fullno" style="color: #333;">Full No</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#desired" style="color: #333;">Desired</a>
+
+            </li>
         </ul>
     </div>
 </nav>
@@ -78,7 +82,7 @@
         <div class="container mt-5 content" id="thome">
             <form id="myForm">
                 <div class="form-row">
-                    <div class="form-group col-md-12">
+                    <div class="form-group grp col-md-12">
                         <div class="input-group">
                             <input type="text" class="form-control" id="box1" value="TN" readonly
                                    data-toggle="tooltip" title="State code">
@@ -170,82 +174,105 @@
         </div>
 </section>
         
-      <section id="range" style="display: none;">
+<section id="range" style="display: none;">
     <div class="container mt-5">
         <h1 class="display-4 text-center mb-4">Range Section</h1>
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <form class="border p-4 rounded">
-                    <div class="form-group">
-                        <label for="startNumber">Start Number:</label>
-                        <input type="text" class="form-control" id="startNumber" min="1" maxlength="4" required placeholder="Enter start number">
-                    </div>
-                    <div class="form-group">
-                        <label for="maxNumber">Max Number:</label>
-                        <input type="text" class="form-control" id="maxNumber" min="1" maxlength="4" required placeholder="Enter max number">
+                <form class="border p-4 rounded" id="rangeForm">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="startNumber">Start Number:</label>
+                            <input type="text" class="form-control" id="startNumber" maxlength="4" required placeholder="Enter start number" oninput="validateNumber(this, 4, 'maxNumber')">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="maxNumber">Max Number:</label>
+                            <input type="text" class="form-control" id="maxNumber" maxlength="4" required placeholder="Enter max number" oninput="validateNumber(this, 4, 'sumDigits')">
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="sumDigits">Sum:</label>
-                        <input type="text" class="form-control" id="sumDigits" maxlength="1" required placeholder="Enter sum">
+                        <input type="text" class="form-control" id="sumDigits" maxlength="1" required placeholder="Enter sum" oninput="validateNumber(this, 1, null)">
                     </div>
-                    <button type="button" class="btn btn-primary btn-block" onclick="calculateSumDigits()">Calculate</button>
-                    <button type="button" class="btn btn-secondary btn-block mt-2" onclick="printResult()">Print</button>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <button type="button" class="btn btn-primary btn-block" onclick="calculateSumDigits()">Calculate</button>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <button type="button" id="rangebtn" class="btn btn-secondary btn-block" onclick="printResult()">Print</button>
+                        </div>
+                    </div>
                 </form>
             </div>
-            <div class="col-md-6">
-                <!-- Place your results here -->
-                <div id="div" class="container mt-4">
-                    <h2 id="i" class="text-center mb-4"></h2>
-                    <div id="result" class="row"></div>
+            
+
+            <div class="col-md">
+                <h2 id="i" class="text-center mb-4"></h2>
+                <div id="rangeresult" class="output-container"></div>
+                  
                 </div>
-            </div>
+              </div>
+
         </div>
     </div>
 </section>
+
         
         
-        <section id="fullno" style="display: none;">
-            <div class="container mt-5">
-                <h1 class="display-4">Choice Finder</h1>
-                <div class="row">
-                    <!-- Form Column (Left) -->
-                    <div class="col-md-6">
-                        <!-- Add an id to the form element -->
-                        <form id="fullNoForm">
-                            <div class="form-group">
-                                <label for="userChars">TN52</label>
-                                <input type="text" class="form-control" id="userChars" name="userChars" maxlength="2" required pattern="[A-Za-z]{2}">
-                            </div>
+<section id="fullno" style="display: none;">
+    <div class="container mt-5">
+        <h1 class="display-4">Choice Finder</h1>
+        <div class="row">
+            <!-- Form Column (Left) -->
+            <div class="col-lg-6 col-md-12">
+                <form id="fullNoForm">
+                    <div class="form-group mb-3">
+                        <label for="userChars">TN52</label>
+                        <input type="text" class="form-control" id="userChars" name="userChars" maxlength="2" required pattern="[A-Za-z]{2}">
+                    </div>
+                    <div class="form-row mb-3">
+                        <div class="col-lg-6 col-md-6 mb-3">
                             <div class="form-group">
                                 <label for="minValue">Enter Min Value:</label>
-                                <input type="text" class="form-control" id="minValue" name="minValue" maxlength="4"  required>
+                                <input type="text" class="form-control" id="minValue" name="minValue" maxlength="4" required>
                             </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 mb-3">
                             <div class="form-group">
                                 <label for="maxValue">Enter Max Value:</label>
                                 <input type="text" class="form-control" id="maxValue" name="maxValue" maxlength="4" required>
                             </div>
-                            <div class="form-group">
-                                <label for="userNumber">Enter a number (1-9):</label>
-                                <input type="text" class="form-control" id="userNumber" name="userNumber" maxlength="1" required>
-                            </div>
-                            <!-- Use JavaScript to prevent form submission -->
-                            <button type="button" class="btn btn-primary btn-block" onclick="generate()">Generate</button>
-                        </form>
-                        <button type="button" class="btn btn-secondary btn-block printButton" onclick="printResults()">Print</button>
-                    </div>
-        
-                    <!-- Printable Area Column (Right) -->
-                    <div class="col-md-6">
-                        <div id="printableArea" class="container mt-4">
-                            <h1 class="mb-4"></h1>
-                            <div id="generatedCodes" class="row">
-                                <!-- Your generated code spans will go here -->
-                            </div>
                         </div>
                     </div>
-                </div>
+                    <div class="form-group mb-3">
+                        <label for="userNumber">Enter a number (1-9):</label>
+                        <input type="text" class="form-control" id="userNumber" name="userNumber" maxlength="1" required>
+                    </div>
+                    <div class="form-row mb-3">
+                        <div class="col-lg-6 col-md-6 mb-3">
+                            <button type="button" class="btn btn-primary btn-block" onclick="generate()">Generate</button>
+                        </div>
+                        <div class="col-lg-6 col-md-6 mb-3">
+                            <button type="button" class="btn btn-secondary btn-block printButton" onclick="printResults()">Print</button>
+                        </div>
+                    </div>
+                </form>
             </div>
-        </section>
+
+            <!-- Printable Area Column (Right) -->
+       
+
+            <div  id="printableArea" class="col-md-6">
+                
+                <div id="generatedCodes" class="output-container"></div>
+                  
+                </div>
+        </div>
+    </div>
+</section>
+
+
+
         
     <section id="desired" style="display: none;">
         <div class="container">
@@ -304,10 +331,13 @@
               </div>
               
               <!-- Right Side: Generated Numbers -->
-              <div class="col-md-8">
-                <div class="output-container" id="output">
-                  
-                </div>
+
+                <div   class="col-md-8">
+                
+                    <div id="output" class="output-container"></div>
+                      
+                    </div>
+            </div>
               </div>
             </div>
           </div>
@@ -340,6 +370,7 @@
     <script src="js/totaller.js"></script>
     <script src="js/range.js"></script>
     <script src="js/fullno.js"></script>
+    <script src="js/desired.js"></script>
 
 </body>
 <footer class="bg-dark text-white text-center py-3">

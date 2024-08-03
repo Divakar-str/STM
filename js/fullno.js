@@ -20,141 +20,98 @@ function generate() {
     const minValue = parseInt(document.getElementById('minValue').value);
     const maxValue = parseInt(document.getElementById('maxValue').value);
     const userNumber = parseInt(document.getElementById('userNumber').value);
-    const h1Content = document.querySelector("#printableArea h1");
-    h1Content.textContent = "" + userNumber;
+
 
     if (!isNaN(minValue) && !isNaN(maxValue) && !isNaN(userNumber)) {
-        const outputContainer = document.getElementById('generatedCodes');
-        outputContainer.innerHTML = ''; // Clear previous results
+        if (minValue <= maxValue) {
+            const outputContainer = document.getElementById('generatedCodes');
+            outputContainer.innerHTML = ''; // Clear previous results
 
-        const Value_1 = charToNumberMapping[userChars[0]] || 0;
-        const Value_2 = charToNumberMapping[userChars[1]] || 0;
-        const initial = 4 + 5 + 5 + 2 + Value_1 + Value_2;
+            const Value_1 = charToNumberMapping[userChars[0]] || 0;
+            const Value_2 = charToNumberMapping[userChars[1]] || 0;
+            const initial = 4 + 5 + 5 + 2 + Value_1 + Value_2;
 
-for (let i = minValue; i <= maxValue; i++) {
-    let codeValue = initial + i;
-    while (codeValue > 9) {
-        codeValue = Array.from(String(codeValue), Number).reduce((a, b) => a + b);
-    }
-    if (userNumber === codeValue) {
-        let matchedCodeGenerated = `TN52${userChars}${i}`;
-        const outputText = matchedCodeGenerated;
-        const outputSpan = document.createElement('span');
-        outputSpan.className = 'code-container col-3 mb-3'; // Bootstrap classes for styling
-        if (fancy.includes(i)) {
-            outputSpan.classList.add('fancy');
+            for (let i = minValue; i <= maxValue; i++) {
+                let codeValue = initial + i;
+                while (codeValue > 9) {
+                    codeValue = Array.from(String(codeValue), Number).reduce((a, b) => a + b);
+                }
+
+            
+                if (userNumber === codeValue) {
+                    let matchedCodeGenerated = `TN52${userChars}${i}`;
+                    const outputSpan = document.createElement('span');
+                    outputSpan.className = 'col-md-2 code-container output-number'; 
+                    var bgColor = fancy.includes(i) ? '#FFD700' : '#FFFFFF';
+                    outputSpan.textContent = matchedCodeGenerated;
+                    outputSpan.style.backgroundColor = bgColor
+                    outputContainer.appendChild(outputSpan);
+                }
+            }
+        } else {
+            alert('Invalid range: minValue should be less than or equal to maxValue.');
         }
-        outputSpan.textContent = outputText;
-        outputContainer.appendChild(outputSpan);
+    } else {
+        alert('Invalid input: Please ensure minValue, maxValue, and userNumber are numbers.');
     }
 }
 
 
 
-    }
-}
+// Add event listeners for input validation and focus management
+document.getElementById('userChars').addEventListener('input', function() {
+    validateInput(this, /^[A-Za-z]{2}$/);
+    moveFocus(this, document.getElementById('minValue'));
+});
+
+document.getElementById('minValue').addEventListener('input', function() {
+    validateInput(this, /^\d{1,4}$/);
+    moveFocus(this, document.getElementById('maxValue'));
+});
+
+document.getElementById('maxValue').addEventListener('input', function() {
+    validateInput(this, /^\d{1,4}$/);
+    moveFocus(this, document.getElementById('userNumber'));
+});
+
+document.getElementById('userNumber').addEventListener('input', function() {
+    validateInput(this, /^[1-9]$/);
+});
+
+
+
+
 
 function printResults() {
-    // Get the content of the <h1> element
-    var h1Content = document.querySelector("#printableArea h1").innerHTML;
+    var output = document.getElementById('generatedCodes').innerHTML;
 
-    // Get the content of the generated codes container
-    var generatedCodesContent = document.getElementById("generatedCodes").innerHTML;
-
-    // Create a new print window
-    var printWindow = window.open("", "_blank");
-
-    // Define common CSS styles with Bootstrap classes
-    var commonStyles = `
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
-            margin: 0;
-            padding: 20px;
-        }
-
-        .h1-container {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        h1 {
-            font-size: 24px;
-            margin-bottom: 0;
-        }
-
-        #result {
-            display: flex;
-            flex-wrap: wrap;
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin-top: 20px;
-        }
-
-        .fancy {
-            background-color: yellow;
-        }
-        @media print {
-            /* Allow color to be preserved in print */
-            .fancy {
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-                background-color: yellow !important;
-                color: #000 !important;
-            }
-        }
-
-        #generatedCodes {
-            background-color: white;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            overflow-x: auto;
-        }
-
-        .code-container {
-            display: inline-block;
-            margin-right: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            padding: 10px;
-            border-radius: 5px;
-            margin-right: 10px;
-            margin-bottom: 10px;
-        }
-    `;
-
-    // Inject common styles into the print window
-    var styleTag = printWindow.document.createElement("style");
-    styleTag.appendChild(printWindow.document.createTextNode(commonStyles));
-    printWindow.document.head.appendChild(styleTag);
-
-    // Add content to the print window
-    var resultContent = `
-        <div class='container mt-4'>
-            <h1 class='mb-4 text-center'>${h1Content}</h1>
-            <div id='generatedCodes' class='row'>
-                ${generatedCodesContent}
-            </div>
-        </div>
-    `;
-    printWindow.document.body.innerHTML = resultContent;
-
-    // Close the print window after printing
-    printWindow.addEventListener('afterprint', function() {
-        printWindow.close();
-    });
-
-    // Print the content
+    var printWindow = window.open('', '', 'height=600,width=800');
+    printWindow.document.write('<html><head><title>Print Numbers</title>');
+    printWindow.document.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">');
+    printWindow.document.write('<style>');
+    
+    // Default styles for the output container
+    printWindow.document.write('.output-container { border: 1px solid #ccc; padding: 20px; display: grid; grid-gap: 10px; }');
+    printWindow.document.write('.output-number { padding: 5px; text-align: center; border: 1px solid #ddd; background-color: #FFFFFF; box-sizing: border-box; }');
+    
+    // Responsive layout
+    printWindow.document.write('@media (min-width: 1200px) { .output-container { grid-template-columns: repeat(6, 1fr); } }');
+    printWindow.document.write('@media (min-width: 992px) and (max-width: 1199px) { .output-container { grid-template-columns: repeat(5, 1fr); } }');
+    printWindow.document.write('@media (min-width: 768px) and (max-width: 991px) { .output-container { grid-template-columns: repeat(4, 1fr); } }');
+    printWindow.document.write('@media (max-width: 767px) { .output-container { grid-template-columns: repeat(2, 1fr); } }');
+    
+    // Print-specific styles to ensure 6 columns
+    printWindow.document.write('@media print {');
+    printWindow.document.write('.output-container { grid-template-columns: repeat(6, 1fr) !important; grid-gap: 5px; }');
+    printWindow.document.write('.output-number { -webkit-print-color-adjust: exact; print-color-adjust: exact; }');
+    printWindow.document.write('}');
+    printWindow.document.write('</style>');
+    printWindow.document.write('</head><body>');
+    printWindow.document.write('<div class="container"><div class="output-container">' + output + '</div></div>');
+    printWindow.document.write('</body></html>');
+    printWindow.document.close();
     printWindow.print();
 }
 
 
 
-
-window.addEventListener('load', function() {
-    setTimeout(function() {
-      var loader = document.getElementById('loader');
-      loader.style.display = 'none';
-    }, 1000); // Replace 3000 with the desired timeout value in milliseconds
-  });

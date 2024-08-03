@@ -114,3 +114,13 @@ cardData.forEach(card => {
 });
 
 container.appendChild(row);
+
+
+
+
+window.addEventListener('load', function() {
+    setTimeout(function() {
+      var loader = document.getElementById('loader');
+      loader.style.display = 'none';
+    }, 200); // Replace 3000 with the desired timeout value in milliseconds
+  });
