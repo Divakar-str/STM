@@ -149,7 +149,7 @@
 
  /* Additional Styles */
     #fullno {
-     
+        background-color: #f4f4f4;
         padding: 50px 0;
     }
 
@@ -234,30 +234,3 @@
 }
 
 
-
-#desired {
-  
-  padding: 50px 0;
-}
-
-.container {
-  margin-top: 20px;
-}
-.input-container {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-.output-container {
-  border: 1px solid #ccc;
-  padding: 20px;
-  height: 400px; /* Adjust height as needed */
-  overflow-y: auto;
-}
-.output-number {
-  padding: 5px;
-  margin-bottom: 5px;
-  text-align: center;
-  border: 1px solid #ddd;
-  background-color: #FFFFFF;
-}
