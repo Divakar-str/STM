@@ -78,7 +78,7 @@ var fancy = [
       var bgColor = isFancy ? '#FFD700' : '#FFFFFF'; // Yellow background for fancy numbers
   
       html += '<div class="col-md-2">';
-      html += '<div class="output-number" style="background-color: ' + bgColor + ';">' + number + '</div>';
+      html += '<div class="output-number col-md-2 code-container" style="background-color: ' + bgColor + ';">' + number + '</div>';
       html += '</div>';
   
       if (index % numPerRow === numPerRow - 1) {
