@@ -107,7 +107,7 @@ var fancy = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 22, 33, 44, 55, 66, 77, 88, 99, 
         // Print-specific styles to ensure 6 columns
         printWindow.document.write('@media print {');
         printWindow.document.write('.output-container { grid-template-columns: repeat(6, 1fr) !important; grid-gap: 5px; }');
-        printWindow.document.write('.output-number { -webkit-print-color-adjust: exact; print-color-adjust: exact; }');
+        printWindow.document.write('.output-number { -webkit-print-color-adjust: exact; print-color-adjust: exact;font-weight: bolder; }');
         printWindow.document.write('}');
         printWindow.document.write('</style>');
         printWindow.document.write('</head><body>');

@@ -76,6 +76,7 @@ document.getElementById('maxValue').addEventListener('input', function() {
 
 document.getElementById('userNumber').addEventListener('input', function() {
     validateInput(this, /^[1-9]$/);
+    moveFocus(this, document.getElementById('generate'));
 });
 
 
@@ -103,7 +104,7 @@ function printResults() {
     // Print-specific styles to ensure 6 columns
     printWindow.document.write('@media print {');
     printWindow.document.write('.output-container { grid-template-columns: repeat(6, 1fr) !important; grid-gap: 5px; }');
-    printWindow.document.write('.output-number { -webkit-print-color-adjust: exact; print-color-adjust: exact; }');
+    printWindow.document.write('.output-number { -webkit-print-color-adjust: exact; print-color-adjust: exact; font-weight: bolder; }');
     printWindow.document.write('}');
     printWindow.document.write('</style>');
     printWindow.document.write('</head><body>');

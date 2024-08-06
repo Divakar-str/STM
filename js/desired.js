@@ -92,6 +92,40 @@ var fancy = [
   
     output.innerHTML = html;
   }
+
+  function moveFocus(currentInput, nextInput, prevInput = null) {
+    currentInput.addEventListener('input', function(event) {
+        if (currentInput.value.length > 0) {
+            nextInput.focus();
+        }
+    });
+
+    if (prevInput) {
+        currentInput.addEventListener('keydown', function(event) {
+            if (event.key === 'Backspace' && currentInput.value.length === 0) {
+                prevInput.focus();
+            }
+        });
+    }
+}
+
+moveFocus(document.getElementById('firstInput'), document.getElementById('secondInput'));
+moveFocus(document.getElementById('secondInput'), document.getElementById('thirdInput'), document.getElementById('firstInput'));
+moveFocus(document.getElementById('thirdInput'), document.getElementById('fourthInput'), document.getElementById('secondInput'));
+moveFocus(document.getElementById('fourthInput'), document.getElementById('sumInput'), document.getElementById('thirdInput'));
+moveFocus(document.getElementById('sumInput'), document.getElementById('startRange'), document.getElementById('fourthInput'));
+moveFocus(document.getElementById('startRange'), document.getElementById('endRange'), document.getElementById('sumInput'));
+
+
+document.getElementById('endRange').addEventListener('input', function() {
+   
+    moveFocus(this, document.getElementById('generate'));
+});
+
+
+
+
+
   
   
   
@@ -117,7 +151,7 @@ var fancy = [
     // Print-specific styles to ensure 6 columns
     printWindow.document.write('@media print {');
     printWindow.document.write('.output-container { grid-template-columns: repeat(6, 1fr) !important; grid-gap: 5px; }');
-    printWindow.document.write('.output-number { -webkit-print-color-adjust: exact; print-color-adjust: exact; }');
+    printWindow.document.write('.output-number { -webkit-print-color-adjust: exact; print-color-adjust: exact; font-weight: bolder; }');
     printWindow.document.write('}');
     printWindow.document.write('</style>');
     printWindow.document.write('</head><body>');
