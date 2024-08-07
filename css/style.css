@@ -1,3 +1,78 @@
+/* Base Styles for Sections */
+section {
+  width: 100%;
+  
+  margin: 0; /* Remove any default margin */
+ 
+}
+
+.container {
+  max-width: 100%; /* Full width */
+  padding: 5px; /* No padding for full width */
+ 
+}
+
+
+
+/* Container for output numbers */
+.output-container {
+  padding: 20px; /* Adjust padding for overall spacing */
+  background-color: #f2f2f2; /* Background color for the container */
+  display: grid; /* Use grid layout for the container */
+  gap: 5px; /* Space between grid items */
+  overflow: hidden; /* Ensure child elements do not overflow */
+}
+
+/* Style for each number box */
+.output-number {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 103px; /* Minimum width to ensure numbers are visible */
+  height: 40px; /* Adjust height as needed */
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px; /* Ensure text fits within the box */
+  box-sizing: border-box; /* Ensure padding and border are included in the total width and height */
+  background-color: #ffffff; /* Default background color */
+  overflow: hidden; /* Ensure text does not overflow */
+  white-space: nowrap; /* Prevent text from wrapping */
+  text-overflow: ellipsis; /* Add ellipsis if text overflows */
+}
+
+/* Responsive grid for numbers */
+@media (min-width: 1200px) {
+  .output-container {
+      grid-template-columns: repeat(5, 1fr); /* 6 columns */
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .output-container {
+      grid-template-columns: repeat(4, 1fr); /* 5 columns */
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .output-container {
+      grid-template-columns: repeat(3, 1fr); /* 4 columns */
+  }
+}
+
+@media (max-width: 767px) {
+  .output-container {
+      grid-template-columns: repeat(2, 1fr); /* 2 columns */
+  }
+}
+
+@media (max-width: 479px) {
+  .output-container {
+      grid-template-columns: 1fr; /* 1 column */
+  }
+}
+
+
+/* Loader styles */
 #loader {
   position: fixed;
   top: 0;
@@ -25,254 +100,53 @@
   position: relative;
   z-index: 1;
 }
-/* Custom CSS for Navigation Bar */
-.navbar {
-    background-color: #333;
-  }
-  
-.navbar-brand {
-    font-size: 3.5rem;
-    font-weight: bold;
-    color: #d62729 !important;
-  }
-  
-  .navbar-nav .nav-item .nav-link {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #2c2d59 !important;
-  }
-  
-  .navbar-nav .nav-item .nav-link:hover {
-    color: #ffcc00 !important;
-  }
-  
-.container {
-  width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
-  margin:5px !important;
-}
-  
-  section h1 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-    color: #333;
-  }
-  
-  section p {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    color: #555;
-  }
-  
- #footer {
-    font-size: 0.8rem;
-    color: #999;
-  }
-  
-  /* Custom CSS for Range Section */
-  #range form {
-    margin-bottom: 20px;
-  }
-  
-  #range .btn-secondary {
-    margin-bottom: 20px;
-  }
-  
-  #range #div {
-    border: 1px solid #ddd;
-    padding: 20px;
-    background-color: #f8f9fa;
-  }
-  
-  #range #i {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: #333;
-  }
-  
-  #range #result {
-    font-size: 1.2rem;
-    color: #555;
-  }
-  
-  /* Custom CSS for Fullno Section */
-  #fullno form {
-    margin-bottom: 20px;
-  }
-  
-  #fullno .btn-secondary {
-    margin-bottom: 20px;
-  }
- 
- 
-  
-  
-  
-  /* Custom CSS for Authentic Color Scheme */
-  body {
-    background-color: #f8f8f8;
-  }
-  
-  h1, h2, h3, h4, h5, h6 {
-    color: #333;
-  }
-  
-  p {
-    color: #555;
-  }
-  
 
-  
-  .table {
-    background-color: #fff;
-  }
-  
-  .table th, .table td {
-    border-color: #ddd;
-  }
-
-
- /* Additional Styles */
-    #fullno {
-        background-color: #f4f4f4;
-        padding: 50px 0;
-    }
-
-    form {
-        background-color: #ffffff;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-    }
-
-    .btn-primary {
-        background-color: #007bff;
-        border-color: #007bff;
-        border-radius: 4px;
-        color: #ffffff;
-        transition: background-color 0.3s ease;
-    }
-
-    .btn-primary:hover {
-        background-color: #0056b3;
-        border-color: #0056b3;
-    }
-
-    .btn-secondary {
-        background-color: #6c757d;
-        border-color: #6c757d;
-        border-radius: 4px;
-        color: #ffffff;
-        transition: background-color 0.3s ease;
-    }
-
-    .btn-secondary:hover {
-        background-color: #5a6268;
-        border-color: #5a6268;
-    }
-
-
-
-    #generatedCodes {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: start;
-      margin-top: 15px;
-  }
-  
-  .code-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid #ddd;
-      padding: 10px;
-      border-radius: 5px;
-      text-align: center;
-      background-color: #f8f9fa;
-      margin: 5px;
-      font-size: 1rem; /* Adjust font size as needed */
-  }
-
-
-
-
-  .text {
-    font-size: 3rem;
-    color: #d62729;
-    text-transform: uppercase;
-    font-family: Arial, sans-serif;
-    position: relative;
-    animation: lighting 2s infinite alternate;
+/* Text animation */
+.text {
+  font-size: 3rem;
+  color: #d62729;
+  text-transform: uppercase;
+  font-family: Arial, sans-serif;
+  position: relative;
+  animation: lighting 2s infinite alternate;
 }
 
 @keyframes lighting {
-    0% {
-        text-shadow: 0 0 10px #0056b3;
-    }
-    100% {
-        text-shadow: 0 0 30px rgba(255, 255, 255, 1);
-    }
-}
-
-
-
-
-/* Container for output numbers */
-.output-container {
-  padding: 20px;
-  background-color: #f2f2f2;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px; /* Space between items */
-  overflow: hidden; /* Ensure child elements do not overflow */
-}
-
-/* Style for each number box */
-.output-number {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-width: 93px; /* Minimum width to ensure numbers are visible */
-  height: 40px; /* Adjust height as needed */
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 15px; /* Adjust font size as needed */
-  padding: 20px; /* Ensure text fits within box */
-  box-sizing: border-box; /* Ensure padding and border are included in the total width and height */
-  background-color: #ffffff; /* Default background color */
-  overflow: hidden; /* Ensure text does not overflow */
-  white-space: nowrap; /* Prevent text from wrapping */
-  text-overflow: ellipsis; /* Add ellipsis if text overflows */
-}
-
-/* Responsive grid for numbers */
-@media (min-width: 1200px) {
-  .output-number {
-      flex: 1 1 calc(16.666% - 10px); /* 6 columns */
+  0% {
+    text-shadow: 0 0 10px #0056b3;
+  }
+  100% {
+    text-shadow: 0 0 30px rgba(255, 255, 255, 1);
   }
 }
 
-@media (min-width: 992px) and (max-width: 1199px) {
-  .output-number {
-      flex: 1 1 calc(20% - 10px); /* 5 columns */
-  }
+/* Navbar styles */
+.navbar {
+  background-color: #333;
 }
 
-@media (min-width: 768px) and (max-width: 991px) {
-  .output-number {
-      flex: 1 1 calc(25% - 10px); /* 4 columns */
-  }
+.navbar-brand {
+  font-size: 3.5rem;
+  font-weight: bold;
+  color: #d62729 !important;
 }
 
-@media (max-width: 767px) {
-  .output-number {
-      flex: 1 1 calc(50% - 10px); /* 2 columns */
-  }
+.navbar-nav .nav-item .nav-link {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #2c2d59 !important;
 }
 
-@media (max-width: 479px) {
-  .output-number {
-      flex: 1 1 calc(100% - 10px); /* 1 column */
-  }
+.navbar-nav .nav-item .nav-link:hover {
+  color: #ffcc00 !important;
+}
+
+#footer {
+  font-size: 0.8rem;
+  color: #999;
+}
+
+/* Input text transformation */
+#userChars {
+  text-transform: uppercase;
 }

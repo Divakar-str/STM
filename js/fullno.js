@@ -1,3 +1,4 @@
+// Function to generate codes based on user input
 function generate() {
     const charToNumberMapping = {
         'A': 1, 'I': 1, 'J': 1, 'Q': 1, 'Y': 1,
@@ -21,7 +22,6 @@ function generate() {
     const maxValue = parseInt(document.getElementById('maxValue').value);
     const userNumber = parseInt(document.getElementById('userNumber').value);
 
-
     if (!isNaN(minValue) && !isNaN(maxValue) && !isNaN(userNumber)) {
         if (minValue <= maxValue) {
             const outputContainer = document.getElementById('generatedCodes');
@@ -37,17 +37,18 @@ function generate() {
                     codeValue = Array.from(String(codeValue), Number).reduce((a, b) => a + b);
                 }
 
-            
                 if (userNumber === codeValue) {
                     let matchedCodeGenerated = `TN52${userChars}${i}`;
                     const outputSpan = document.createElement('span');
                     outputSpan.className = 'col-md-2 code-container output-number'; 
                     var bgColor = fancy.includes(i) ? '#FFD700' : '#FFFFFF';
                     outputSpan.textContent = matchedCodeGenerated;
-                    outputSpan.style.backgroundColor = bgColor
+                    outputSpan.style.backgroundColor = bgColor;
                     outputContainer.appendChild(outputSpan);
                 }
             }
+
+            
         } else {
             alert('Invalid range: minValue should be less than or equal to maxValue.');
         }
@@ -56,35 +57,32 @@ function generate() {
     }
 }
 
+// Function to validate input and move focus to the next input field
+function validateRangeInput(inputElement, maxLength, nextInputId) {
+    const value = inputElement.value;
+    inputElement.value = value.replace(/[^0-9]/g, '').slice(0, maxLength);
 
+    if (inputElement.value.length === maxLength && nextInputId) {
+        const nextInput = document.getElementById(nextInputId);
+        if (nextInput) {
+            nextInput.focus();
+        } else {
+            console.error(`Element with ID ${nextInputId} not found.`);
+            alert(`Element with ID ${nextInputId} not found.`);
+        }
+    } else if (inputElement.value.length > maxLength) {
+        alert(`Input value exceeds maximum length of ${maxLength} digits.`);
+    }
+}
 
-// Add event listeners for input validation and focus management
-document.getElementById('userChars').addEventListener('input', function() {
-    validateInput(this, /^[A-Za-z]{2}$/);
-    moveFocus(this, document.getElementById('minValue'));
-});
-
-document.getElementById('minValue').addEventListener('input', function() {
-    validateInput(this, /^\d{1,4}$/);
-    moveFocus(this, document.getElementById('maxValue'));
-});
-
-document.getElementById('maxValue').addEventListener('input', function() {
-    validateInput(this, /^\d{1,4}$/);
-    moveFocus(this, document.getElementById('userNumber'));
-});
-
-document.getElementById('userNumber').addEventListener('input', function() {
-    validateInput(this, /^[1-9]$/);
-    moveFocus(this, document.getElementById('generate'));
-});
-
-
-
-
-
+// Function to print the results
 function printResults() {
     var output = document.getElementById('generatedCodes').innerHTML;
+
+    if (!output.trim()) {
+        alert("No results to print.");
+        return;
+    }
 
     var printWindow = window.open('', '', 'height=600,width=800');
     printWindow.document.write('<html><head><title>Print Numbers</title>');
@@ -111,8 +109,7 @@ function printResults() {
     printWindow.document.write('<div class="container"><div class="output-container">' + output + '</div></div>');
     printWindow.document.write('</body></html>');
     printWindow.document.close();
+    
+   
     printWindow.print();
 }
-
-
-
