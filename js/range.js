@@ -82,6 +82,6 @@ function printResult() {
     printWindow.document.write('</body></html>');
     printWindow.document.close();
     
-    alert("Preparing to print the results...");
+    
     printWindow.print();
 }
