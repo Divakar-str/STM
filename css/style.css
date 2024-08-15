@@ -134,12 +134,18 @@ section {
 .navbar-nav .nav-item .nav-link {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #2c2d59 !important;
+  color: #2c2d59 ;
 }
 
 .navbar-nav .nav-item .nav-link:hover {
   color: #ffcc00 !important;
 }
+
+
+.active {
+  color: #ffcc00 !important;
+}
+
 
 #footer {
   font-size: 0.8rem;

@@ -189,7 +189,7 @@ html, body {
 
 .number-plate {
   margin-top: 15px;
-  margin-left:250px;
+  margin-left:400px;
   display: flex;
   width: 520px;
   height: 120px;
@@ -252,7 +252,7 @@ html, body {
       width: 320px;
       height: 80px;
       margin-top: 15px;
-      margin-left: 25px;
+      margin-left: 22px;
   }
   .blue-section {
       width: 60px;
@@ -265,7 +265,7 @@ html, body {
 
 @media  (max-width: 950px){
   .number-plate {
-    margin-left: 60px;
+    margin-left: 55px;
   }
   
 }

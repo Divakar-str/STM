@@ -37,13 +37,13 @@ const charToNumberMapping = {
  
 
   const categoryColorMapping = {
-    'மிக மிக அதிர்ஸ்டம்': '#00FF00', // Green
-    'அதிர்ஸ்டம்': '#7FFF00',         // Light Green
-    'சுமார்': '#FFFF00',              // Yellow (changed)
-    'துரஅதிர்ஸ்டம்': '#FFA500',      // Orange
-    'எதிரியை அழிப்பது': '#FF4500',   // Orange Red
-    'சோதனை மிக்கது': '#FF0000',      // Red
-    'ஆபத்து': '#8B0000',             // Dark Red
+    'மிக மிக அதிர்ஸ்டம்': '#00ff3c', // Green
+    'அதிர்ஸ்டம்': '#a0ff41',         // Light Green
+    'சுமார்': '#fefe39',              // Yellow (changed)
+    'துரஅதிர்ஸ்டம்': '#fdb93c',      // Orange
+    'எதிரியை அழிப்பது': '#eb3f00',   // Orange Red
+    'சோதனை மிக்கது': '#e40000',      // Red
+    'ஆபத்து': '#7a0404',             // Dark Red
     'ஏமாற்றம்': '#000000'            // Black
 };
 
