@@ -184,16 +184,16 @@
                 <form class="border p-4 rounded">
                     <div class="form-row mb-3">
                         <div class="form-group col">
-                            <label for="startNumber">Start Number:</label>
+                            <label for="startNumber">Start No:</label>
                             <input type="text" class="form-control" id="startNumber" maxlength="4" required placeholder="Enter start number" oninput="validateNumber(this, 4, 'maxNumber')">
                         </div>
                         <div class="form-group col">
-                            <label for="maxNumber">Max Number:</label>
+                            <label for="maxNumber">End No:</label>
                             <input type="text" class="form-control" id="maxNumber" maxlength="4" required placeholder="Enter max number" oninput="validateNumber(this, 4, 'sumDigits')">
                         </div>
                     </div>
                     <div class="form-group mb-3">
-                        <label for="sumDigits">Sum:</label>
+                        <label for="sumDigits">Total (1-9):</label>
                         <input type="text" class="form-control" id="sumDigits" maxlength="1" required placeholder="Enter sum" oninput="validateNumber(this, 1, 'rangecal')">
                     </div>
                     <div class="form-row">
@@ -218,27 +218,33 @@
 
 <section id="fullno" style="display: none;">
     <div class="container mt-5">
-        <h1 class="display-4 text-center mb-4">Choice Finder</h1>
+        <h1 class="display-4 text-center mb-4">Full Number</h1>
         <div class="row">
             <!-- Form Column (Left) -->
             <div class="col-lg-6 col-md-12">
                 <form id="fullNoForm" class="border p-4 rounded" style="border-color: #007bff; border-width: 2px;">
                     <div class="form-group mb-3">
-                        <label for="userChars">TN52</label>
-                        <input type="text" class="form-control" id="userChars" name="userChars" maxlength="2" required pattern="[A-Za-z]{2}" style="font-size: 1.25rem;" >
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">TN 52</span>
+                            </div>
+                            <input type="text" class="form-control" id="userChars" name="userChars" maxlength="2" required pattern="[A-Za-z]{2}" style="font-size: 1.25rem;" >
+                        </div>
                     </div>
+                    
+                    
                     <div class="form-row mb-3">
                         <div class="form-group col-md-6">
-                            <label for="minValue">Enter Min Value:</label>
+                            <label for="minValue">Start No:</label>
                             <input type="text" class="form-control" id="minValue" name="minValue" maxlength="4" required pattern="[0-9]{4}" style="font-size: 1.25rem;" oninput="handleInput(this, 'maxValue')">
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="maxValue">Enter Max Value:</label>
+                            <label for="maxValue">End No:</label>
                             <input type="text" class="form-control" id="maxValue" name="maxValue" maxlength="4" required pattern="[0-9]{4}" style="font-size: 1.25rem;" oninput="handleInput(this,'userNumber')">
                         </div>
                     </div>
                     <div class="form-group mb-3">
-                        <label for="userNumber">Enter a number (1-9):</label>
+                        <label for="userNumber">Total (1-9):</label>
                         <input type="text" class="form-control" id="userNumber" name="userNumber" maxlength="1" required style="font-size: 1.25rem;" oninput="handleInput(this,'fullcal')">
                     </div>
                     <div class="form-row mb-3">
@@ -282,35 +288,35 @@
                         </div>
                         <div class="form-group col">
                             <label for="fourthInput">Fourth:</label>
-                            <input type="text" class="form-control" id="fourthInput" maxlength="1">
+                            <input type="text" class="form-control" id="fourthInput" maxlength="1" oninput="handleInput(this,'startRange')">
                         </div>
                     </div>
                     <div class="form-row mb-3">
                         <div class="form-group col">
-                            <label for="sumInput">Sum Criteria (1-9):</label>
-                            <input type="text" class="form-control" id="sumInput" maxlength="1"  oninput="handleInput(this,'startRange')">
-                        </div>
-                    </div>
-                    <div class="form-row mb-3">
-                        <div class="form-group col">
-                            <label for="startRange">Start Range:</label>
+                            <label for="startRange">Start No :</label>
                             <input type="text" class="form-control" id="startRange" maxlength="4" oninput="handleInput(this, 'endRange')">
                         </div>
                         <div class="form-group col">
-                            <label for="endRange">End Range:</label>
-                            <input type="text" class="form-control" id="endRange" maxlength="4"  oninput="handleInput(this, 'desiredcal')">
+                            <label for="endRange">End No :</label>
+                            <input type="text" class="form-control" id="endRange" maxlength="4"  oninput="handleInput(this, 'sumInput')">
                         </div>
                     </div>
+                    <div class="form-row mb-3">
+                        <div class="form-group col">
+                            <label for="sumInput">Total (1-9) :</label>
+                            <input type="text" class="form-control" id="sumInput" maxlength="1"  oninput="handleInput(this,'desiredcal')">
+                        </div>
+                    </div>
+                   
                     <div class="form-row mb-3">
                         <div class="form-group col text-center">
                             <button type="button" class="btn btn-primary" id="desiredcal" onclick="generateNumbers()">Generate Numbers</button>
                         </div>
-                    </div>
-                    <div class="form-row">
                         <div class="form-group col text-center">
                             <button type="button" class="btn btn-secondary btn-block printButton" onclick="printNumbers()">Print</button>
                         </div>
                     </div>
+                  
                 </form>
             </div>
             <div class="col-md">

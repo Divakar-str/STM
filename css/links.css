@@ -1,5 +1,3 @@
-
-
 /* Center-align text inside the container */
 .text-center {
     text-align: center;
@@ -25,7 +23,6 @@
     margin: 0; /* Reset margin */
 }
 
-
 /* Row and Column styling */
 .row {
     display: flex;
@@ -48,7 +45,6 @@
     border-radius: 15px !important;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
     transition: transform 0.3s, box-shadow 0.3s !important;
-    
     height: 100% !important;
 }
 
@@ -85,6 +81,7 @@
 
 .custom-links li {
     margin: 1rem 0 !important;
+    position: relative !important; /* Ensure dropdown positioning works */
 }
 
 /* Custom link styling */
@@ -93,7 +90,7 @@
     align-items: center !important; /* Align items (icon and text) vertically */
     padding: 1rem 1.25rem !important;
     border-radius: 5px !important;
-    color: #fff !important;
+    color: #fff ;
     text-decoration: none !important;
     font-weight: bold !important;
     transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s !important;
@@ -143,6 +140,41 @@
     margin-right: 10px !important; /* Space between icon and text */
 }
 
+/* Dropdown menu styling */
+.dropdown-menu {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 0.5rem;
+    box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Ensure dropdown is above other content */
+    position: absolute;
+    top: 100%; /* Position dropdown below the link */
+    left: 0;
+    display: none; /* Hide dropdown by default */
+    width: 100%; /* Make dropdown width match the link */
+}
+
+.custom-links li:hover .dropdown-menu,
+.custom-links li:focus-within .dropdown-menu {
+    display: block; /* Show dropdown on hover or focus */
+}
+
+/* Dropdown item styling */
+.dropdown-item {
+    display: block;
+    padding: 0.25rem 0.5rem;
+    color: #333 !important; /* Ensure dropdown text is visible */
+    text-decoration: none;
+    font-size: 0.875rem; /* Adjust font size to match overall design */
+}
+
+
+
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+}
+
 /* Media queries for responsiveness */
 @media (max-width: 768px) {
     .container {
@@ -166,6 +198,12 @@
         padding: 0.75rem 1rem !important;
         font-size: 0.9rem !important;
     }
+
+    /* Dropdown menu adjustments for mobile */
+    .dropdown-menu {
+        position: relative;
+        width: 100%;
+    }
 }
 
 @media (max-width: 480px) {
@@ -186,8 +224,13 @@
     .custom-links i {
         margin-right: 5px !important;
     }
-}
 
+    /* Dropdown menu adjustments for smaller screens */
+    .dropdown-menu {
+        position: relative;
+        width: 100%;
+    }
+}
 
 /* Media queries for responsiveness */
 @media (max-width: 768px) {
