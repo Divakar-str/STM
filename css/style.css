@@ -144,6 +144,12 @@ section {
 
 .active {
   color: #ffcc00 !important;
+  text-shadow:
+  0.5px 1px 0 #2c2d59,  
+  -1px -1px 0 #2c2d59,  
+  0.5px -1px 0 #2c2d59,  
+  -1px 1px 0 #2c2d59;
+
 }
 
 
