@@ -54,6 +54,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="#desired" style="color: #333;">Desired</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#sumMatchingSection" style="color: #333;">Sum Desired</a>
+            </li>
         </ul>
     </div>
 </nav>
@@ -325,10 +328,66 @@
         </div>
     </div>
 </section>
-
-        
-        
+ 
     </div>
+
+    <section id="sumMatchingSection"  style="display: none;">
+        <div class="container-fluid mt-5">
+       
+        <div class="row">
+            <!-- Form Column (Left) -->
+            <div class="col-md-4">
+                <form id="sumMatchingForm" class="border p-4 rounded" style="border-color: #007bff; border-width: 2px;">
+                    <div class="form-group mb-3">
+                        <label for="prefixInput">Prefix (e.g., TN52):</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <input type="text" class="form-control" id="prefixInput" name="prefixInput" value="TN52"  style="font-size: 1.25rem; text-transform: uppercase;" disabled>
+                            </div>
+                            <input type="text" class="form-control" id="additionalPrefixInput" name="additionalPrefixInput" maxlength="2" required pattern="[A-Za-z]{2}" style="font-size: 1.25rem; text-transform: uppercase;" required>
+                        </div>
+                    </div>
+    
+                    <div class="form-group mb-3">
+                        <label for="minValueInput">Min Value:</label>
+                        <input type="number" class="form-control" id="minValueInput" name="minValueInput"    maxlength="4" required pattern="[0-9]{4}" style="font-size: 1.25rem;" oninput="handleInput(this, 'maxValueInput')" required>
+                    </div>
+    
+                    <div class="form-group mb-3">
+                        <label for="maxValueInput">Max Value:</label>
+                        <input type="number" class="form-control" id="maxValueInput" name="maxValueInput"   maxlength="4" required pattern="[0-9]{4}" style="font-size: 1.25rem;" oninput="handleInput(this,'listSelector')"required>
+                    </div>
+    
+                    <div class="form-group mb-3">
+                        <label for="listSelector">Select List:</label>
+                        <select id="listSelector" name="listSelector" class="form-control" required>
+                            <option value="athirstam">Athirstam</option>
+                            <option value="migaathirstam">Migaathirstam</option>
+                            <option value="thuraathirstam">Thuraathirstam</option>
+                            <option value="aathiryaialipathu">Aathiryaialipathu</option>
+                            <option value="sothanai">Sothanai</option>
+                            <option value="sumar">Sumar</option>
+                            <option value="aapathu">Aapathu</option>
+                            <option value="aamatram">Aamatram</option>
+                        </select>
+                    </div>
+                    <div class="form-row mb-3">
+                        <div class="form-group col text-center">
+                            <button type="button" class="btn btn-primary btn-block" onclick="processSumMatching()">Find Matches</button>
+                        </div>
+                        <div class="form-group col text-center">
+                            <button type="button" class="btn btn-secondary btn-block printButton" onclick="printNumbersfull()">Print</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- Results Column (Right) -->
+            <div id="resultColumn" class="col-md">
+                <div id="outputResults" class="output-container mt-4 row"></div>
+            </div>
+        </div>
+    </div>
+    </section>
 
 
     <script src="js/script.js"></script>
@@ -352,6 +411,7 @@
     <script src="js/range.js"></script>
     <script src="js/fullno.js"></script>
     <script src="js/desired.js"></script>
+    <script src="js/sumfull.js"></script>
 
 </body>
 <footer class="bg-dark text-white text-center py-3">
