@@ -12,7 +12,9 @@ section {
  
 }
 
-
+.min-size{
+  font-size:medium  !important;
+}
 
 /* Container for output numbers */
 .output-container {
@@ -30,7 +32,7 @@ section {
   align-items: center;
   min-width: 103px; /* Minimum width to ensure numbers are visible */
   height: 40px; /* Adjust height as needed */
-  border: 1px solid #ddd;
+  border: 1px solid #454545;
   border-radius: 5px;
   padding: 10px; /* Ensure text fits within the box */
   box-sizing: border-box; /* Ensure padding and border are included in the total width and height */
@@ -38,7 +40,12 @@ section {
   overflow: hidden; /* Ensure text does not overflow */
   white-space: nowrap; /* Prevent text from wrapping */
   text-overflow: ellipsis; /* Add ellipsis if text overflows */
+  font-size: x-large;
+font-family: sans-serif
+
 }
+
+
 
 /* Responsive grid for numbers */
 @media (min-width: 1200px) {

@@ -40,7 +40,7 @@ function generate() {
                 if (userNumber === codeValue) {
                     let matchedCodeGenerated = `TN52${userChars}${i}`;
                     const outputSpan = document.createElement('span');
-                    outputSpan.className = 'col-md-2 code-container output-number'; 
+                    outputSpan.className = 'col-md-2 code-container output-number min-size'; 
                     var bgColor = fancy.includes(i) ? '#FFD700' : '#FFFFFF';
                     outputSpan.textContent = matchedCodeGenerated;
                     outputSpan.style.backgroundColor = bgColor;
@@ -90,26 +90,63 @@ function printResults() {
     printWindow.document.write('<style>');
     
     // Default styles for the output container
-    printWindow.document.write('.output-container { border: 1px solid #ccc; padding: 20px; display: grid; grid-gap: 10px; }');
-    printWindow.document.write('.output-number { padding: 5px; text-align: center; border: 1px solid #ddd; background-color: #FFFFFF; box-sizing: border-box; }');
-    
-    // Responsive layout
-    printWindow.document.write('@media (min-width: 1200px) { .output-container { grid-template-columns: repeat(6, 1fr); } }');
-    printWindow.document.write('@media (min-width: 992px) and (max-width: 1199px) { .output-container { grid-template-columns: repeat(5, 1fr); } }');
-    printWindow.document.write('@media (min-width: 768px) and (max-width: 991px) { .output-container { grid-template-columns: repeat(4, 1fr); } }');
-    printWindow.document.write('@media (max-width: 767px) { .output-container { grid-template-columns: repeat(2, 1fr); } }');
-    
-    // Print-specific styles to ensure 6 columns
-    printWindow.document.write('@media print {');
-    printWindow.document.write('.output-container { grid-template-columns: repeat(6, 1fr) !important; grid-gap: 5px; }');
-    printWindow.document.write('.output-number { -webkit-print-color-adjust: exact; print-color-adjust: exact; font-weight: bolder; }');
-    printWindow.document.write('}');
+    printWindow.document.write(`
+        .output-container {
+            border: 1px solid #ccc;
+            padding: 20px;
+            display: grid;
+            grid-gap: 10px;
+            background-color: #f2f2f2;
+        }
+
+        .output-number {
+            padding: 5px;
+            text-align: center;
+            border: 1px solid #ddd;
+            background-color: #FFFFFF;
+            box-sizing: border-box;
+            font-size: large;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 40px;
+            min-width: 103px;
+            border-radius: 5px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        /* Responsive layout */
+        @media (min-width: 1200px) { .output-container { grid-template-columns: repeat(6, 1fr); } }
+        @media (min-width: 992px) and (max-width: 1199px) { .output-container { grid-template-columns: repeat(5, 1fr); } }
+        @media (min-width: 768px) and (max-width: 991px) { .output-container { grid-template-columns: repeat(4, 1fr); } }
+        @media (max-width: 767px) { .output-container { grid-template-columns: repeat(2, 1fr); } }
+
+        /* Print-specific styles to ensure A4 layout and 6 columns */
+        @media print {
+            @page {
+                size: A4;
+                margin: 10mm;
+            }
+            .output-container {
+                grid-template-columns: repeat(6, 1fr) !important;
+                grid-gap: 5px;
+            }
+            .output-number {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                font-weight: bolder;
+            }
+        }
+    `);
+
     printWindow.document.write('</style>');
     printWindow.document.write('</head><body>');
     printWindow.document.write('<div class="container"><div class="output-container">' + output + '</div></div>');
     printWindow.document.write('</body></html>');
     printWindow.document.close();
     
-   
     printWindow.print();
 }
+
