@@ -41,7 +41,7 @@ section {
   white-space: nowrap; /* Prevent text from wrapping */
   text-overflow: ellipsis; /* Add ellipsis if text overflows */
   font-size: x-large;
-font-family: sans-serif
+font-family: sans-serif;
 
 
 }
