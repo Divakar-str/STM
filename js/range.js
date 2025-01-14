@@ -74,6 +74,7 @@ function printResult() {
           display: grid;
           gap: 5px;
           overflow: hidden;
+          border: 1px solid #4545;
         }
 
         /* Style for each number box */

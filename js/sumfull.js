@@ -79,13 +79,7 @@ function processSumMatching() {
         }
     }
 
-    if (matchCount === 0) {
-        outputContainer.innerText = `No matches found.\n\nTotal Sum: ${predefinedSum}`;
-    } else {
-        const totalMatches = document.createElement('div');
-        totalMatches.innerText = `Total matches: ${matchCount}`;
-        outputContainer.appendChild(totalMatches);
-    }
+    
 }
 
 
@@ -126,7 +120,7 @@ function printNumbersfull() {
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
-            font-size: large;
+            font-size: 22px;
         }
 
         /* Responsive grid layout */

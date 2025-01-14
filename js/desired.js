@@ -93,7 +93,7 @@ function displayNumbers(numbers) {
   output.innerHTML = html;
 }
 
-function moveFocus(currentInput, nextInput, prevInput = null) {
+function moveFocuss(currentInput, nextInput, prevInput = null) {
   currentInput.addEventListener('input', function(event) {
       if (currentInput.value.length > 0) {
           nextInput.focus();

@@ -92,29 +92,32 @@ function printResults() {
     // Default styles for the output container
     printWindow.document.write(`
         .output-container {
-            border: 1px solid #ccc;
+            border: 1px solid #4545;
             padding: 20px;
             display: grid;
-            grid-gap: 10px;
+            grid-gap: 11px;
             background-color: #f2f2f2;
         }
 
         .output-number {
-            padding: 5px;
+            padding: 6px ;
             text-align: center;
-            border: 1px solid #ddd;
+            border: 1px solid #4545;
             background-color: #FFFFFF;
             box-sizing: border-box;
-            font-size: large;
+            font-size: 22px;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 40px;
+            height: 45px;
             min-width: 103px;
             border-radius: 5px;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
+            margin:3px;
+           
+            
         }
 
         /* Responsive layout */
