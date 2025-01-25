@@ -12,6 +12,7 @@ const charToNumberMapping = {
   'F': 8, 'P': 8
 };
 
+
     const migaathirstam= [19,23,37,41,45];
     const athirstam = [1,3,5,6,9,10,14,15,16,18,21,23,24,27,32,33,36,42,46,50,51];
     const thuraathirstam= [4,7,8,11,13,17,22,28,31,40,49,58];
@@ -270,3 +271,7 @@ const charHeaderRow = document.querySelector('#charHeaderRow');
             numberCategoryTableBody.appendChild(row);
         });
 
+
+        $(document).ready(function() {
+          $('[data-toggle="tooltip"]').tooltip(); // Initialize the tooltip
+      });
