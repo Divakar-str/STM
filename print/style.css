@@ -1,0 +1,123 @@
+body {
+    background: #f8f9fa;
+    font-family: 'Arial', sans-serif;
+}
+
+h2 {
+    font-size: 26px;
+    color: #0d6efd;
+    text-transform: uppercase;
+}
+
+.canvas-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px dashed #0d6efd;
+    background: white;
+    width: 100%;
+    height: 350px;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.canvas-container:hover {
+    border-color: #0b5ed7;
+}
+
+.canvas-container {
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    transition: all 0.3s ease-in-out;
+}
+
+.canvas-container:hover {
+    border-color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+
+.upload-label {
+    position: absolute;
+    font-size: 18px;
+    color: #0d6efd;
+    text-align: center;
+    cursor: pointer;
+}
+
+.image-display {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.btn {
+    margin: 5px;
+    font-weight: bold;
+}
+
+.id-copy-container {
+    display: none;
+    max-width: 1100px;
+}
+
+.full-page-container, .id-copy-container {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    .print-container, .print-container * {
+        visibility: visible;
+    }
+    .print-container {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .print-container img {
+        max-width: 100%;
+        height: auto;
+        margin-bottom: 10px;
+    }
+}
+
+
+@media print {
+    body {
+        background: none;
+    }
+    .id-copy-container {
+        width: 100%;
+        max-width: 900px;
+        margin: auto;
+    }
+    .canvas-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .canvas-container img {
+        max-width: 48%;
+        height: auto;
+        page-break-inside: avoid;
+    }
+}
+
+

@@ -73,6 +73,13 @@ const cardData = [
             { url: "https://mail.yahoo.com/", text: "Yahoo", class: "link-danger", icon: "fas fa-envelope-open" },
             { url: "https://mail.protonmail.com/login", text: "Proton", class: "link-info", icon: "fas fa-envelope-square" }
         ]
+    },
+
+    {
+        title:"Tools",
+        links:[
+            {url:"../print/print.html",text:"print",class: "link-primary", icon: "fas fa-print"}
+        ]
     }
 ];
 
