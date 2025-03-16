@@ -18,7 +18,7 @@
 
     <!-- Full Page Mode -->
     <div class="full-page-container mt-4">
-        <div class="card p-3 shadow">
+      
             <div class="canvas-container text-center" id="canvas-container-main">
                 <input type="file" id="uploadImage" class="d-none" accept="image/*" onchange="loadImage(event, 'image')">
                 <label for="uploadImage" class="upload-label btn btn-outline-primary">Upload Image</label>
@@ -28,10 +28,10 @@
                 <button class="btn btn-success" onclick="cropImage('image')">Crop</button>
                 <button class="btn btn-warning" onclick="rotateImage('image')">Rotate</button>
                 <button class="btn btn-danger" onclick="resetImage('image')">Reset</button>
-                <button class="btn btn-primary" onclick="saveImage('image')">Save</button>
+                <button class="btn btn-primary" onclick="saveFull('image')">Save</button>
                 <button class="btn btn-secondary" onclick="printFullPage('image')">Print</button>
             </div>
-        </div>
+        
     </div>
 
     <!-- ID Copy Mode -->
@@ -67,7 +67,7 @@
             </div>
         </div>
         <div class="text-center mt-4">
-            <button class="btn btn-primary" onclick="saveImage('imageFront', 'imageBack')">Save Both</button>
+            <button class="btn btn-primary" onclick="saveIDCopy('imageFront', 'imageBack')">Save Both</button>
             <button class="btn btn-secondary" onclick="printIDCopy('imageFront', 'imageBack')">Print Both</button>
         </div>
     </div>

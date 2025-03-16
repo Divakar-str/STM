@@ -72,6 +72,24 @@ h2 {
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
 }
 
+/* Make the crop box handles (edges and corners) bigger and more visible */
+.cropper-point {
+    width: 15px;  /* Increase width */
+    height: 15px; /* Increase height */
+    background-color: rgba(255, 255, 255, 0.9); /* Optional: lighter for visibility */
+    border: 2px solid #333; /* Dark border for contrast */
+    box-sizing: border-box;
+    border-radius: 2px; /* Optional: slightly rounded */
+}
+
+/* Optional: Increase the clickable line for edges */
+.cropper-line {
+    width: 18px; /* Make edge lines thicker for easier grabbing */
+    height: 8px;
+    background-color: rgb(0, 138, 236); /* Optional: visible color */
+    box-sizing: border-box;
+}
+
 
 @media print {
     body * {
