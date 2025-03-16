@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PDF to Image Converter (Enhanced)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .converter-card {
+      max-width: 960px;
+      margin: 40px auto;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .drop-zone {
+      border: 2px dashed #ccc;
+      padding: 40px;
+      text-align: center;
+      color: #777;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .drop-zone.dragover {
+      background-color: #e9f7fe;
+      border-color: #007bff;
+      color: #007bff;
+    }
+    .canvas-wrapper {
+      margin-bottom: 30px;
+      padding: 10px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      position: relative;
+    }
+    .canvas-wrapper canvas {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .download-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="card converter-card">
+      <h3 class="text-center mb-4">PDF to Image Converter (JPEG)</h3>
+
+      <!-- Drop zone -->
+      <div id="dropZone" class="drop-zone mb-4">📂 Drag & Drop PDF here or Click to Upload
+        <input type="file" id="pdfFile" accept="application/pdf" hidden>
+      </div>
+
+      <!-- Options -->
+      <div class="mb-3">
+        <label for="qualitySelect" class="form-label">Select Quality/Scale:</label>
+        <select id="qualitySelect" class="form-select">
+          <option value="1.0">Low Quality (Fast)</option>
+          <option value="1.5" >Medium Quality</option>
+          <option value="2.0" selected>High Quality (Slow)</option>
+        </select>
+      </div>
+
+      <!-- Action buttons -->
+      <div class="d-flex justify-content-center gap-3 mb-4">
+        <button id="previewBtn" class="btn btn-outline-primary">Preview</button>
+        <button id="convertBtn" class="btn btn-primary">Convert to JPEG</button>
+      </div>
+
+      <!-- Progress indicator -->
+      <div id="loadingSpinner" class="text-center my-3 d-none">
+        <div class="spinner-border text-primary" role="status"></div>
+        <p>Processing PDF, please wait...</p>
+      </div>
+
+      <!-- Output -->
+      <h5 id="outputTitle" class="d-none text-center my-4">PDF Pages:</h5>
+      <div id="previewContainer" class="preview-container d-none"></div>
+
+      <!-- Pagination (Lazy Load) -->
+      <div id="paginationControls" class="d-none text-center my-4">
+        <button id="loadMoreBtn" class="btn btn-secondary">Load More Pages</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const dropZone = document.getElementById('dropZone');
+    const pdfFile = document.getElementById('pdfFile');
+    const previewBtn = document.getElementById('previewBtn');
+    const convertBtn = document.getElementById('convertBtn');
+    const previewContainer = document.getElementById('previewContainer');
+    const outputTitle = document.getElementById('outputTitle');
+    const loadingSpinner = document.getElementById('loadingSpinner');
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+    const paginationControls = document.getElementById('paginationControls');
+    const qualitySelect = document.getElementById('qualitySelect');
+    let selectedFile = null, pdfDoc = null, currentPage = 0, allowDownload = false;
+
+    // Drag & Drop Handling
+    dropZone.addEventListener('click', () => pdfFile.click());
+    dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+    dropZone.addEventListener('drop', (e) => { e.preventDefault(); dropZone.classList.remove('dragover'); handleFile(e.dataTransfer.files[0]); });
+    pdfFile.addEventListener('change', (e) => handleFile(e.target.files[0]));
+
+    function handleFile(file) {
+      if (file && file.type === 'application/pdf') {
+        selectedFile = file;
+        dropZone.innerHTML = `<strong>📄 ${file.name}</strong>`;
+      } else {
+        alert('Please upload a valid PDF!');
+        resetFileSelection();
+      }
+    }
+
+    function resetFileSelection() {
+      selectedFile = null;
+      dropZone.innerHTML = '📂 Drag & Drop PDF here or Click to Upload';
+    }
+
+    // Rendering Function with Lazy Loading
+    async function renderPDF(lazyLoad = false) {
+      const scale = parseFloat(qualitySelect.value);
+      loadingSpinner.classList.remove('d-none');
+      previewContainer.innerHTML = '';
+      previewContainer.classList.add('d-none');
+      outputTitle.classList.add('d-none');
+      paginationControls.classList.add('d-none');
+      currentPage = 0;
+
+      try {
+        const typedarray = new Uint8Array(await selectedFile.arrayBuffer());
+        pdfDoc = await pdfjsLib.getDocument(typedarray).promise;
+        allowDownload = (lazyLoad === 'convert');
+        previewContainer.classList.remove('d-none');
+        outputTitle.classList.remove('d-none');
+        loadPages(scale, 5); // Load first 5 pages
+        paginationControls.classList.remove('d-none');
+      } catch (err) {
+        alert('Failed to load PDF: ' + err.message);
+      } finally {
+        loadingSpinner.classList.add('d-none');
+      }
+    }
+
+    // Load specified number of pages
+    async function loadPages(scale, count) {
+      for (let i = 0; i < count && currentPage < pdfDoc.numPages; i++) {
+        currentPage++;
+        const page = await pdfDoc.getPage(currentPage);
+        const viewport = page.getViewport({ scale });
+        const canvas = document.createElement('canvas');
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+        const context = canvas.getContext('2d');
+        await page.render({ canvasContext: context, viewport }).promise;
+
+        const wrapper = document.createElement('div');
+        wrapper.classList.add('canvas-wrapper');
+        wrapper.appendChild(canvas);
+
+        if (allowDownload) {
+          const link = document.createElement('a');
+          link.textContent = 'Download JPEG';
+          link.href = canvas.toDataURL('image/jpeg', 0.95);
+          link.download = `Page-${currentPage}.jpeg`;
+          link.classList.add('btn', 'btn-success', 'download-btn');
+          wrapper.appendChild(link);
+        }
+        previewContainer.appendChild(wrapper);
+      }
+      if (currentPage >= pdfDoc.numPages) paginationControls.classList.add('d-none');
+    }
+
+    // Button Actions
+    previewBtn.addEventListener('click', () => selectedFile ? renderPDF(false) : alert('Please select a PDF!'));
+    convertBtn.addEventListener('click', () => selectedFile ? renderPDF('convert') : alert('Please select a PDF!'));
+    loadMoreBtn.addEventListener('click', () => loadPages(parseFloat(qualitySelect.value), 5));
+
+  </script>
+</body>
+</html>
