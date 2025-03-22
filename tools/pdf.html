@@ -2,53 +2,20 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>PDF to Image Converter (Enhanced)</title>
+  <title>PDF to Image</title>
+  <link rel="icon" type="image/x-icon" href="/images/png logo.png">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <style>
-    body {
-      background-color: #f8f9fa;
-    }
-    .converter-card {
-      max-width: 960px;
-      margin: 40px auto;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    .drop-zone {
-      border: 2px dashed #ccc;
-      padding: 40px;
-      text-align: center;
-      color: #777;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-    .drop-zone.dragover {
-      background-color: #e9f7fe;
-      border-color: #007bff;
-      color: #007bff;
-    }
-    .canvas-wrapper {
-      margin-bottom: 30px;
-      padding: 10px;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      position: relative;
-    }
-    .canvas-wrapper canvas {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-    .download-btn {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-    }
+    body { background-color: #f8f9fa; }
+    .converter-card { max-width: 960px; margin: 40px auto; padding: 30px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .drop-zone { border: 2px dashed #ccc; padding: 40px; text-align: center; color: #777; border-radius: 12px; cursor: pointer; transition: all 0.3s; }
+    .drop-zone.dragover { background-color: #e9f7fe; border-color: #007bff; color: #007bff; }
+    .canvas-wrapper { margin-bottom: 20px; padding: 10px; background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); position: relative; }
+    .canvas-wrapper canvas { width: 100%; height: auto; display: block; }
+    .action-buttons { position: absolute; top: 10px; right: 10px; display: flex; gap: 5px; }
+    .action-buttons button, .action-buttons a { font-size: 12px; padding: 5px 8px; }
   </style>
 </head>
 <body>
@@ -67,7 +34,7 @@
         <label for="qualitySelect" class="form-label">Select Quality/Scale:</label>
         <select id="qualitySelect" class="form-select">
           <option value="1.0">Low Quality (Fast)</option>
-          <option value="1.5" >Medium Quality</option>
+          <option value="1.5">Medium Quality</option>
           <option value="2.0" selected>High Quality (Slow)</option>
         </select>
       </div>
@@ -106,6 +73,7 @@
     const loadMoreBtn = document.getElementById('loadMoreBtn');
     const paginationControls = document.getElementById('paginationControls');
     const qualitySelect = document.getElementById('qualitySelect');
+
     let selectedFile = null, pdfDoc = null, currentPage = 0, allowDownload = false;
 
     // Drag & Drop Handling
@@ -129,66 +97,77 @@
       selectedFile = null;
       dropZone.innerHTML = '📂 Drag & Drop PDF here or Click to Upload';
     }
+    async function renderPDF(mode) {
+        const scale = parseFloat(qualitySelect.value);
+        loadingSpinner.classList.remove('d-none');
+        previewContainer.innerHTML = '';
+        previewContainer.classList.add('d-none');
+        outputTitle.classList.add('d-none');
+        paginationControls.classList.add('d-none');
+        currentPage = 0;
+        allowDownload = (mode === 'convert');
 
-    // Rendering Function with Lazy Loading
-    async function renderPDF(lazyLoad = false) {
-      const scale = parseFloat(qualitySelect.value);
-      loadingSpinner.classList.remove('d-none');
-      previewContainer.innerHTML = '';
-      previewContainer.classList.add('d-none');
-      outputTitle.classList.add('d-none');
-      paginationControls.classList.add('d-none');
-      currentPage = 0;
-
-      try {
-        const typedarray = new Uint8Array(await selectedFile.arrayBuffer());
-        pdfDoc = await pdfjsLib.getDocument(typedarray).promise;
-        allowDownload = (lazyLoad === 'convert');
-        previewContainer.classList.remove('d-none');
-        outputTitle.classList.remove('d-none');
-        loadPages(scale, 5); // Load first 5 pages
-        paginationControls.classList.remove('d-none');
-      } catch (err) {
-        alert('Failed to load PDF: ' + err.message);
-      } finally {
-        loadingSpinner.classList.add('d-none');
-      }
-    }
-
-    // Load specified number of pages
-    async function loadPages(scale, count) {
-      for (let i = 0; i < count && currentPage < pdfDoc.numPages; i++) {
-        currentPage++;
-        const page = await pdfDoc.getPage(currentPage);
-        const viewport = page.getViewport({ scale });
-        const canvas = document.createElement('canvas');
-        canvas.width = viewport.width;
-        canvas.height = viewport.height;
-        const context = canvas.getContext('2d');
-        await page.render({ canvasContext: context, viewport }).promise;
-
-        const wrapper = document.createElement('div');
-        wrapper.classList.add('canvas-wrapper');
-        wrapper.appendChild(canvas);
-
-        if (allowDownload) {
-          const link = document.createElement('a');
-          link.textContent = 'Download JPEG';
-          link.href = canvas.toDataURL('image/jpeg', 0.95);
-          link.download = `Page-${currentPage}.jpeg`;
-          link.classList.add('btn', 'btn-success', 'download-btn');
-          wrapper.appendChild(link);
+        try {
+            const typedarray = new Uint8Array(await selectedFile.arrayBuffer());
+            pdfDoc = await pdfjsLib.getDocument(typedarray).promise;
+            previewContainer.classList.remove('d-none');
+            outputTitle.classList.remove('d-none');
+            loadPages(scale, 5);
+            paginationControls.classList.remove('d-none');
+        } catch (err) {
+            alert('Failed to load PDF: ' + err.message);
+        } finally {
+            loadingSpinner.classList.add('d-none');
         }
-        previewContainer.appendChild(wrapper);
-      }
-      if (currentPage >= pdfDoc.numPages) paginationControls.classList.add('d-none');
     }
 
-    // Button Actions
-    previewBtn.addEventListener('click', () => selectedFile ? renderPDF(false) : alert('Please select a PDF!'));
-    convertBtn.addEventListener('click', () => selectedFile ? renderPDF('convert') : alert('Please select a PDF!'));
-    loadMoreBtn.addEventListener('click', () => loadPages(parseFloat(qualitySelect.value), 5));
+    async function loadPages(scale, count) {
+        const baseFileName = selectedFile.name.replace(/\.[^/.]+$/, ""); // Get PDF name without extension
 
+        for (let i = 0; i < count && currentPage < pdfDoc.numPages; i++) {
+            currentPage++;
+            const page = await pdfDoc.getPage(currentPage);
+            const viewport = page.getViewport({ scale });
+            const canvas = document.createElement('canvas');
+            canvas.width = viewport.width;
+            canvas.height = viewport.height;
+            const context = canvas.getContext('2d');
+            await page.render({ canvasContext: context, viewport }).promise;
+
+            const wrapper = document.createElement('div');
+            wrapper.classList.add('canvas-wrapper');
+            wrapper.appendChild(canvas);
+
+            // Action Buttons
+            const actionButtons = document.createElement('div');
+            actionButtons.classList.add('action-buttons');
+
+            // Download Button
+            const downloadBtn = document.createElement('a');
+            downloadBtn.textContent = 'Download';
+            downloadBtn.classList.add('btn', 'btn-success', 'btn-sm');
+            downloadBtn.href = canvas.toDataURL('image/jpeg', 0.95);
+            downloadBtn.download = `${baseFileName}_page${currentPage}.jpg`; // Updated file name
+
+            // Copy Button
+            const copyBtn = document.createElement('button');
+            copyBtn.textContent = 'Copy Image';
+            copyBtn.classList.add('btn', 'btn-warning', 'btn-sm');
+            copyBtn.onclick = async () => {
+                const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+                await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+                alert('Image copied to clipboard!');
+            };
+
+            actionButtons.append(downloadBtn, copyBtn);
+            wrapper.append(actionButtons);
+            previewContainer.append(wrapper);
+        }
+    }
+    previewBtn.onclick = () => selectedFile ? renderPDF(false) : alert('Please select a PDF!');
+    convertBtn.onclick = () => selectedFile ? renderPDF('convert') : alert('Please select a PDF!');
+    loadMoreBtn.onclick = () => loadPages(parseFloat(qualitySelect.value), 5);
   </script>
+
 </body>
 </html>

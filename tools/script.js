@@ -194,7 +194,7 @@ function cropImage(imgId) {
             canvas.height = img.height;
             ctx.drawImage(img, 0, 0);
     
-            const jpegData = canvas.toDataURL("image/jpeg", 1.0); // High quality JPEG
+            const jpegData = canvas.toDataURL("image/jpeg", 0.6); 
     
             // ✅ Generate random number between 1 and 9999
             const randomNum = Math.floor(Math.random() * 9999) + 1;
@@ -280,7 +280,7 @@ function cropImage(imgId) {
                 }
     
                 // Export as JPEG
-                const finalImage = canvas.toDataURL("image/jpeg", 1.0); // High-quality JPEG
+                const finalImage = canvas.toDataURL("image/jpeg", 0.6); // High-quality JPEG
     
                 // ✅ Generate random number for filename
                 const randomNum = Math.floor(Math.random() * 9999) + 1;

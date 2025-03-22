@@ -1,103 +1,213 @@
+/* ===================== */
+/* 🌟 Universal Styling - Soft Spacing & Layout */
+/* ===================== */
 body {
-    background: #f8f9fa;
-    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    font-family: "Inter", sans-serif;
+    color: #333;
+    padding: 20px;
 }
 
-h2 {
-    font-size: 26px;
-    color: #0d6efd;
-    text-transform: uppercase;
+/* ===================== */
+/* 🌟 Editor Container - Clean & Professional */
+/* ===================== */
+.full-page-container,
+.id-copy-container {
+    max-width: 950px;
+    margin: auto;
+    padding: 40px;
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    border: 1px solid #dee2e6;
+    transition: all 0.3s ease-in-out;
 }
 
+.id-copy-container {
+    display: none;
+}
+
+/* ===================== */
+/* 🌟 Editor Toolbars & Card Styling */
+/* ===================== */
+.card {
+    border: none;
+    border-radius: 12px;
+    background: #ffffff;
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease-in-out;
+    padding: 24px;
+    margin-bottom: 20px;
+}
+
+.card:hover {
+    box-shadow: 6px 6px 14px rgba(0, 0, 0, 0.12);
+    transform: scale(1.01);
+}
+
+/* ===================== */
+/* 🌟 Canvas Look - Soft UI with Proper Spacing */
+/* ===================== */
 .canvas-container {
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 2px dashed #0d6efd;
-    background: white;
+    border: 2px dashed rgba(13, 110, 253, 0.6);
+    background: #f8f9fa;
     width: 100%;
-    height: 350px;
+    height: 320px;
     border-radius: 12px;
     overflow: hidden;
-    transition: all 0.3s ease;
-}
-
-.canvas-container:hover {
-    border-color: #0b5ed7;
-}
-
-.canvas-container {
-    border: 2px dashed #ccc;
-    border-radius: 8px;
-    padding: 20px;
     transition: all 0.3s ease-in-out;
+    box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.05);
+    padding: 20px;
 }
 
 .canvas-container:hover {
-    border-color: #007bff;
-    background-color: rgba(0, 123, 255, 0.1);
+    border-color: #0d6efd;
 }
 
-
-.upload-label {
-    position: absolute;
-    font-size: 18px;
-    color: #0d6efd;
-    text-align: center;
-    cursor: pointer;
-}
-
+/* ===================== */
+/* 🌟 Image Display - Proper Sizing & Spacing */
+/* ===================== */
 .image-display {
     max-width: 100%;
     max-height: 100%;
     display: block;
     object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    transition: all 0.3s ease-in-out;
+    padding: 10px;
 }
 
+/* ===================== */
+/* 🌟 Upload Label - Soft Elegant Look */
+/* ===================== */
+.upload-label {
+    position: absolute;
+    font-size: 16px;
+    font-weight: 600;
+    color: #0d6efd;
+    text-align: center;
+    cursor: pointer;
+    padding: 12px 18px;
+    border-radius: 10px;
+    background: rgba(13, 110, 253, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+.upload-label:hover {
+    background: #0d6efd;
+    color: white;
+    box-shadow: 0 0 8px rgba(13, 110, 253, 0.6);
+}
+
+/* ===================== */
+/* 🌟 Buttons - Soft Gradient Look with Proper Spacing */
+/* ===================== */
 .btn {
-    margin: 5px;
     font-weight: bold;
+    padding: 14px 22px;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+    border: none;
+    margin: 8px;
 }
 
-.id-copy-container {
-    display: none;
-    max-width: 1100px;
+.btn:hover {
+    transform: scale(1.05);
 }
 
-.full-page-container, .id-copy-container {
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+/* Special Buttons */
+.btn-success {
+    background: linear-gradient(135deg, #198754, #157347);
+    color: white;
 }
 
-/* Make the crop box handles (edges and corners) bigger and more visible */
+.btn-success:hover {
+    box-shadow: 0 0 12px rgba(25, 135, 84, 0.4);
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #ffc107, #e0a800);
+    color: black;
+}
+
+.btn-warning:hover {
+    box-shadow: 0 0 12px rgba(255, 193, 7, 0.4);
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #dc3545, #bb2d3b);
+    color: white;
+}
+
+.btn-danger:hover {
+    box-shadow: 0 0 12px rgba(220, 53, 69, 0.4);
+}
+
+/* ===================== */
+/* 🌟 Cropper Handles - Refined Visibility & Spacing */
+/* ===================== */
 .cropper-point {
-    width: 15px;  /* Increase width */
-    height: 15px; /* Increase height */
-    background-color: rgba(255, 255, 255, 0.9); /* Optional: lighter for visibility */
-    border: 2px solid #333; /* Dark border for contrast */
-    box-sizing: border-box;
-    border-radius: 2px; /* Optional: slightly rounded */
+    width: 15px !important;
+    height: 15px !important;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 2px solid #333;
+    border-radius: 2px;
 }
 
-/* Optional: Increase the clickable line for edges */
 .cropper-line {
-    width: 18px; /* Make edge lines thicker for easier grabbing */
+    width: 18px;
     height: 8px;
-    background-color: rgb(0, 138, 236); /* Optional: visible color */
-    box-sizing: border-box;
+    background-color: rgba(13, 110, 253, 0.8);
 }
 
+/* ===================== */
+/* 🌟 Responsive Adjustments - Spacing & Padding Optimized */
+/* ===================== */
+@media (max-width: 768px) {
+    .full-page-container,
+    .id-copy-container {
+        padding: 30px;
+    }
 
+    .canvas-container {
+        height: 280px;
+        padding: 15px;
+    }
+
+    .card {
+        padding: 20px;
+        margin-bottom: 15px;
+    }
+
+    .upload-label {
+        font-size: 14px;
+        padding: 10px 14px;
+    }
+
+    .btn {
+        padding: 12px 18px;
+        margin: 6px;
+    }
+}
+
+/* ===================== */
+/* 🌟 Print Optimization - Clean & Aligned */
+/* ===================== */
 @media print {
     body * {
         visibility: hidden;
     }
-    .print-container, .print-container * {
+
+    .print-container,
+    .print-container * {
         visibility: visible;
     }
+
     .print-container {
         position: absolute;
         left: 0;
@@ -108,34 +218,25 @@ h2 {
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        padding: 20px;
     }
+
     .print-container img {
         max-width: 100%;
         height: auto;
-        margin-bottom: 10px;
+        margin-bottom: 12px;
     }
-}
 
-
-@media print {
-    body {
-        background: none;
-    }
     .id-copy-container {
         width: 100%;
         max-width: 900px;
         margin: auto;
+        padding: 20px;
     }
-    .canvas-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
+
     .canvas-container img {
         max-width: 48%;
         height: auto;
         page-break-inside: avoid;
     }
 }
-
-
