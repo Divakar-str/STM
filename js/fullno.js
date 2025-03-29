@@ -101,7 +101,7 @@ function printResults() {
             border: 1px solid #4545;
             background-color: #FFFFFF;
             box-sizing: border-box;
-            font-size: 22px;
+            font-size: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
