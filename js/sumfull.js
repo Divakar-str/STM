@@ -11,8 +11,8 @@ const charToNumber = {
 
 const lists = {
     'migaathirstam': [19, 23, 37, 41, 45],
-    'athirstam': [1, 3, 5, 6, 9, 10, 14, 15, 16, 18, 21, 23, 24, 27, 32, 33, 36, 42, 46, 50, 51],
-    'thuraathirstam': [4, 7, 8, 11, 13, 17, 22, 28, 31, 40, 49, 58],
+    'athirstam': [1, 3, 5, 6, 9, 10, 14, 15, 16, 18, 21, 23, 24, 27,28, 32, 33, 36, 42, 46, 50, 51],
+    'thuraathirstam': [4, 7, 8, 11, 13, 17, 22, 31, 40, 49, 58],
     'aathiryaialipathu': [20, 55],
     'sothanai': [25, 34, 43, 47],
     'sumar': [2, 12, 30, 38, 39, 48, 54, 56, 57],
@@ -50,7 +50,7 @@ function processSumMatching() {
 
     const outputContainer = document.getElementById('outputResults');
     outputContainer.innerHTML = ''; // Clear previous results
-    let matchCount = 0;
+    let matchingNumbers = [];
 
     for (let num = minValue; num <= maxValue; num++) {
         const digitSum = Array.from(num.toString()).reduce((total, digit) => total + parseInt(digit), 0);
@@ -62,90 +62,74 @@ function processSumMatching() {
         if (selectedList.includes(reducedTotalSum) && selectedList.includes(reducedDigitSum)) {
             const formattedNum = num.toString().padStart(4, '0');
             // Set background color based on whether the number is "fancy"
-            const bgColor = fancy.includes(num) ? '#FFD700' : '#FFFFFF'; // Fancy numbers get gold background
-
-            const span = document.createElement('span');
-            span.classList.add('col-md-2', 'code-container', 'output-number');
-            span.style.backgroundColor = bgColor;
-            span.innerText = `TN52AD${formattedNum}`;
-            outputContainer.appendChild(span);
-            matchCount++;
+            matchingNumbers.push({ number: `TN52AD${formattedNum}`, originalNumber: num });
         }
     }
 
-    
-}
-
-
-function printNumbersfull() {
-    var output = document.getElementById('outputResults').innerHTML;
-
-    if (!output.trim()) {
-        alert("No results to print.");
+    if (matchingNumbers.length === 0) {
+        outputContainer.innerHTML = "<p>No matching numbers found.</p>";
         return;
     }
 
-    var printWindow = window.open('', '', 'height=600,width=800');
-    printWindow.document.write('<html><head><title>Print Numbers</title>');
-    printWindow.document.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">');
-    printWindow.document.write('<style>');
-    
-    // Custom styles for the output container and number boxes
+    // Creating a structured table layout dynamically
+    let columns = Math.min(5, Math.ceil(Math.sqrt(matchingNumbers.length)));
+    let rows = Math.ceil(matchingNumbers.length / columns);
+
+    let tableHTML = "<table class='fancy-table' style='width: 100%; border-collapse: collapse;'>";
+    for (let i = 0; i < rows; i++) {
+        tableHTML += "<tr>";
+        for (let j = 0; j < columns; j++) {
+            let index = i * columns + j;
+            if (index < matchingNumbers.length) {
+                const { number, originalNumber } = matchingNumbers[index];
+                let isFancy = fancy.includes(originalNumber); // Check if it's fancy
+                tableHTML += `<td class='${isFancy ? "fancy" : ""}' style='padding: 10px; text-align: center; border: 1px solid #000;'>${number}</td>`;
+            } else {
+                tableHTML += "<td></td>";
+            }
+        }
+        tableHTML += "</tr>";
+    }
+    tableHTML += "</table>";
+
+    outputContainer.innerHTML = tableHTML;
+}
+
+
+
+
+function printNumbersfull() {
+    var resultDiv = document.getElementById('outputResults');
+
+    // Get the HTML content of the resultDiv
+    var resultHTML = resultDiv.innerHTML;
+
+    let printWindow = window.open('', '', 'height=600,width=800');
     printWindow.document.write(`
-        .output-container {
-            border: 1px solid #ccc;
-            padding: 20px;
-            display: grid;
-            grid-gap: 10px;
-            background-color: #f2f2f2;
-        }
-
-        .output-number {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-width: 103px;
-            height: 40px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 10px;
-            box-sizing: border-box;
-            background-color: #ffffff;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            font-size: 22px;
-        }
-
-        /* Responsive grid layout */
-        @media (min-width: 1200px) { .output-container { grid-template-columns: repeat(6, 1fr); } }
-        @media (min-width: 992px) and (max-width: 1199px) { .output-container { grid-template-columns: repeat(5, 1fr); } }
-        @media (min-width: 768px) and (max-width: 991px) { .output-container { grid-template-columns: repeat(4, 1fr); } }
-        @media (max-width: 767px) { .output-container { grid-template-columns: repeat(2, 1fr); } }
-
-        /* Print-specific layout for A4 */
-        @media print {
-            @page {
-                size: A4;
-                margin: 10mm;
-            }
-            .output-container {
-                grid-template-columns: repeat(6, 1fr) !important;
-                grid-gap: 5px;
-            }
-            .output-number {
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-                font-weight: bolder;
-            }
-        }
+        <html>
+        <head>
+            <title>Print Numbers</title>
+            <style>
+                body { font-family: Arial, sans-serif; text-align: center; }
+                table { width: 100%; border-collapse: collapse; border: 1px solid black; }
+                td { border: 1px solid black; padding: 10px; text-align: center; font-size: 18px; }
+                .fancy { background-color: #FFD700 !important; font-weight: bold; }
+                @media print { 
+                    @page { size: A4; margin: 10mm; } 
+                    .fancy { 
+                        background-color: #FFD700 !important; 
+                        font-weight: bold; 
+                        -webkit-print-color-adjust: exact; /* Ensure color prints */
+                    }
+                }
+            </style>
+        </head>
+        <body>
+            ${resultHTML}
+        </body>
+        </html>
     `);
-
-    printWindow.document.write('</style>');
-    printWindow.document.write('</head><body>');
-    printWindow.document.write('<div class="container"><div class="output-container">' + output + '</div></div>');
-    printWindow.document.write('</body></html>');
     printWindow.document.close();
-    
     printWindow.print();
 }
+

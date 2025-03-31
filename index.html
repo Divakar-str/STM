@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/links.css">
     <link rel="stylesheet" href="./css/totaller.css">
+    <link rel="stylesheet" href="./css/numbers.css">
 </head>
 <style> .fancy {
     background-color: yellow;
@@ -179,12 +180,14 @@
 
 
 <!-- Range Section -->
-<section id="range" style="display: none;">
-    <div class="container mt-5">
-        <h1 class="display-4 text-center mb-4">Range Section</h1>
+<section id="range" style="display: none;" class="tn-vehicle-app">
+    <div class="container">
+        
         <div class="row justify-content-center">
-            <div class="col-md-6">
-                <form class="border p-4 rounded">
+            <div class="col-md-6 form-container">  <!-- Fixed position -->
+                
+                <form class="border p-4 rounded glass-container">
+                    <h1 class="text-center mb-4">Range Section</h1>
                     <div class="form-row mb-3">
                         <div class="form-group col">
                             <label for="startNumber">Start No:</label>
@@ -201,17 +204,17 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <button type="button" class="btn btn-primary btn-block" id="rangecal" onclick="calculateSumDigits()">Calculate</button>
+                            <button type="button" class="btn btn-primary w-100" id="rangecal" onclick="calculateSumDigits()">Calculate</button>
                         </div>
                         <div class="form-group col-md-6">
-                            <button type="button" class="btn btn-secondary btn-block" onclick="printResult()">Print</button>
+                            <button type="button" class="btn btn-secondary w-100" onclick="printResult()">Print</button>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="col-md">
                 <h2 id="rangeResultTitle" class="text-center mb-4"></h2>
-                <div id="rangeresult" class="output-container mt-4 row"></div>
+                <div id="rangeresult" class="output-container mt-4 d-flex flex-wrap justify-content-center"></div>
             </div>
         </div>
     </div>
@@ -219,63 +222,74 @@
 
 
 
-<section id="fullno" style="display: none;">
-    <div class="container mt-5">
-        <h1 class="display-4 text-center mb-4">Full Number</h1>
-        <div class="row">
-            <!-- Form Column (Left) -->
-            <div class="col-lg-6 col-md-12">
-                <form id="fullNoForm" class="border p-4 rounded" style="border-color: #007bff; border-width: 2px;">
+<section id="fullno" style="display: none;" class="tn-vehicle-app">
+    <div class="container-fluid">
+        
+        
+        <div class="row justify-content-center mx-auto g-0"> 
+
+            <!-- Form Column (Centered) -->
+            <div class="col-lg-6 col-md-8 col-sm-12 text-center">
+                
+                <form id="fullNoForm" class="border p-4 rounded glass-container">
+                    <h2 class=" text-center mb-4">Full Number</h2>
                     <div class="form-group mb-3">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">TN 52</span>
                             </div>
-                            <input type="text" class="form-control" id="userChars" name="userChars" maxlength="2" required pattern="[A-Za-z]{2}" style="font-size: 1.25rem;" >
+                            <input type="text" class="form-control" id="userChars" name="userChars" maxlength="2" required pattern="[A-Za-z]{2}" placeholder="Enter letters">
                         </div>
                     </div>
-                    
-                    
+
                     <div class="form-row mb-3">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col">
                             <label for="minValue">Start No:</label>
-                            <input type="text" class="form-control" id="minValue" name="minValue" maxlength="4" required pattern="[0-9]{4}" style="font-size: 1.25rem;" oninput="handleInput(this, 'maxValue')">
+                            <input type="text" class="form-control" id="minValue" name="minValue" maxlength="4" required pattern="[0-9]{4}" placeholder="Enter start number">
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col">
                             <label for="maxValue">End No:</label>
-                            <input type="text" class="form-control" id="maxValue" name="maxValue" maxlength="4" required pattern="[0-9]{4}" style="font-size: 1.25rem;" oninput="handleInput(this,'userNumber')">
+                            <input type="text" class="form-control" id="maxValue" name="maxValue" maxlength="4" required pattern="[0-9]{4}" placeholder="Enter end number">
                         </div>
                     </div>
+
                     <div class="form-group mb-3">
                         <label for="userNumber">Total (1-9):</label>
-                        <input type="text" class="form-control" id="userNumber" name="userNumber" maxlength="1" required style="font-size: 1.25rem;" oninput="handleInput(this,'fullcal')">
+                        <input type="text" class="form-control" id="userNumber" name="userNumber" maxlength="1" required placeholder="Enter sum">
                     </div>
-                    <div class="form-row mb-3">
-                        <div class="col-md-6 mb-3">
-                            <button type="button" class="btn btn-primary btn-block"  id="fullcal"style="background-color: #007bff; border-color: #007bff;" onclick="generate()">Generate</button>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <button type="button" class="btn btn-primary w-100" id="fullcal" onclick="generate()">Generate</button>
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <button type="button" class="btn btn-secondary btn-block" style="background-color: #6c757d; border-color: #6c757d;" onclick="printResults()">Print</button>
+                        <div class="form-group col-md-6">
+                            <button type="button" class="btn btn-secondary w-100" onclick="printFullNo()">Print</button>
                         </div>
                     </div>
                 </form>
             </div>
-            <!-- Printable Area Column (Right) -->
-            <div id="printableArea" class="col-md-6">
-                <div id="generatedCodes" class="output-container mt-4"></div>
+
+            <!-- Results Column (Full Width on Small Screens) -->
+            <div class="col-lg-6 col-md-8 col-sm-12">
+                <h2 id="fullnoResultTitle" class="text-center mb-4"></h2>
+                <div id="generatedCodes" class="output-container mt-4 d-flex flex-wrap justify-content-center" style="max-width: 100%; min-height: 100px; overflow-wrap: break-word;">
+                </div>
             </div>
+
         </div>
     </div>
 </section>
 
 
+
 <!-- Desired Section -->
-<section id="desired" style="display: none;">
-    <div class="container-fluid mt-5">
-        
-        <div class="row">
-            <div class="col-md-4">
-                <form id="generatorForm" class="border p-4 rounded">
+<section id="desired" style="display: none;" class="tn-vehicle-app">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 form-container">  <!-- Fixed position -->
+                <form id="generatorForm" class="border p-4 rounded glass-container">
+                    <h1 class="text-center mb-4">Desired Section</h1>
+                    
                     <div class="form-row mb-3">
                         <div class="form-group col">
                             <label for="firstInput">First:</label>
@@ -285,6 +299,8 @@
                             <label for="secondInput">Second:</label>
                             <input type="text" class="form-control" id="secondInput" maxlength="1">
                         </div>
+                    </div>
+                    <div class="form-row mb-3">
                         <div class="form-group col">
                             <label for="thirdInput">Third:</label>
                             <input type="text" class="form-control" id="thirdInput" maxlength="1">
@@ -294,70 +310,73 @@
                             <input type="text" class="form-control" id="fourthInput" maxlength="1" oninput="handleInput(this,'startRange')">
                         </div>
                     </div>
+
                     <div class="form-row mb-3">
                         <div class="form-group col">
-                            <label for="startRange">Start No :</label>
+                            <label for="startRange">Start No:</label>
                             <input type="text" class="form-control" id="startRange" maxlength="4" oninput="handleInput(this, 'endRange')">
                         </div>
                         <div class="form-group col">
-                            <label for="endRange">End No :</label>
-                            <input type="text" class="form-control" id="endRange" maxlength="4"  oninput="handleInput(this, 'sumInput')">
+                            <label for="endRange">End No:</label>
+                            <input type="text" class="form-control" id="endRange" maxlength="4" oninput="handleInput(this, 'sumInput')">
                         </div>
                     </div>
-                    <div class="form-row mb-3">
-                        <div class="form-group col">
-                            <label for="sumInput">Total (1-9) :</label>
-                            <input type="text" class="form-control" id="sumInput" maxlength="1"  oninput="handleInput(this,'desiredcal')">
+
+                    <div class="form-group mb-3">
+                        <label for="sumInput">Total (1-9):</label>
+                        <input type="text" class="form-control" id="sumInput" maxlength="1" oninput="handleInput(this,'desiredcal')">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <button type="button" class="btn btn-primary w-100" id="desiredcal" onclick="generateNumbers()">Generate Numbers</button>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <button type="button" class="btn btn-secondary w-100" onclick="printNumbers()">Print</button>
                         </div>
                     </div>
-                   
-                    <div class="form-row mb-3">
-                        <div class="form-group col text-center">
-                            <button type="button" class="btn btn-primary" id="desiredcal" onclick="generateNumbers()">Generate Numbers</button>
-                        </div>
-                        <div class="form-group col text-center">
-                            <button type="button" class="btn btn-secondary btn-block printButton" onclick="printNumbers()">Print</button>
-                        </div>
-                    </div>
-                  
                 </form>
             </div>
+
             <div class="col-md">
-                <div id="output" class="output-container mt-4 row"></div>
+                <h2 id="desiredResultTitle" class="text-center mb-4"></h2>
+                <div id="output" class="output-container mt-4 d-flex flex-wrap justify-content-center"></div>
             </div>
         </div>
     </div>
 </section>
- 
+
    
 
-    <section id="sumMatchingSection"  style="display: none;">
-        <div class="container-fluid mt-5">
-       
-        <div class="row">
-            <!-- Form Column (Left) -->
-            <div class="col-md-4">
-                <form id="sumMatchingForm" class="border p-4 rounded" style="border-color: #007bff; border-width: 2px;">
+<section id="sumMatchingSection" style="display: none;" class="tn-vehicle-app">
+    <div class="container-fluid">
+        <div class="row justify-content-center mx-auto g-0"> 
+
+            <!-- Form Column (Centered) -->
+            <div class="col-lg-6 col-md-8 col-sm-12 text-center">
+                <form id="sumMatchingForm" class="border p-4 rounded glass-container">
+                    <h2 class=" text-center mb-4">Sum Matching</h2>
+
                     <div class="form-group mb-3">
-                        <label for="prefixInput">Prefix (e.g., TN52):</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <input type="text" class="form-control" id="prefixInput" name="prefixInput" value="TN52"  style="font-size: 1.25rem; text-transform: uppercase;" disabled>
+                                <input type="text" class="form-control" id="prefixInput" name="prefixInput" value="TN52" style="font-size: 1.25rem; text-transform: uppercase;" disabled>
                             </div>
                             <input type="text" class="form-control" id="additionalPrefixInput" name="additionalPrefixInput" maxlength="2" required pattern="[A-Za-z]{2}" style="font-size: 1.25rem; text-transform: uppercase;" required>
                         </div>
                     </div>
-    
-                    <div class="form-group mb-3">
-                        <label for="minValueInput">Min Value:</label>
-                        <input type="number" class="form-control" id="minValueInput" name="minValueInput"    maxlength="4" required pattern="[0-9]{4}" style="font-size: 1.25rem;" oninput="handleInput(this, 'maxValueInput')" required>
+
+                    <div class="form-row mb-3">
+                        <div class="form-group col">
+                            <label for="minValueInput">Min Value:</label>
+                            <input type="number" class="form-control" id="minValueInput" name="minValueInput" maxlength="4" required pattern="[0-9]{4}" style="font-size: 1.25rem;" oninput="handleInput(this, 'maxValueInput')" required>
+                        </div>
+                        <div class="form-group col">
+                            <label for="maxValueInput">Max Value:</label>
+                            <input type="number" class="form-control" id="maxValueInput" name="maxValueInput" maxlength="4" required pattern="[0-9]{4}" style="font-size: 1.25rem;" oninput="handleInput(this, 'listSelector')" required>
+                        </div>
                     </div>
-    
-                    <div class="form-group mb-3">
-                        <label for="maxValueInput">Max Value:</label>
-                        <input type="number" class="form-control" id="maxValueInput" name="maxValueInput"   maxlength="4" required pattern="[0-9]{4}" style="font-size: 1.25rem;" oninput="handleInput(this,'listSelector')"required>
-                    </div>
-    
+
                     <div class="form-group mb-3">
                         <label for="listSelector">Select List:</label>
                         <select id="listSelector" name="listSelector" class="form-control" required>
@@ -371,23 +390,27 @@
                             <option value="aamatram">Aamatram</option>
                         </select>
                     </div>
+
                     <div class="form-row mb-3">
-                        <div class="form-group col text-center">
-                            <button type="button" class="btn btn-primary btn-block" onclick="processSumMatching()">Find Matches</button>
+                        <div class="form-group col-md-6">
+                            <button type="button" class="btn btn-primary w-100" onclick="processSumMatching()">Find Matches</button>
                         </div>
-                        <div class="form-group col text-center">
-                            <button type="button" class="btn btn-secondary btn-block printButton" onclick="printNumbersfull()">Print</button>
+                        <div class="form-group col-md-6">
+                            <button type="button" class="btn btn-secondary w-100 printButton" onclick="printNumbersfull()">Print</button>
                         </div>
                     </div>
                 </form>
             </div>
-            <!-- Results Column (Right) -->
-            <div id="resultColumn" class="col-md">
+
+            <!-- Results Column (Full Width on Small Screens) -->
+            <div class="col-lg-6 col-md-8 col-sm-12">
                 <div id="outputResults" class="output-container mt-4 row"></div>
             </div>
+
         </div>
     </div>
-    </section>
+</section>
+
 
 </div>
     <script src="js/script.js"></script>

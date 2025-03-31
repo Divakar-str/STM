@@ -19,8 +19,8 @@ const cardData = [
             { url: "https://vahan.parivahan.gov.in/vahanservice/vahan/ui/statevalidation/homepage.xhtml", text: "Vahan", class: "link-success", icon: "fas fa-truck" , additionalLinks: [
                 { url: "https://vahan.parivahan.gov.in/vahanservice/vahan/ui/eapplication/form_eAppCommonHome.xhtml", text: "Reverify Transaction" } ]
             },
-            { url: "https://vahan.parivahan.gov.in/appointment/vahan/ui/userpanel/bookappoinment.xhtml", text: "Appointment", class: "link-danger", icon: "fas fa-id-card" , additionalLinks: [
-                { url: "https://vahan.parivahan.gov.in/appointment/vahan/ui/userpanel/form_rescheduleAppointment.xhtml", text: "Reschedule Appointment" },
+            { url: "https://vahan.parivahan.gov.in/appointment/vahan/ui/userpanel/bookappoinment.xhtml", text: "Appointment", class: "link-danger", icon: "fas fa-calendar-day" , additionalLinks: [
+                { url: "https://vahan.parivahan.gov.in/appointment/vahan/ui/userpanel/form_rescheduleAppointment.xhtml", text: "Reschedule Appointment",icon: "fas fa-calendar-day" },
                 { url: "https://vahan.parivahan.gov.in/appointment/vahan/ui/userpanel/form_ReprintReceipt.xhtml", text: "Print Appointment" }
             ]},
             { url: "https://vahan.parivahan.gov.in/vahan/vahan/ui/eapplication/form_payment.xhtml", text: "Online Payment", class: "link-info", icon: "fa fa-money-bill" }
@@ -30,11 +30,19 @@ const cardData = [
     {
         title: "NP permit",
         links: [
-            { url: "https://vahan.parivahan.gov.in/npermit/faces/np/jsp/nationalpermit.jsp", text: "NP Permit Home", class: "link-primary", icon: "fas fa-id-card" },
+            { url: "https://vahan.parivahan.gov.in/onlinepermit/vahan/loginpage.xhtml?statecd=Mzc2MzM2MzAzNjY0MzIzODM3NjIzNjY0MzY2MjM3NTQ0ZQ==", text: "Online Permit", class: "link-info", icon: "fas fa-receipt" },            { url: "https://vahan.parivahan.gov.in/npermit/faces/np/jsp/nationalpermit.jsp", text: "NP Permit Home", class: "link-primary", icon: "fas fa-id-card" },
             { url: "https://vahan.parivahan.gov.in/npermit/faces/np/jsp/nationalpermit.jsp", text: "Permit Pay", class: "link-success", icon: "fas fa-receipt" },
-            { url: "https://vahan.parivahan.gov.in/npermit/faces/np/jsp/printpermitreceipt.jsp", text: "Print Receipt", class: "link-danger", icon: "fas fa-print" },
-            { url: "https://vahan.parivahan.gov.in/onlinepermit/vahan/loginpage.xhtml?statecd=Mzc2MzM2MzAzNjY0MzIzODM3NjIzNjY0MzY2MjM3NTQ0ZQ==", text: "Online Permit", class: "link-info", icon: "fas fa-receipt" }
+            { url: "https://vahan.parivahan.gov.in/npermit/faces/np/jsp/printpermitreceipt.jsp", text: "Print Receipt", class: "link-danger", icon: "fas fa-print" }
             
+        ]
+    },
+    {
+        title: "Echallan",
+        links: [
+            { url: "https://echallan.parivahan.gov.in/index/accused-challan", text: "Echallan Pay", class: "link-primary", icon: "fas fa-receipt" },
+            { url: "https://echallan.parivahan.gov.in/payment-verification/re-double-verification", text: "Failed Transaction", class: "link-success", icon: "fas fa-circle-exclamation" },
+            { url: "https://echallan.parivahan.gov.in/payment-verification", text: "Pending Transaction", class: "link-danger", icon: "fas fa-spinner" },
+            { url: "https://vahan.parivahan.gov.in/eTransPgi/paymentDetails", text: "Status", class: "link-info", icon: "fas fa-list" }
         ]
     },
     {
@@ -63,15 +71,6 @@ const cardData = [
             { url: "https://www.instagram.com/", text: "Instagram", class: "link-success", icon: "fab fa-instagram" },
             { url: "https://twitter.com/", text: "Twitter", class: "link-danger", icon: "fab fa-twitter" },
             { url: "https://www.linkedin.com/", text: "Linkedin", class: "link-info", icon: "fab fa-linkedin" }
-        ]
-    },
-    {
-        title: "Mail",
-        links: [
-            { url: "https://mail.google.com/mail/u/0/#inbox", text: "Gmail", class: "link-primary", icon: "fas fa-envelope" },
-            { url: "https://outlook.live.com/mail/0/inbox", text: "Outlook", class: "link-success", icon: "fas fa-envelope-open-text" },
-            { url: "https://mail.yahoo.com/", text: "Yahoo", class: "link-danger", icon: "fas fa-envelope-open" },
-            { url: "https://mail.protonmail.com/login", text: "Proton", class: "link-info", icon: "fas fa-envelope-square" }
         ]
     },
 

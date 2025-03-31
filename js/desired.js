@@ -1,209 +1,145 @@
-
-function generateNumbers() {
-  // Fetch criteria and range values from input fields
-  var firstCriteria = document.getElementById('firstInput').value.trim();
-  var secondCriteria = document.getElementById('secondInput').value.trim();
-  var thirdCriteria = document.getElementById('thirdInput').value.trim();
-  var fourthCriteria = document.getElementById('fourthInput').value.trim();
-  var sumCriteria = parseInt(document.getElementById('sumInput').value);
-  var startRange = parseInt(document.getElementById('startRange').value);
-  var endRange = parseInt(document.getElementById('endRange').value);
-
-  // Validate input range
-  if (isNaN(startRange) || isNaN(endRange)) {
-      alert('Please provide valid numeric range.');
-      return;
-  }
-
-  // Phase 1: Generate numbers based on criteria
-  var filteredNumbers = [];
-  for (var i = startRange; i <= endRange; i++) {
-      var numStr = i.toString().padStart(4, '0');
-
-      if (
-          (firstCriteria.length === 0 || numStr[0] === firstCriteria) &&
-          (secondCriteria.length === 0 || numStr[1] === secondCriteria) &&
-          (thirdCriteria.length === 0 || numStr[2] === thirdCriteria) &&
-          (fourthCriteria.length === 0 || numStr[3] === fourthCriteria)
-      ) {
-          filteredNumbers.push(numStr);
-      }
-  }
-
-  // Phase 2: Filter numbers based on sum criteria
-  var generatedNumbers = [];
-  filteredNumbers.forEach(function (numStr) {
-      // Calculate sum of digits (continue until single digit)
-      var sum = calculateSingleDigitSum(numStr);
-
-      // Check against sum criteria
-      if (sum === sumCriteria) {
-          generatedNumbers.push(numStr);
-      }
-  });
-
-  // Display generated numbers in rows and columns
-  displayNumbers(generatedNumbers);
-}
-
-function calculateSingleDigitSum(numStr) {
-  var sum = [...numStr].reduce((acc, curr) => acc + parseInt(curr), 0);
-  while (sum >= 10) {
-      sum = [...String(sum)].reduce((acc, curr) => acc + parseInt(curr), 0);
-  }
-  return sum;
-}
-
-function displayNumbers(numbers) {
-  var output = document.getElementById('output');
-  output.innerHTML = ''; // Clear previous output
-
-  var html = '';
-  var numPerRow = 5; // Number of numbers per row
-
-  numbers.forEach(function (number, index) {
-      if (index % numPerRow === 0) {
-          html += '<div class="row">';
-      }
-
-      var numberInt = parseInt(number);
-      var isFancy = fancy.includes(numberInt);
-      var bgColor = isFancy ? '#FFD700' : '#FFFFFF'; // Yellow background for fancy numbers
-
-      html += '<div class="col-md-2">';
-      html += '<div class="output-number col-md-2 code-container" style="background-color: ' + bgColor + ';">' + number + '</div>';
-      html += '</div>';
-
-      if (index % numPerRow === numPerRow - 1) {
-          html += '</div>';
-      }
-  });
-
-  if (numbers.length % numPerRow !== 0) {
-      html += '</div>';
-  }
-
-  output.innerHTML = html;
-}
-
-function moveFocuss(currentInput, nextInput, prevInput = null) {
-  currentInput.addEventListener('input', function(event) {
-      if (currentInput.value.length > 0) {
-          nextInput.focus();
-      }
-  });
-
-  if (prevInput) {
-      currentInput.addEventListener('keydown', function(event) {
-          if (event.key === 'Backspace' && currentInput.value.length === 0) {
-              prevInput.focus();
-          }
-      });
-  }
-}
-
+// Handle input auto-focus and validation
 function handleInput(inputElement, nextInputId) {
-    const type = inputElement.type;
-    const value = inputElement.value;
+    inputElement.value = inputElement.value.replace(/\D/g, ''); // Allow only numbers
 
-    // Handle text inputs with a maxlength constraint
-    if (type === 'text') {
-        // Remove any non-digit characters and enforce maxlength
-        inputElement.value = value.replace(/\D/g, '').slice(0, inputElement.maxLength);
-
-        // Move focus if the input length reaches the maximum length
-        if (inputElement.value.length === parseInt(inputElement.maxLength) && nextInputId) {
-            const nextInput = document.getElementById(nextInputId);
-            if (nextInput) {
-                nextInput.focus();
-            } else {
-                console.error(`Element with ID ${nextInputId} not found.`);
-            }
-        }
-    }
-    // Handle number inputs (if necessary)
-    else if (type === 'number') {
-        // Limit the number of digits if needed
-        inputElement.value = value.slice(0, inputElement.maxLength);
-
-        // Move focus if the input length reaches the maximum length
-        if (inputElement.value.length === parseInt(inputElement.maxLength) && nextInputId) {
-            const nextInput = document.getElementById(nextInputId);
-            if (nextInput) {
-                nextInput.focus();
-            } else {
-                console.error(`Element with ID ${nextInputId} not found.`);
-            }
-        }
+    if (inputElement.value.length === inputElement.maxLength && nextInputId) {
+        let nextInput = document.getElementById(nextInputId);
+        if (nextInput) nextInput.focus();
     }
 }
 
+// Calculate the sum of digits until a single digit is reached
+function calculateSingleDigitSum(numStr) {
+    var sum = [...numStr].reduce((acc, curr) => acc + parseInt(curr), 0);
+    while (sum >= 10) {
+        sum = [...String(sum)].reduce((acc, curr) => acc + parseInt(curr), 0);
+    }
+    return sum;
+}
+
+// Function to generate numbers based on input
+function generateNumbers() {
+    // Fetch values from the input fields
+    var firstCriteria = document.getElementById('firstInput').value.trim();
+    var secondCriteria = document.getElementById('secondInput').value.trim();
+    var thirdCriteria = document.getElementById('thirdInput').value.trim();
+    var fourthCriteria = document.getElementById('fourthInput').value.trim();
+    var sumCriteria = parseInt(document.getElementById('sumInput').value);
+    var startRange = parseInt(document.getElementById('startRange').value);
+    var endRange = parseInt(document.getElementById('endRange').value);
+
+    // Validate input range and sum criteria
+    if (isNaN(startRange) || isNaN(endRange)) {
+        alert('Please provide valid numeric range.');
+        return;
+    }
+    if (sumCriteria < 1 || sumCriteria > 9 || isNaN(sumCriteria)) {
+        alert('Please enter a valid sum target (1-9).');
+        return;
+    }
+
+    // Phase 1: Generate numbers based on the criteria
+    var filteredNumbers = [];
+    for (var i = startRange; i <= endRange; i++) {
+        var numStr = i.toString().padStart(4, '0');
+
+        if (
+            (firstCriteria.length === 0 || numStr[0] === firstCriteria) &&
+            (secondCriteria.length === 0 || numStr[1] === secondCriteria) &&
+            (thirdCriteria.length === 0 || numStr[2] === thirdCriteria) &&
+            (fourthCriteria.length === 0 || numStr[3] === fourthCriteria)
+        ) {
+            filteredNumbers.push(numStr);
+        }
+    }
+
+    // Phase 2: Filter numbers based on sum criteria
+    var generatedNumbers = [];
+    filteredNumbers.forEach(function (numStr) {
+        var sum = calculateSingleDigitSum(numStr);
+
+        // Check if the sum matches the target sum
+        if (sum === sumCriteria) {
+            generatedNumbers.push(numStr);
+        }
+    });
+
+    // Display generated numbers in a table grid
+    displayNumbers(generatedNumbers);
+}
 
 
+// Display the generated numbers in a table layout
+function displayNumbers(numbers) {
+    var output = document.getElementById('output');
+    output.innerHTML = ''; // Clear previous output
+
+    if (numbers.length === 0) {
+        output.innerHTML = '<p>No numbers found based on the criteria.</p>';
+        return;
+    }
+
+     // Calculate table dimensions
+     let columns = Math.min(6, Math.ceil(Math.sqrt(numbers.length))); // Maximum of 6 columns
+     let rows = Math.ceil(numbers.length / columns);
+ 
+     let tableHTML = "<table class='fancy-table' style='width: 100%; border-collapse: collapse;'>";
+     for (let i = 0; i < rows; i++) {
+         tableHTML += "<tr>";
+         for (let j = 0; j < columns; j++) {
+             let index = i * columns + j;
+             if (index < numbers.length) {
+                 let isFancy = fancy.includes(parseInt(numbers[index])); // Check if it's a "fancy" number
+                 tableHTML += `<td class='${isFancy ? "fancy" : ""}' style='border: 1px solid black; padding: 10px; text-align: center; font-size: 18px;'>${numbers[index]}</td>`;
+             } else {
+                 tableHTML += "<td></td>"; // Empty cell if out of bounds
+             }
+         }
+         tableHTML += "</tr>";
+     }
+     tableHTML += "</table>";
+ 
+     output.innerHTML = tableHTML; // Insert the table into the result div
+}
+
+// Function to print the numbers
 function printNumbers() {
-    var output = document.getElementById('output').innerHTML;
+    let resultDiv = document.getElementById("output");
+    if (!resultDiv.innerHTML.trim()) {
+        alert("No numbers to print.");
+        return;
+    }
 
-    var printWindow = window.open('', '', 'height=600,width=800');
-    printWindow.document.write('<html><head><title>Print Numbers</title>');
-    printWindow.document.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">');
-    printWindow.document.write('<style>');
-
-    // Custom styles for the output container and number boxes
+    let printWindow = window.open('', '', 'height=600,width=800');
     printWindow.document.write(`
-        .output-container {
-            border: 1px solid #ccc;
-            padding: 20px;
-            background-color: #f2f2f2;
-            display: grid;
-            gap: 10px;
-            overflow: hidden;
-        }
-        
-        .output-number {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-width: 103px;
-            height: 40px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 10px;
-            box-sizing: border-box;
-            background-color: #ffffff;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            font-size: x-large;
-        }
-
-        /* Responsive grid layout */
-        @media (min-width: 1200px) { .output-container { grid-template-columns: repeat(6, 1fr); } }
-        @media (min-width: 992px) and (max-width: 1199px) { .output-container { grid-template-columns: repeat(5, 1fr); } }
-        @media (min-width: 768px) and (max-width: 991px) { .output-container { grid-template-columns: repeat(4, 1fr); } }
-        @media (max-width: 767px) { .output-container { grid-template-columns: repeat(2, 1fr); } }
-
-        /* Print-specific layout for A4 */
-        @media print {
-            @page {
-                size: A4;
-                margin: 10mm;
-            }
-            .output-container {
-                grid-template-columns: repeat(6, 1fr) !important;
-                gap: 5px;
-            }
-            .output-number {
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-                font-weight: bolder;
-            }
-        }
+        <html>
+        <head>
+            <title>Print Numbers</title>
+            <style>
+                body { font-family: Arial, sans-serif; text-align: center; }
+                table { width: 100%; border-collapse: collapse; border: 1px solid black; }
+                td { border: 1px solid black; padding: 10px; text-align: center; font-size: 18px; }
+                .fancy { background-color: #FFD700 !important; font-weight: bold; }
+                @media print { 
+                    @page { size: A4; margin: 10mm; } 
+                    .fancy { 
+                        background-color: #FFD700 !important; 
+                        font-weight: bold; 
+                        -webkit-print-color-adjust: exact; /* Ensure color prints */
+                    }
+                }
+            </style>
+        </head>
+        <body>
+            ${resultDiv.innerHTML}
+        </body>
+        </html>
     `);
-
-    printWindow.document.write('</style>');
-    printWindow.document.write('</head><body>');
-    printWindow.document.write('<div class="container"><div class="output-container">' + output + '</div></div>');
-    printWindow.document.write('</body></html>');
+    
     printWindow.document.close();
-    printWindow.print();
+
+    printWindow.onload = function () {
+        printWindow.print();
+        printWindow.close(); // Close after printing
+    };
 }

@@ -1,14 +1,13 @@
 /* Base Styles for Sections */
 section {
   width: 100%;
-  
-  margin: 0; /* Remove any default margin */
+  padding: 0 !important; /* Remove any default padding */
+  margin: 0 !important; /* Remove any default margin */
  
 }
 
 .container {
   max-width: 100%; /* Full width */
-  padding: 5px; /* No padding for full width */
  
 }
 
@@ -16,68 +15,8 @@ section {
   font-size:medium  !important;
 }
 
-/* Container for output numbers */
-.output-container {
-  padding: 20px; /* Adjust padding for overall spacing */
-  background-color: #f2f2f2; /* Background color for the container */
-  display: grid; /* Use grid layout for the container */
-  gap: 5px; /* Space between grid items */
-  overflow: hidden; /* Ensure child elements do not overflow */
-}
-
-/* Style for each number box */
-.output-number {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-width: 103px; /* Minimum width to ensure numbers are visible */
-  height: 40px; /* Adjust height as needed */
-  border: 1px solid #454545;
-  border-radius: 5px;
-  padding: 10px; /* Ensure text fits within the box */
-  box-sizing: border-box; /* Ensure padding and border are included in the total width and height */
-  background-color: #ffffff; /* Default background color */
-  overflow: hidden; /* Ensure text does not overflow */
-  white-space: nowrap; /* Prevent text from wrapping */
-  text-overflow: ellipsis; /* Add ellipsis if text overflows */
-  font-size: x-large;
-font-family: sans-serif;
 
 
-}
-
-
-
-/* Responsive grid for numbers */
-@media (min-width: 1200px) {
-  .output-container {
-      grid-template-columns: repeat(5, 1fr); /* 6 columns */
-  }
-}
-
-@media (min-width: 992px) and (max-width: 1199px) {
-  .output-container {
-      grid-template-columns: repeat(4, 1fr); /* 5 columns */
-  }
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  .output-container {
-      grid-template-columns: repeat(3, 1fr); /* 4 columns */
-  }
-}
-
-@media (max-width: 767px) {
-  .output-container {
-      grid-template-columns: repeat(2, 1fr); /* 2 columns */
-  }
-}
-
-@media (max-width: 479px) {
-  .output-container {
-      grid-template-columns: 1fr; /* 1 column */
-  }
-}
 
 
 /* Loader styles */

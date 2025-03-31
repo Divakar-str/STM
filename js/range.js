@@ -1,125 +1,135 @@
 
-// Function to calculate the sum of digits and display the result
+// Function to validate number input and auto-jump
+function validateNumber(input, maxLength, nextFieldId) {
+    input.value = input.value.replace(/\D/g, ''); // Remove non-numeric characters
+
+    if (input.id === "sumDigits" && (input.value < 1 || input.value > 9)) {
+        input.value = ""; // Reset if out of range
+    }
+
+    if (input.value.length === maxLength) {
+        document.getElementById(nextFieldId)?.focus(); // Move to next field
+    }
+}
+
+// Auto move back when deleting an empty field
+document.addEventListener("keydown", function (event) {
+    let activeElement = document.activeElement;
+    
+    if (event.key === "Backspace" && activeElement.value === "") {
+        if (activeElement.id === "maxNumber") {
+            document.getElementById("startNumber").focus();
+        } else if (activeElement.id === "sumDigits") {
+            document.getElementById("maxNumber").focus();
+        }
+    }
+});
+
+
+function sumDigits(number) {
+    var sum = number.toString().split('').reduce((acc, digit) => acc + parseInt(digit), 0);
+    while (sum >= 10) {
+        sum = sum.toString().split('').reduce((acc, digit) => acc + parseInt(digit), 0);
+    }
+    return sum;
+}
+// Function to handle generating the numbers and displaying in a table
 function calculateSumDigits() {
     var startNumber = parseInt(document.getElementById("startNumber").value);
     var desiredSum = parseInt(document.getElementById("sumDigits").value);
     var maxNumber = parseInt(document.getElementById("maxNumber").value);
-    
+
     if (isNaN(startNumber) || isNaN(desiredSum) || isNaN(maxNumber)) {
-        alert("Please ensure all input fields contain valid numbers.");
+        alert("Please enter valid numbers in all fields.");
+        return;
+    }
+
+    if (startNumber > maxNumber) {
+        alert("Start number must be less than or equal to Max number.");
         return;
     }
 
     var resultDiv = document.getElementById("rangeresult");
-    resultDiv.innerHTML = "";
+    resultDiv.innerHTML = ""; // Clear previous results
 
+    var numbers = [];
+
+    // Loop through the range and find numbers with the desired sum of digits
     for (var number = startNumber; number <= maxNumber; number++) {
         if (sumDigits(number) === desiredSum) {
-            var formattedNumber = ("0000" + number).slice(-4);
-            var container = document.createElement("span");
-            container.className = "col-md-2 code-container output-number";
-            container.textContent = formattedNumber;
-            container.style.backgroundColor = fancy.includes(number) ? '#FFD700' : '#FFFFFF';
-            resultDiv.appendChild(container);
+            let formattedNumber = ("0000" + number).slice(-4); // Format to 4 digits
+            numbers.push(formattedNumber);
         }
     }
 
-    
-}
-
-// Function to sum digits until the number is a single digit
-function sumDigits(number) {
-    while (number > 9) {
-        number = Array.from(String(number), Number).reduce((a, b) => a + b);
+    // Check if we have results
+    if (numbers.length === 0) {
+        resultDiv.innerHTML = "<p>No matching numbers found.</p>";
+        return;
     }
-    return number;
-}
 
-// Function to validate input and move focus to the next input field
-function validateNumber(inputElement, maxLength, nextInputId) {
-    const value = inputElement.value;
-    inputElement.value = value.replace(/[^0-9]/g, '').slice(0, maxLength);
+    // Calculate table dimensions
+    let columns = Math.min(6, Math.ceil(Math.sqrt(numbers.length))); // Maximum of 6 columns
+    let rows = Math.ceil(numbers.length / columns);
 
-    if (inputElement.value.length === maxLength && nextInputId) {
-        const nextInput = document.getElementById(nextInputId);
-        if (nextInput) {
-            nextInput.focus();
-        } else {
-            console.error(`Element with ID ${nextInputId} not found.`);
-            alert(`Element with ID ${nextInputId} not found.`);
+    let tableHTML = "<table class='fancy-table' style='width: 100%; border-collapse: collapse;'>";
+    for (let i = 0; i < rows; i++) {
+        tableHTML += "<tr>";
+        for (let j = 0; j < columns; j++) {
+            let index = i * columns + j;
+            if (index < numbers.length) {
+                let isFancy = fancy.includes(parseInt(numbers[index])); // Check if it's a "fancy" number
+                tableHTML += `<td class='${isFancy ? "fancy" : ""}' style='border: 1px solid black; padding: 10px; text-align: center; font-size: 18px;'>${numbers[index]}</td>`;
+            } else {
+                tableHTML += "<td></td>"; // Empty cell if out of bounds
+            }
         }
-    } else if (inputElement.value.length > maxLength) {
-        alert(`Input value exceeds maximum length of ${maxLength} digits.`);
+        tableHTML += "</tr>";
     }
+    tableHTML += "</table>";
+
+    resultDiv.innerHTML = tableHTML; // Insert the table into the result div
 }
 
-// Function to print the result
+
 function printResult() {
-    var output = document.getElementById('rangeresult').innerHTML;
-    var printWindow = window.open('', '', 'height=600,width=800');
+    let resultDiv = document.getElementById("rangeresult");
+    if (!resultDiv.innerHTML.trim()) {
+        alert("No numbers to print.");
+        return;
+    }
 
-    printWindow.document.write('<html><head><title>Print Numbers</title>');
-    printWindow.document.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">');
-    printWindow.document.write('<style>');
+    let printWindow = window.open('', '', 'height=600,width=800');
     printWindow.document.write(`
-        /* Container for output numbers */
-        .output-container {
-          padding: 20px;
-          background-color: #f2f2f2;
-          display: grid;
-          gap: 5px;
-          overflow: hidden;
-          border: 1px solid #4545;
-        }
-
-        /* Style for each number box */
-        .output-number {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          min-width: 103px;
-          height: 40px;
-          border: 1px solid #ddd;
-          border-radius: 5px;
-          padding: 10px;
-          box-sizing: border-box;
-          background-color: #ffffff;
-          overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-          font-size: x-large;
-        }
-
-        @media (min-width: 1200px) { .output-container { grid-template-columns: repeat(6, 1fr); } }
-        @media (min-width: 992px) and (max-width: 1199px) { .output-container { grid-template-columns: repeat(5, 1fr); } }
-        @media (min-width: 768px) and (max-width: 991px) { .output-container { grid-template-columns: repeat(4, 1fr); } }
-        @media (max-width: 767px) { .output-container { grid-template-columns: repeat(2, 1fr); } }
-
-        @media print {
-          /* A4 page size */
-          @page {
-            size: A4;
-            margin: 10mm;
-          }
-          
-          /* Print-specific styles */
-          .output-container {
-            grid-template-columns: repeat(6, 1fr) !important;
-            grid-gap: 5px;
-          }
-          .output-number {
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
-            font-weight: bolder;
-          }
-        }
+        <html>
+        <head>
+            <title>Print Numbers</title>
+            <style>
+                body { font-family: Arial, sans-serif; text-align: center; }
+                table { width: 100%; border-collapse: collapse; border: 1px solid black; }
+                td { border: 1px solid black; padding: 10px; text-align: center; font-size: 18px; }
+                .fancy { background-color: #FFD700 !important; font-weight: bold; }
+                .fancy { border: 1px solid #FFD700 !important; background-color:#FFD700; font-weight: bold; }
+                @media print { 
+                    @page { size: A4; margin: 10mm; } 
+                    .fancy { 
+                        background-color: #FFD700 !important; 
+                        font-weight: bold; 
+                        -webkit-print-color-adjust: exact; /* Ensure color prints */
+                    }
+                }
+            </style>
+        </head>
+        <body>
+            ${resultDiv.innerHTML}
+        </body>
+        </html>
     `);
-    printWindow.document.write('</style>');
-    printWindow.document.write('</head><body>');
-    printWindow.document.write('<div class="container"><div class="output-container">' + output + '</div></div>');
-    printWindow.document.write('</body></html>');
-    printWindow.document.close();
     
-    printWindow.print();
-}
+    printWindow.document.close();
 
+    printWindow.onload = function () {
+        printWindow.print();
+        printWindow.close(); // Close after printing
+    };
+}

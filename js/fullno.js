@@ -10,9 +10,7 @@ function generate() {
         'O': 7, 'Z': 7,
         'F': 8, 'P': 8
     };
-    
-    
-    
+
     const userChars = document.getElementById('userChars').value.toUpperCase();
     const minValue = parseInt(document.getElementById('minValue').value);
     const maxValue = parseInt(document.getElementById('maxValue').value);
@@ -27,6 +25,7 @@ function generate() {
             const Value_2 = charToNumberMapping[userChars[1]] || 0;
             const initial = 4 + 5 + 5 + 2 + Value_1 + Value_2;
 
+            let numbers = [];
             for (let i = minValue; i <= maxValue; i++) {
                 let codeValue = initial + i;
                 while (codeValue > 9) {
@@ -34,17 +33,37 @@ function generate() {
                 }
 
                 if (userNumber === codeValue) {
-                    let matchedCodeGenerated = `TN52${userChars}${i}`;
-                    const outputSpan = document.createElement('span');
-                    outputSpan.className = 'col-md-2 code-container output-number min-size'; 
-                    var bgColor = fancy.includes(i) ? '#FFD700' : '#FFFFFF';
-                    outputSpan.textContent = matchedCodeGenerated;
-                    outputSpan.style.backgroundColor = bgColor;
-                    outputContainer.appendChild(outputSpan);
+                    let formattedNumber = `TN52${userChars}${i.toString().padStart(4, '0')}`;
+                    numbers.push(formattedNumber);
                 }
             }
 
-            
+            if (numbers.length === 0) {
+                outputContainer.innerHTML = "<p>No matching numbers found.</p>";
+                return;
+            }
+
+            // Creating a structured table layout dynamically
+            let columns = Math.min(5, Math.ceil(Math.sqrt(numbers.length)));
+            let rows = Math.ceil(numbers.length / columns);
+
+            let tableHTML = "<table class='fancy-table' style='width: 100%; border-collapse: collapse;'>";
+            for (let i = 0; i < rows; i++) {
+                tableHTML += "<tr>";
+                for (let j = 0; j < columns; j++) {
+                    let index = i * columns + j;
+                    if (index < numbers.length) {
+                        let isFancy = fancy.includes(parseInt(numbers[index].slice(-4)));
+                        tableHTML += `<td class='${isFancy ? "fancy" : ""}'>${numbers[index]}</td>`;
+                    } else {
+                        tableHTML += "<td></td>";
+                    }
+                }
+                tableHTML += "</tr>";
+            }
+            tableHTML += "</table>";
+
+            outputContainer.innerHTML = tableHTML;
         } else {
             alert('Invalid range: minValue should be less than or equal to maxValue.');
         }
@@ -53,99 +72,40 @@ function generate() {
     }
 }
 
-// Function to validate input and move focus to the next input field
-function validateRangeInput(inputElement, maxLength, nextInputId) {
-    const value = inputElement.value;
-    inputElement.value = value.replace(/[^0-9]/g, '').slice(0, maxLength);
-
-    if (inputElement.value.length === maxLength && nextInputId) {
-        const nextInput = document.getElementById(nextInputId);
-        if (nextInput) {
-            nextInput.focus();
-        } else {
-            console.error(`Element with ID ${nextInputId} not found.`);
-            alert(`Element with ID ${nextInputId} not found.`);
-        }
-    } else if (inputElement.value.length > maxLength) {
-        alert(`Input value exceeds maximum length of ${maxLength} digits.`);
-    }
-}
-
-// Function to print the results
-function printResults() {
-    var output = document.getElementById('generatedCodes').innerHTML;
-
-    if (!output.trim()) {
-        alert("No results to print.");
+// Function to print results
+function printFullNo() {
+    let resultDiv = document.getElementById("generatedCodes");
+    if (!resultDiv.innerHTML.trim()) {
+        alert("No numbers to print.");
         return;
     }
 
-    var printWindow = window.open('', '', 'height=600,width=800');
-    printWindow.document.write('<html><head><title>Print Numbers</title>');
-    printWindow.document.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">');
-    printWindow.document.write('<style>');
-    
-    // Default styles for the output container
+    let printWindow = window.open('', '', 'height=600,width=800');
     printWindow.document.write(`
-        .output-container {
-            border: 1px solid #4545;
-            padding: 20px;
-            display: grid;
-            grid-gap: 11px;
-            background-color: #f2f2f2;
-        }
-
-        .output-number {
-            padding: 6px ;
-            text-align: center;
-            border: 1px solid #4545;
-            background-color: #FFFFFF;
-            box-sizing: border-box;
-            font-size: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 45px;
-            min-width: 103px;
-            border-radius: 5px;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            margin:3px;
-           
-            
-        }
-
-        /* Responsive layout */
-        @media (min-width: 1200px) { .output-container { grid-template-columns: repeat(6, 1fr); } }
-        @media (min-width: 992px) and (max-width: 1199px) { .output-container { grid-template-columns: repeat(5, 1fr); } }
-        @media (min-width: 768px) and (max-width: 991px) { .output-container { grid-template-columns: repeat(4, 1fr); } }
-        @media (max-width: 767px) { .output-container { grid-template-columns: repeat(2, 1fr); } }
-
-        /* Print-specific styles to ensure A4 layout and 6 columns */
-        @media print {
-            @page {
-                size: A4;
-                margin: 10mm;
-            }
-            .output-container {
-                grid-template-columns: repeat(6, 1fr) !important;
-                grid-gap: 5px;
-            }
-            .output-number {
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-                font-weight: bolder;
-            }
-        }
+        <html>
+        <head>
+            <title>Print Numbers</title>
+            <style>
+                body { font-family: Arial, sans-serif; text-align: center; }
+                table { width: 100%; border-collapse: collapse; border: 1px solid black; }
+                td { border: 1px solid black; padding: 10px; text-align: center; font-size: 18px; }
+                .fancy { background-color: #FFD700 !important; font-weight: bold; }
+                .fancy { border: 1px solid #FFD700 !important; background-color:#FFD700; font-weight: bold; }
+                @media print { 
+                    @page { size: A4; margin: 10mm; } 
+                    .fancy { 
+                        background-color: #FFD700 !important; 
+                        font-weight: bold; 
+                        -webkit-print-color-adjust: exact; /* Ensure color prints */
+                    }
+                }
+            </style>
+        </head>
+        <body>
+            ${resultDiv.innerHTML}
+        </body>
+        </html>
     `);
-
-    printWindow.document.write('</style>');
-    printWindow.document.write('</head><body>');
-    printWindow.document.write('<div class="container"><div class="output-container">' + output + '</div></div>');
-    printWindow.document.write('</body></html>');
     printWindow.document.close();
-    
     printWindow.print();
 }
-

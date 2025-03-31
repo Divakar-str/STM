@@ -1,0 +1,182 @@
+/* Scope all styles inside .tn-vehicle-app */
+.tn-vehicle-app {
+   
+    color: #333;
+    font-family: 'Poppins', sans-serif;
+
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+
+
+/* Form Section */
+.tn-vehicle-app form {
+    margin-top: 10%;
+    margin-right: auto;
+    margin-left: auto;
+    
+}
+
+/* Glass Box */
+.tn-vehicle-app .glass-box {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: left;
+}
+
+.tn-vehicle-app .glass-box input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    text-align: center;
+}
+
+/* Buttons */
+.tn-vehicle-app .button-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+.tn-vehicle-app .btn {
+    width: 48%;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    color: white;
+}
+
+.tn-vehicle-app .btn:hover {
+    background-color: #f40404;
+}
+
+/* Table Section */
+.tn-vehicle-app .table-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.tn-vehicle-app .table-wrapper {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+    overflow-x: auto;
+    width: 100%;
+    max-width: 800px;
+}
+
+.tn-vehicle-app table {
+    width: 100%;
+    max-width: 600px;
+    border-collapse: collapse;
+    margin: auto;
+    border-spacing: 6px;
+}
+
+.tn-vehicle-app th, 
+.tn-vehicle-app td {
+    padding: 12px 16px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 18px;
+    background: #f9f9f9;
+    border-radius: 6px;
+    color: #333;
+    border: 1px solid #ddd;
+    transition: transform 0.2s ease-in-out;
+}
+
+.tn-vehicle-app td:hover {
+    transform: scale(1.05);
+    background: #eee;
+}
+
+/* Fancy Number Highlight */
+.tn-vehicle-app .fancy {
+    background: linear-gradient(45deg, #ffd700, #ffcc00);
+    color: black;
+    font-weight: bold;
+    border: 2px solid #ffb400;
+}
+
+/* Glassmorphism Effect */
+.tn-vehicle-app .glass-container {
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Print Styles */
+@media print {
+    .tn-vehicle-app {
+        background: white;
+        color: black;
+    }
+
+    .tn-vehicle-app .glass-box,
+    .tn-vehicle-app .table-wrapper {
+        background: none;
+        box-shadow: none;
+        border: none;
+    }
+
+    .tn-vehicle-app td {
+        background: none;
+        color: black;
+    }
+
+    .tn-vehicle-app .fancy {
+        background: #000 !important;
+        color: white !important;
+        font-weight: bold;
+    }
+
+    .tn-vehicle-app .btn {
+        display: none; /* Hide buttons when printing */
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .tn-vehicle-app .form-section {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .tn-vehicle-app .glass-box {
+        width: 90%;
+        max-width: 350px;
+    }
+
+    .tn-vehicle-app .table-container {
+        margin-top: 20px;
+        padding: 10px;
+    }
+
+    .tn-vehicle-app .table-wrapper {
+        padding: 10px;
+        max-width: 100%;
+    }
+
+    .tn-vehicle-app th, 
+    .tn-vehicle-app td {
+        font-size: 16px;
+        padding: 8px;
+    }
+}
