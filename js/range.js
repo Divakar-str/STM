@@ -92,12 +92,17 @@ function calculateSumDigits() {
 }
 
 
-function printResult() {
-    let resultDiv = document.getElementById("rangeresult");
-    if (!resultDiv.innerHTML.trim()) {
-        alert("No numbers to print.");
+function printResults(divid) {
+    let resultDiv = document.getElementById(divid);
+    if (!resultDiv) {
+        alert("Result div not found.");
         return;
     }
+    if (resultDiv.innerHTML.trim() === "") {
+        alert("No results to print.");
+        return;
+    }
+  
 
     let printWindow = window.open('', '', 'height=600,width=800');
     printWindow.document.write(`
@@ -116,6 +121,7 @@ function printResult() {
                         background-color: #FFD700 !important; 
                         font-weight: bold; 
                         -webkit-print-color-adjust: exact; /* Ensure color prints */
+                         print-color-adjust: exact;
                     }
                 }
             </style>

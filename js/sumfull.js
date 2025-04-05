@@ -97,39 +97,3 @@ function processSumMatching() {
 
 
 
-
-function printNumbersfull() {
-    var resultDiv = document.getElementById('outputResults');
-
-    // Get the HTML content of the resultDiv
-    var resultHTML = resultDiv.innerHTML;
-
-    let printWindow = window.open('', '', 'height=600,width=800');
-    printWindow.document.write(`
-        <html>
-        <head>
-            <title>Print Numbers</title>
-            <style>
-                body { font-family: Arial, sans-serif; text-align: center; }
-                table { width: 100%; border-collapse: collapse; border: 1px solid black; }
-                td { border: 1px solid black; padding: 10px; text-align: center; font-size: 18px; }
-                .fancy { background-color: #FFD700 !important; font-weight: bold; }
-                @media print { 
-                    @page { size: A4; margin: 10mm; } 
-                    .fancy { 
-                        background-color: #FFD700 !important; 
-                        font-weight: bold; 
-                        -webkit-print-color-adjust: exact; /* Ensure color prints */
-                    }
-                }
-            </style>
-        </head>
-        <body>
-            ${resultHTML}
-        </body>
-        </html>
-    `);
-    printWindow.document.close();
-    printWindow.print();
-}
-

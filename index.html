@@ -207,7 +207,7 @@
                             <button type="button" class="btn btn-primary w-100" id="rangecal" onclick="calculateSumDigits()">Calculate</button>
                         </div>
                         <div class="form-group col-md-6">
-                            <button type="button" class="btn btn-secondary w-100" onclick="printResult()">Print</button>
+                            <button type="button" class="btn btn-secondary w-100" onclick="printResults('rangeresult')">Print</button>
                         </div>
                     </div>
                 </form>
@@ -245,17 +245,17 @@
                     <div class="form-row mb-3">
                         <div class="form-group col">
                             <label for="minValue">Start No:</label>
-                            <input type="text" class="form-control" id="minValue" name="minValue" maxlength="4" required pattern="[0-9]{4}" placeholder="Enter start number">
+                            <input type="text" class="form-control" id="minValue" name="minValue" maxlength="4" required pattern="[0-9]{4}" placeholder="Enter start number" oninput="validateNumber(this, 4, 'maxValue')">
                         </div>
                         <div class="form-group col">
                             <label for="maxValue">End No:</label>
-                            <input type="text" class="form-control" id="maxValue" name="maxValue" maxlength="4" required pattern="[0-9]{4}" placeholder="Enter end number">
+                            <input type="text" class="form-control" id="maxValue" name="maxValue" maxlength="4" required pattern="[0-9]{4}" placeholder="Enter end number" oninput="validateNumber(this, 4, 'userNumber')">
                         </div>
                     </div>
 
                     <div class="form-group mb-3">
                         <label for="userNumber">Total (1-9):</label>
-                        <input type="text" class="form-control" id="userNumber" name="userNumber" maxlength="1" required placeholder="Enter sum">
+                        <input type="text" class="form-control" id="userNumber" name="userNumber" maxlength="1" required placeholder="Enter sum" oninput="validateNumber(this, 1, 'fullcal')">
                     </div>
 
                     <div class="form-row">
@@ -263,7 +263,7 @@
                             <button type="button" class="btn btn-primary w-100" id="fullcal" onclick="generate()">Generate</button>
                         </div>
                         <div class="form-group col-md-6">
-                            <button type="button" class="btn btn-secondary w-100" onclick="printFullNo()">Print</button>
+                            <button type="button" class="btn btn-secondary w-100" onclick="printResults('generatedCodes')">Print</button>
                         </div>
                     </div>
                 </form>
@@ -332,7 +332,7 @@
                             <button type="button" class="btn btn-primary w-100" id="desiredcal" onclick="generateNumbers()">Generate Numbers</button>
                         </div>
                         <div class="form-group col-md-6">
-                            <button type="button" class="btn btn-secondary w-100" onclick="printNumbers()">Print</button>
+                            <button type="button" class="btn btn-secondary w-100" onclick="printResults('output')">Print</button>
                         </div>
                     </div>
                 </form>
@@ -396,7 +396,7 @@
                             <button type="button" class="btn btn-primary w-100" onclick="processSumMatching()">Find Matches</button>
                         </div>
                         <div class="form-group col-md-6">
-                            <button type="button" class="btn btn-secondary w-100 printButton" onclick="printNumbersfull()">Print</button>
+                            <button type="button" class="btn btn-secondary w-100 printButton" onclick="printResults('outputResults')">Print</button>
                         </div>
                     </div>
                 </form>

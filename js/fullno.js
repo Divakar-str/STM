@@ -1,3 +1,4 @@
+
 // Function to generate codes based on user input
 function generate() {
     const charToNumberMapping = {
@@ -44,7 +45,7 @@ function generate() {
             }
 
             // Creating a structured table layout dynamically
-            let columns = Math.min(5, Math.ceil(Math.sqrt(numbers.length)));
+            let columns = Math.min(4, Math.ceil(Math.sqrt(numbers.length)));
             let rows = Math.ceil(numbers.length / columns);
 
             let tableHTML = "<table class='fancy-table' style='width: 100%; border-collapse: collapse;'>";
@@ -72,40 +73,3 @@ function generate() {
     }
 }
 
-// Function to print results
-function printFullNo() {
-    let resultDiv = document.getElementById("generatedCodes");
-    if (!resultDiv.innerHTML.trim()) {
-        alert("No numbers to print.");
-        return;
-    }
-
-    let printWindow = window.open('', '', 'height=600,width=800');
-    printWindow.document.write(`
-        <html>
-        <head>
-            <title>Print Numbers</title>
-            <style>
-                body { font-family: Arial, sans-serif; text-align: center; }
-                table { width: 100%; border-collapse: collapse; border: 1px solid black; }
-                td { border: 1px solid black; padding: 10px; text-align: center; font-size: 18px; }
-                .fancy { background-color: #FFD700 !important; font-weight: bold; }
-                .fancy { border: 1px solid #FFD700 !important; background-color:#FFD700; font-weight: bold; }
-                @media print { 
-                    @page { size: A4; margin: 10mm; } 
-                    .fancy { 
-                        background-color: #FFD700 !important; 
-                        font-weight: bold; 
-                        -webkit-print-color-adjust: exact; /* Ensure color prints */
-                    }
-                }
-            </style>
-        </head>
-        <body>
-            ${resultDiv.innerHTML}
-        </body>
-        </html>
-    `);
-    printWindow.document.close();
-    printWindow.print();
-}
