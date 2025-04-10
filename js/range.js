@@ -102,7 +102,6 @@ function printResults(divid) {
         alert("No results to print.");
         return;
     }
-  
 
     let printWindow = window.open('', '', 'height=600,width=800');
     printWindow.document.write(`
@@ -113,15 +112,37 @@ function printResults(divid) {
                 body { font-family: Arial, sans-serif; text-align: center; }
                 table { width: 100%; border-collapse: collapse; border: 1px solid black; }
                 td { border: 1px solid black; padding: 10px; text-align: center; font-size: 18px; }
-                .fancy { background-color: #FFD700 !important; font-weight: bold; }
-                .fancy { border: 1px solid #FFD700 !important; background-color:#FFD700; font-weight: bold; }
+
+                /* Sum-Based Colors */
+                .sum-1 { background-color: #FF5733 !important; } /* Red */
+                .sum-2 { background-color: #337BFF !important; } /* Bright Blue */
+                .sum-3 { background-color: #33FF9E !important; } /* Teal Green */
+                .sum-4 { background-color: #A833FF !important; } /* Deep Purple */
+                .sum-5 { background-color: #FF336E !important; } /* Hot Pink */
+                .sum-6 { background-color: #33FFD1 !important; } /* Cyan */
+                .sum-7 { background-color: #8C33FF !important; } /* Violet */
+                .sum-8 { background-color: #FF5733 !important; } /* Red-Orange */
+                .sum-9 { background-color: #3E3E3E !important; } /* Dark Gray */
+
+                /* Fancy Highlight */
+                .fancy { 
+                    position: relative; 
+                    font-weight: bold; 
+                    border: 2px solid #FFD700 !important; 
+                    box-shadow: 0px 0px 8px #FFD700 !important; /* Glow effect */
+                }
+
+                /* Ensure colors & fancy highlight print */
                 @media print { 
                     @page { size: A4; margin: 10mm; } 
                     .fancy { 
-                        background-color: #FFD700 !important; 
-                        font-weight: bold; 
-                        -webkit-print-color-adjust: exact; /* Ensure color prints */
-                         print-color-adjust: exact;
+                        background-color: #FFD700 !important;
+                        -webkit-print-color-adjust: exact;
+                        print-color-adjust: exact;
+                    }
+                    td {
+                        -webkit-print-color-adjust: exact;
+                        print-color-adjust: exact;
                     }
                 }
             </style>
@@ -139,3 +160,5 @@ function printResults(divid) {
         printWindow.close(); // Close after printing
     };
 }
+
+

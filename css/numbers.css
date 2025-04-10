@@ -180,3 +180,67 @@
         padding: 8px;
     }
 }
+
+
+.sum-btn {
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+    border-radius: 50%;
+    border: 2px solid #007bff;
+    background-color: white;
+    color: #007bff;
+    text-align: center;
+    line-height: 35px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.sum-btn.selected {
+    background-color: #007bff;
+    color: white;
+}
+
+.fancy-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+
+
+/* Updated colors avoiding yellow */
+.sum-1 { background-color: #FF5733 !important; }  /* Red */
+.sum-2 { background-color: #337BFF !important; }  /* Bright Blue */
+.sum-3 { background-color: #33FF9E !important; }  /* Teal Green */
+.sum-4 { background-color: #A833FF !important; }  /* Deep Purple */
+.sum-5 { background-color: #FF336E !important; }  /* Hot Pink */
+.sum-6 { background-color: #33FFD1 !important; }  /* Cyan */
+.sum-7 { background-color: #8C33FF !important; }  /* Violet */
+.sum-8 { background-color: #FF5733 !important; }  /* Red-Orange */
+.sum-9 { background-color: #3E3E3E !important; }  /* Dark Gray */
+
+.fancy { 
+    position: relative;
+    font-weight: bold; 
+}
+
+/* Fancy Highlight Overlay */
+.fancy::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(255, 215, 0, 0.6); /* Gold Highlight */
+    z-index: -1;
+    border: 2px solid #FFD700; /* Gold Border */
+    box-shadow: 0px 0px 8px #FFD700; /* Soft Glow Effect */
+}
+
+/* Ensure colors & fancy highlight print */
+@media print { 
+    .fancy::before { 
+        background-color: rgba(255, 215, 0, 0.6) !important;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+    }
+}
