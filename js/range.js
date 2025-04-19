@@ -15,7 +15,7 @@ function validateNumber(input, maxLength, nextFieldId) {
 // Auto move back when deleting an empty field
 document.addEventListener("keydown", function (event) {
     let activeElement = document.activeElement;
-    
+
     if (event.key === "Backspace" && activeElement.value === "") {
         if (activeElement.id === "maxNumber") {
             document.getElementById("startNumber").focus();
@@ -124,6 +124,16 @@ function printResults(divid) {
                 .sum-8 { background-color: #FF5733 !important; } /* Red-Orange */
                 .sum-9 { background-color: #3E3E3E !important; } /* Dark Gray */
 
+                .color-1 { background-color: #FF6B6B !important; }
+                .color-2 { background-color: #05ff9b !important; }
+                .color-3 { background-color: #6BCB77 !important; }
+                .color-4 { background-color: #4D96FF !important ; }
+                .color-5 { background-color: #A66CFF !important;  }
+                .color-6 { background-color: #FF7F3F !important; }
+                .color-7 { background-color: #1FAB89 !important; }
+                .color-8 { background-color: #E85D75 !important; }
+                .color-9 { background-color: #5FAD56 !important; }
+
                 /* Fancy Highlight */
                 .fancy { 
                     position: relative; 
@@ -152,7 +162,7 @@ function printResults(divid) {
         </body>
         </html>
     `);
-    
+
     printWindow.document.close();
 
     printWindow.onload = function () {

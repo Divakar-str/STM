@@ -1,0 +1,183 @@
+/* Body Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f9;
+  color: #333;
+}
+
+/* Container Styling */
+.container {
+  width: 80%;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+/* Header Styling */
+h1 {
+  text-align: center;
+  color: #4CAF50;
+}
+
+/* Input and Statistics Areas */
+.input-area-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.input-area,
+.statistics-area {
+  width: 48%;
+  height: 120px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.statistics-area {
+  height: auto;
+}
+
+/* Button Styling */
+.btn-generate {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-right: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.btn-generate:hover {
+  background-color: #45a049;
+}
+
+.btn-print {
+  padding: 10px 20px;
+  background-color: #008CBA;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.btn-print:hover {
+  background-color: #007bb5;
+}
+
+/* Filter Group Styling */
+.filter-group {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.filter-option {
+  display: flex;
+  align-items: center;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 50%; /* Ensures the filters are rounded */
+}
+
+/* Circle Color Styling */
+.color-1 { background-color: #FF6B6B; }
+.color-2 { background-color: #05ff9b; }
+.color-3 { background-color: #6BCB77; }
+.color-4 { background-color: #4D96FF; }
+.color-5 { background-color: #A66CFF; }
+.color-6 { background-color: #FF7F3F; }
+.color-7 { background-color: #1FAB89; }
+.color-8 { background-color: #E85D75; }
+.color-9 { background-color: #5FAD56; }
+
+/* Number Circle Style */
+.number-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  border-radius: 50%; /* Ensures circle shape */
+  transition: background-color 0.3s ease, border 0.3s ease;
+}
+
+.number-inside {
+  z-index: 2; /* Ensure the number stays on top of the background */
+}
+
+input[type="checkbox"].d-none {
+  display: none; /* Hides the checkbox */
+}
+
+/* Checked State Styling */
+.number-circle input[type="checkbox"]:checked + .number-inside {
+  font-weight: bold;
+  color: #fff;
+}
+
+/* Selected Filter Highlight */
+.selected {
+  border: 2px solid #000; /* Adds a border around the selected circle */
+}
+
+/* Table Styling */
+.number-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.number-table th,
+.number-table td {
+  padding: 12px;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.number-table th {
+  background-color: #f4f4f4;
+}
+
+/* Container for statistics layout */
+.statistics-container {
+  margin-top: 20px;
+  padding: 10px;
+}
+
+.statistics-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.statistics-table th,
+.statistics-table td {
+  padding: 8px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.statistics-table th {
+  background-color: #f4f4f4;
+}
+
+.statistics-table td {
+  font-weight: normal;
+}
