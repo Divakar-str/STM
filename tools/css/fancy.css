@@ -92,15 +92,15 @@ h1 {
 }
 
 /* Circle Color Styling */
-.color-1 { background-color: #FF6B6B; }
-.color-2 { background-color: #05ff9b; }
-.color-3 { background-color: #6BCB77; }
-.color-4 { background-color: #4D96FF; }
-.color-5 { background-color: #A66CFF; }
-.color-6 { background-color: #FF7F3F; }
-.color-7 { background-color: #1FAB89; }
-.color-8 { background-color: #E85D75; }
-.color-9 { background-color: #5FAD56; }
+.color-1 { background-color: #ff2f00ac !important; }
+.color-2 { background-color: #337affd0 !important; }
+.color-3 { background-color: #008444cd !important; }
+.color-4 { background-color: #fc0101b2 !important; }
+.color-5 { background-color: #ff0048d6 !important; }
+.color-6 { background-color: #00fcc1cd !important; }
+.color-7 { background-color: #8b33ffac !important; }
+.color-8 { background-color: #ff58338d !important; }
+.color-9 { background-color: #0a8deaa7 !important; }
 
 /* Number Circle Style */
 .number-circle {

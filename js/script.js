@@ -77,8 +77,9 @@ const cardData = [
     {
         title:"Tools",
         links:[
-            {url:"tools/print.html",text:"print",class: "link-primary", icon: "fas fa-print"},
-            {url:"tools/pdf.html",text:"pdf",class: "link-success", icon: "fas fa-file-pdf"}
+            {url:"tools/print.html",text:"Print",class: "link-primary", icon: "fas fa-print"},
+            {url:"tools/pdf.html",text:"Pdf",class: "link-success", icon: "fas fa-file-pdf"},
+            {url:"tools/fancy.html",text:"Fancy",class: "link-danger", icon: "fas fa-sort-numeric-asc"},
           
         ]
     }

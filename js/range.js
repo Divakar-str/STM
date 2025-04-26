@@ -113,26 +113,15 @@ function printResults(divid) {
                 table { width: 100%; border-collapse: collapse; border: 1px solid black; }
                 td { border: 1px solid black; padding: 10px; text-align: center; font-size: 18px; }
 
-                /* Sum-Based Colors */
-                .sum-1 { background-color: #FF5733 !important; } /* Red */
-                .sum-2 { background-color: #337BFF !important; } /* Bright Blue */
-                .sum-3 { background-color: #33FF9E !important; } /* Teal Green */
-                .sum-4 { background-color: #A833FF !important; } /* Deep Purple */
-                .sum-5 { background-color: #FF336E !important; } /* Hot Pink */
-                .sum-6 { background-color: #33FFD1 !important; } /* Cyan */
-                .sum-7 { background-color: #8C33FF !important; } /* Violet */
-                .sum-8 { background-color: #FF5733 !important; } /* Red-Orange */
-                .sum-9 { background-color: #3E3E3E !important; } /* Dark Gray */
-
-                .color-1 { background-color: #FF6B6B !important; }
-                .color-2 { background-color: #05ff9b !important; }
-                .color-3 { background-color: #6BCB77 !important; }
-                .color-4 { background-color: #4D96FF !important ; }
-                .color-5 { background-color: #A66CFF !important;  }
-                .color-6 { background-color: #FF7F3F !important; }
-                .color-7 { background-color: #1FAB89 !important; }
-                .color-8 { background-color: #E85D75 !important; }
-                .color-9 { background-color: #5FAD56 !important; }
+                .sum-1, .color-1 { background-color: #ff2f00ac !important; }
+                .sum-2, .color-2 { background-color: #337affd0 !important; }
+                .sum-3, .color-3 { background-color: #008444cd !important; }
+                .sum-4, .color-4 { background-color: #fc0101b2 !important; }
+                .sum-5, .color-5 { background-color: #ff0048d6 !important; }
+                .sum-6, .color-6 { background-color: #00fcc1cd !important; }
+                .sum-7, .color-7 { background-color: #8b33ffac !important; }
+                .sum-8, .color-8 { background-color: #ff58338d !important; }
+                .sum-9, .color-9 { background-color: #0a8deaa7 !important; }
 
                 /* Fancy Highlight */
                 .fancy { 

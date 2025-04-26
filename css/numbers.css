@@ -94,7 +94,6 @@
     font-weight: 600;
     font-size: 18px;
     background: #f9f9f9;
-    border-radius: 6px;
     color: #333;
     border: 1px solid #ddd;
     transition: transform 0.2s ease-in-out;
@@ -210,15 +209,15 @@
 
 
 /* Updated colors avoiding yellow */
-.sum-1 { background-color: #FF5733 !important; }  /* Red */
-.sum-2 { background-color: #337BFF !important; }  /* Bright Blue */
-.sum-3 { background-color: #33FF9E !important; }  /* Teal Green */
-.sum-4 { background-color: #A833FF !important; }  /* Deep Purple */
-.sum-5 { background-color: #FF336E !important; }  /* Hot Pink */
-.sum-6 { background-color: #33FFD1 !important; }  /* Cyan */
-.sum-7 { background-color: #8C33FF !important; }  /* Violet */
-.sum-8 { background-color: #FF5733 !important; }  /* Red-Orange */
-.sum-9 { background-color: #3E3E3E !important; }  /* Dark Gray */
+.sum-1 { background-color: #ff2f00ac !important; }  
+.sum-2 { background-color: #337affd0 !important; }  
+.sum-3 { background-color: #008444cd !important; }  
+.sum-4 { background-color: #fc0101b2 !important; }
+.sum-5 { background-color: #ff0048d6 !important; }  
+.sum-6 { background-color: #00fcc1cd !important; }  
+.sum-7 { background-color: #8b33ffac !important; }  
+.sum-8 { background-color: #ff58338d !important; }  
+.sum-9 { background-color: #0a8deaa7 !important; }  
 
 .fancy { 
     position: relative;
