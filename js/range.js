@@ -156,8 +156,7 @@ function printResults(divid) {
 
     printWindow.onload = function () {
         printWindow.print();
-        printWindow.close(); // Close after printing
-    };
+       };
 }
 
 
