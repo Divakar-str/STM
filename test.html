@@ -1,0 +1,104 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fancy Table Generator</title>
+    <link rel="stylesheet" href="css/fancy.css">
+    <link rel="icon" type="image/x-icon" href="../images/png logo.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="js/fancy.js" defer=""></script>
+    <script src="/js/range.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Custom Fancy Number</h1>
+  
+      <!-- Input Area and Statistics Area -->
+      <div class="input-area-container">
+        <textarea class="input-area" id="numbersInput" placeholder="Paste numbers here"></textarea>
+        <div class="statistics-area" id="statistics">
+      <div class="statistics-container">
+        <table class="statistics-table">
+          <thead>
+            <tr>
+              <th>Statistic</th>
+              <th>Total - 1108</th>
+              <th>Filtered - 326</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+        <tr>
+          <td>1</td>
+          <td>109</td>
+          <td>109</td>
+        </tr>
+      
+        <tr>
+          <td>2</td>
+          <td>115</td>
+          <td>0</td>
+        </tr>
+      
+        <tr>
+          <td>3</td>
+          <td>120</td>
+          <td>0</td>
+        </tr>
+      
+        <tr>
+          <td>4</td>
+          <td>132</td>
+          <td>0</td>
+        </tr>
+      
+        <tr>
+          <td>5</td>
+          <td>110</td>
+          <td>110</td>
+        </tr>
+      
+        <tr>
+          <td>6</td>
+          <td>107</td>
+          <td>107</td>
+        </tr>
+      
+        <tr>
+          <td>7</td>
+          <td>125</td>
+          <td>0</td>
+        </tr>
+      
+        <tr>
+          <td>8</td>
+          <td>172</td>
+          <td>0</td>
+        </tr>
+      
+        <tr>
+          <td>9</td>
+          <td>118</td>
+          <td>0</td>
+        </tr>
+      
+          </tbody>
+        </table>
+      </div>
+    </div>
+      </div>
+  
+      <!-- Generate Button -->
+      <button class="btn-generate" onclick="generateTableFromInput()">Generate Table</button>
+      <button class="btn-print" onclick="printResults('table-container')">print</button>
+  
+      <div class="filter-group">
+        <!-- Filter options will be added here dynamically -->
+      <div class="filter-option text-center"><label class="d-flex align-items-center justify-content-center"><div class="color-1 rounded-circle d-flex align-items-center justify-content-center number-circle selected" style="width: 40px; height: 40px; cursor: pointer;"><input type="checkbox" value="1" class="d-none" id="filter-1"><span class="number-inside">1</span></div></label></div><div class="filter-option text-center"><label class="d-flex align-items-center justify-content-center"><div class="color-2 rounded-circle d-flex align-items-center justify-content-center number-circle" style="width: 40px; height: 40px; cursor: pointer;"><input type="checkbox" value="2" class="d-none" id="filter-2"><span class="number-inside">2</span></div></label></div><div class="filter-option text-center"><label class="d-flex align-items-center justify-content-center"><div class="color-3 rounded-circle d-flex align-items-center justify-content-center number-circle" style="width: 40px; height: 40px; cursor: pointer;"><input type="checkbox" value="3" class="d-none" id="filter-3"><span class="number-inside">3</span></div></label></div><div class="filter-option text-center"><label class="d-flex align-items-center justify-content-center"><div class="color-4 rounded-circle d-flex align-items-center justify-content-center number-circle" style="width: 40px; height: 40px; cursor: pointer;"><input type="checkbox" value="4" class="d-none" id="filter-4"><span class="number-inside">4</span></div></label></div><div class="filter-option text-center"><label class="d-flex align-items-center justify-content-center"><div class="color-5 rounded-circle d-flex align-items-center justify-content-center number-circle selected" style="width: 40px; height: 40px; cursor: pointer;"><input type="checkbox" value="5" class="d-none" id="filter-5"><span class="number-inside">5</span></div></label></div><div class="filter-option text-center"><label class="d-flex align-items-center justify-content-center"><div class="color-6 rounded-circle d-flex align-items-center justify-content-center number-circle selected" style="width: 40px; height: 40px; cursor: pointer;"><input type="checkbox" value="6" class="d-none" id="filter-6"><span class="number-inside">6</span></div></label></div><div class="filter-option text-center"><label class="d-flex align-items-center justify-content-center"><div class="color-7 rounded-circle d-flex align-items-center justify-content-center number-circle" style="width: 40px; height: 40px; cursor: pointer;"><input type="checkbox" value="7" class="d-none" id="filter-7"><span class="number-inside">7</span></div></label></div><div class="filter-option text-center"><label class="d-flex align-items-center justify-content-center"><div class="color-8 rounded-circle d-flex align-items-center justify-content-center number-circle" style="width: 40px; height: 40px; cursor: pointer;"><input type="checkbox" value="8" class="d-none" id="filter-8"><span class="number-inside">8</span></div></label></div><div class="filter-option text-center"><label class="d-flex align-items-center justify-content-center"><div class="color-9 rounded-circle d-flex align-items-center justify-content-center number-circle" style="width: 40px; height: 40px; cursor: pointer;"><input type="checkbox" value="9" class="d-none" id="filter-9"><span class="number-inside">9</span></div></label></div></div>
+      
+  
+      <!-- Container for Table -->
+      <div id="table-container"><table class="number-table"><tbody><tr><td class="color-1">3115</td><td class="color-6">3120</td><td class="color-5">3128</td><td class="color-6">3165</td><td class="color-1">3169</td></tr><tr><td class="color-5">3182</td><td class="color-1">3196</td><td class="color-6">3201</td><td class="color-1">3205</td><td class="color-5">3209</td></tr><tr><td class="color-6">3210</td><td class="color-5">3218</td><td class="color-6">3219</td><td class="color-6">3228</td><td class="color-5">3236</td></tr><tr><td class="color-1">3241</td><td class="color-6">3246</td><td class="color-1">3250</td><td class="color-5">3254</td><td class="color-1">3259</td></tr><tr><td class="color-5">3263</td><td class="color-6">3264</td><td class="color-1">3268</td><td class="color-5">3272</td><td class="color-6">3273</td></tr><tr><td class="color-5">3281</td><td class="color-6">3282</td><td class="color-1">3286</td><td class="color-5">3290</td><td class="color-6">3291</td></tr><tr><td class="color-1">3295</td><td class="color-1">3304</td><td class="color-5">3308</td><td class="color-1">3313</td><td class="color-6">3318</td></tr><tr><td class="color-1">3322</td><td class="color-5">3326</td><td class="color-6">3327</td><td class="color-1">3340</td><td class="color-1">3349</td></tr><tr><td class="color-5">3353</td><td class="color-6">3354</td><td class="color-1">3358</td><td class="color-5">3362</td><td class="color-5">3371</td></tr><tr><td class="color-6">3372</td><td class="color-5">3380</td><td class="color-6">3381</td><td class="color-6">3390</td><td class="color-1">3394</td></tr><tr><td class="color-5">3398</td><td class="color-1">3403</td><td class="color-5">3407</td><td class="color-6">3408</td><td class="color-1">3412</td></tr><tr><td class="color-5">3416</td><td class="color-6">3417</td><td class="color-1">3421</td><td class="color-5">3425</td><td class="color-6">3426</td></tr><tr><td class="color-1">3430</td><td class="color-1">3448</td><td class="color-5">3452</td><td class="color-1">3457</td><td class="color-5">3461</td></tr><tr><td class="color-6">3462</td><td class="color-5">3470</td><td class="color-6">3471</td><td class="color-6">3480</td><td class="color-1">3484</td></tr><tr><td class="color-1">3493</td><td class="color-5">3497</td><td class="color-6">3498</td><td class="color-1">3502</td><td class="color-5">3506</td></tr><tr><td class="color-6">3507</td><td class="color-1">3511</td><td class="color-5">3515</td><td class="color-6">3516</td><td class="color-1">3520</td></tr><tr><td class="color-5">3524</td><td class="color-6">3525</td><td class="color-1">3529</td><td class="color-5">3533</td><td class="color-6">3534</td></tr><tr><td class="color-1">3538</td><td class="color-5">3542</td><td class="color-6">3543</td><td class="color-1">3547</td><td class="color-5">3551</td></tr><tr><td class="color-6">3552</td><td class="color-5">3560</td><td class="color-6">3561</td><td class="color-6">3570</td><td class="color-1">3574</td></tr><tr><td class="color-5">3578</td><td class="color-1">3583</td><td class="color-5">3587</td><td class="color-1">3592</td><td class="color-1">3601</td></tr><tr><td class="color-5">3605</td><td class="color-6">3606</td><td class="color-1">3610</td><td class="color-5">3614</td><td class="color-6">3615</td></tr><tr><td class="color-1">3619</td><td class="color-5">3623</td><td class="color-6">3624</td><td class="color-1">3628</td><td class="color-5">3632</td></tr><tr><td class="color-6">3633</td><td class="color-5">3641</td><td class="color-6">3642</td><td class="color-5">3650</td><td class="color-6">3651</td></tr><tr><td class="color-5">3659</td><td class="color-6">3660</td><td class="color-1">3664</td><td class="color-1">3673</td><td class="color-1">3682</td></tr><tr><td class="color-6">3687</td><td class="color-1">3691</td><td class="color-5">3695</td><td class="color-5">3704</td><td class="color-6">3705</td></tr><tr><td class="color-1">3709</td><td class="color-5">3713</td><td class="color-6">3714</td><td class="color-1">3718</td><td class="color-5">3722</td></tr><tr><td class="color-6">3723</td><td class="color-1">3727</td><td class="color-5">3731</td><td class="color-6">3732</td><td class="color-1">3736</td></tr><tr><td class="color-5">3740</td><td class="color-6">3741</td><td class="color-1">3745</td><td class="color-5">3749</td><td class="color-6">3750</td></tr><tr><td class="color-1">3754</td><td class="color-5">3758</td><td class="color-6">3759</td><td class="color-1">3763</td><td class="color-5">3767</td></tr><tr><td class="color-6">3768</td><td class="color-1">3772</td><td class="color-5">3776</td><td class="color-1">3781</td><td class="color-5">3785</td></tr><tr><td class="color-1">3790</td><td class="color-5">3794</td><td class="color-6">3795</td><td class="color-5">3803</td><td class="color-6">3804</td></tr><tr><td class="color-1">3808</td><td class="color-5">3812</td><td class="color-6">3813</td><td class="color-1">3817</td><td class="color-5">3821</td></tr><tr><td class="color-6">3822</td><td class="color-1">3826</td><td class="color-5">3830</td><td class="color-6">3831</td><td class="color-1">3835</td></tr><tr><td class="color-6">3840</td><td class="color-1">3844</td><td class="color-6">3849</td><td class="color-1">3853</td><td class="color-5">3857</td></tr><tr><td class="color-1">3862</td><td class="color-5">3866</td><td class="color-6">3867</td><td class="color-1">3871</td><td class="color-5">3875</td></tr><tr><td class="color-6">3876</td><td class="color-1">3880</td><td class="color-5">3893</td><td class="color-6">3894</td><td class="color-5">3902</td></tr><tr><td class="color-6">3903</td><td class="color-1">3907</td><td class="color-5">3911</td><td class="color-6">3912</td><td class="color-1">3916</td></tr><tr><td class="color-5">3920</td><td class="color-6">3921</td><td class="color-1">3925</td><td class="color-6">3930</td><td class="color-1">3934</td></tr><tr><td class="color-5">3938</td><td class="color-1">3943</td><td class="color-5">3947</td><td class="color-6">3948</td><td class="color-1">3952</td></tr><tr><td class="color-5">3956</td><td class="color-6">3957</td><td class="color-1">3961</td><td class="color-5">3965</td><td class="color-1">3970</td></tr><tr><td class="color-5">3974</td><td class="color-6">3975</td><td class="color-5">3983</td><td class="color-6">3984</td><td class="color-5">3992</td></tr><tr><td class="color-1">3997</td><td class="color-6">4002</td><td class="color-1">4006</td><td class="color-5">4010</td><td class="color-6">4011</td></tr><tr><td class="color-1">4015</td><td class="color-5">4019</td><td class="color-6">4020</td><td class="color-1">4024</td><td class="color-5">4028</td></tr><tr><td class="color-6">4029</td><td class="color-1">4033</td><td class="color-5">4037</td><td class="color-6">4038</td><td class="color-1">4042</td></tr><tr><td class="color-5">4046</td><td class="color-6">4047</td><td class="color-1">4051</td><td class="color-5">4055</td><td class="color-6">4056</td></tr><tr><td class="color-1">4060</td><td class="color-5">4064</td><td class="color-6">4065</td><td class="color-1">4069</td><td class="color-5">4073</td></tr><tr><td class="color-6">4074</td><td class="color-1">4078</td><td class="color-5">4082</td><td class="color-6">4083</td><td class="color-1">4087</td></tr><tr><td class="color-5">4091</td><td class="color-6">4092</td><td class="color-5">4100</td><td class="color-6">4101</td><td class="color-1">4105</td></tr><tr><td class="color-5">4109</td><td class="color-6">4110</td><td class="color-1">4114</td><td class="color-5">4118</td><td class="color-6">4119</td></tr><tr><td class="color-1">4123</td><td class="color-5">4127</td><td class="color-6">4128</td><td class="color-1">4132</td><td class="color-5">4136</td></tr><tr><td class="color-6">4137</td><td class="color-5">4145</td><td class="color-6">4146</td><td class="color-1">4150</td><td class="color-5">4154</td></tr><tr><td class="color-6">4155</td><td class="color-1">4159</td><td class="color-5">4163</td><td class="color-6">4164</td><td class="color-1">4168</td></tr><tr><td class="color-5">4172</td><td class="color-6">4173</td><td class="color-1">4177</td><td class="color-5">4181</td><td class="color-6">4182</td></tr><tr><td class="color-1">4186</td><td class="color-5">4190</td><td class="color-6">4191</td><td class="color-1">4195</td><td class="color-5">4199</td></tr><tr><td class="color-6">4200</td><td class="color-1">4204</td><td class="color-5">4208</td><td class="color-6">4209</td><td class="color-1">4213</td></tr><tr><td class="color-5">4217</td><td class="color-6">4218</td><td class="color-1">4222</td><td class="color-5">4226</td><td class="color-6">4227</td></tr><tr><td class="color-1">4231</td><td class="color-5">4235</td><td class="color-6">4236</td><td class="color-1">4240</td><td class="color-5">4244</td></tr><tr><td class="color-6">4245</td><td class="color-1">4249</td><td class="color-5">4253</td><td class="color-6">4254</td><td class="color-1">4258</td></tr><tr><td class="color-5">4262</td><td class="color-6">4263</td><td class="color-1">4267</td><td class="color-5">4271</td><td class="color-6">4272</td></tr><tr><td class="color-1">4276</td><td class="color-5">4280</td><td class="color-6">4281</td><td class="color-1">4285</td><td class="color-5">4289</td></tr><tr><td class="color-6">4290</td><td class="color-1">4294</td><td class="color-5">4298</td><td class="color-6">4299</td><td class="color-1">4303</td></tr><tr><td class="color-5">4307</td><td class="color-6">4308</td><td class="color-1">4312</td><td class="color-5">4316</td><td class="color-6">4317</td></tr><tr><td class="color-1">4321</td><td class="color-5">4325</td><td class="color-6">4326</td><td class="color-1">4330</td><td class="color-5">4334</td></tr><tr><td class="color-6">4335</td><td class="color-1">4339</td><td class="color-5">4343</td><td class="color-6">4344</td><td class="color-1">4348</td></tr><tr><td class="color-5">4352</td><td class="color-6">4353</td><td class="color-1">4357</td><td class="color-5">4361</td><td class="color-6">4362</td></tr><tr><td class="color-1">4366</td></tr></tbody></table></div>
+    </div>
+  
+  
+  </body></html>

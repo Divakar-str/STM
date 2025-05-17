@@ -111,17 +111,18 @@ function printResults(divid) {
             <style>
                 body { font-family: Arial, sans-serif; text-align: center; }
                 table { width: 100%; border-collapse: collapse; border: 1px solid black; }
-                td { border: 1px solid black; padding: 10px; text-align: center; font-size: 18px; }
+                td { border: 1px solid black; padding: 10px; text-align: center; font-size: 18px; font-weight: bold; }
 
-                .sum-1, .color-1 { background-color: #ff2f00ac !important; }
-                .sum-2, .color-2 { background-color: #337affd0 !important; }
-                .sum-3, .color-3 { background-color: #008444cd !important; }
-                .sum-4, .color-4 { background-color: #fc0101b2 !important; }
-                .sum-5, .color-5 { background-color: #ff0048d6 !important; }
-                .sum-6, .color-6 { background-color: #00fcc1cd !important; }
-                .sum-7, .color-7 { background-color: #8b33ffac !important; }
-                .sum-8, .color-8 { background-color: #ff58338d !important; }
-                .sum-9, .color-9 { background-color: #0a8deaa7 !important; }
+                .sum-1, .color-1 { background-color: #ffb3a1 !important; }  /* Soft Coral (Warm) */
+                .sum-2, .color-2 { background-color: #ffb380 !important; }  /* Soft Orange */
+                .sum-3, .color-3 { background-color: #ff99c8 !important; }  /* Vibrant Pink */
+                .sum-4, .color-4 { background-color: #c9a7ff !important; }  /* Lavender Purple */
+                .sum-5, .color-5 { background-color: #99c2ff !important; }  /* Calm Sky Blue */
+                .sum-6, .color-6 { background-color: #99ddff !important; }  /* Light Azure */
+                .sum-7, .color-7 { background-color: #86e3b8 !important; }  /* Mint Green */
+                .sum-8, .color-8 { background-color: #7fffd4 !important; }  /* Aqua Green */
+                .sum-9, .color-9 { background-color: #b8f2d0 !important; }  /* Light Pastel Green */
+
 
                 /* Fancy Highlight */
                 .fancy { 
