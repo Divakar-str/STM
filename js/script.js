@@ -89,6 +89,8 @@ const container = document.getElementById('card-container');
 const row = document.createElement('div');
 row.className = 'row';
 
+const isTouchDevice = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+
 cardData.forEach(card => {
     const colDiv = document.createElement('div');
     colDiv.className = 'col-md-3 mb-4';
@@ -108,7 +110,7 @@ cardData.forEach(card => {
 
     card.links.forEach(link => {
         const li = document.createElement('li');
-        li.className = 'position-relative'; // Add position-relative for dropdown positioning
+        li.className = 'position-relative'; // For dropdown positioning
 
         const a = document.createElement('a');
         a.href = link.url;
@@ -124,13 +126,13 @@ cardData.forEach(card => {
 
         li.appendChild(a);
 
-        // Check for additional links
         if (link.additionalLinks && link.additionalLinks.length > 0) {
             const dropdownDiv = document.createElement('div');
             dropdownDiv.className = 'dropdown-menu position-absolute';
-            dropdownDiv.style.top = '100%'; // Position the dropdown below the link
+            dropdownDiv.style.top = '100%';
             dropdownDiv.style.left = '0';
-            dropdownDiv.style.display = 'none'; // Initially hidden
+            dropdownDiv.style.display = 'none';
+            dropdownDiv.style.zIndex = '1000';  // ensure on top
 
             link.additionalLinks.forEach(additionalLink => {
                 const dropdownLink = document.createElement('a');
@@ -143,14 +145,35 @@ cardData.forEach(card => {
 
             li.appendChild(dropdownDiv);
 
-            // Show dropdown on hover
-            li.addEventListener('mouseenter', function() {
-                dropdownDiv.style.display = 'block';
-            });
+            if (isTouchDevice) {
+                a.addEventListener('click', function(event) {
+                    if (dropdownDiv.style.display !== 'block') {
+                        event.preventDefault(); // prevent navigation on first tap
+                        // close other open dropdowns
+                        document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                            menu.style.display = 'none';
+                        });
+                        dropdownDiv.style.display = 'block';
+                    } else {
+                        // allow navigation on second tap
+                    }
+                });
 
-            li.addEventListener('mouseleave', function() {
-                dropdownDiv.style.display = 'none';
-            });
+                // close dropdown if clicked outside
+                document.addEventListener('click', (event) => {
+                    if (!li.contains(event.target)) {
+                        dropdownDiv.style.display = 'none';
+                    }
+                });
+            } else {
+                // Desktop hover using mouseover/mouseout for better support
+                li.addEventListener('mouseover', function() {
+                    dropdownDiv.style.display = 'block';
+                });
+                li.addEventListener('mouseout', function() {
+                    dropdownDiv.style.display = 'none';
+                });
+            }
         }
 
         ul.appendChild(li);
@@ -162,6 +185,7 @@ cardData.forEach(card => {
     colDiv.appendChild(cardDiv);
     row.appendChild(colDiv);
 });
+
 
 container.appendChild(row);
 

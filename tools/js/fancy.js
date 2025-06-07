@@ -23,7 +23,13 @@ function generateTableFromInput() {
   // Sort and filter unique numbers
   const uniqueNumbers = Array.from(allNumbers).sort((a, b) => parseInt(a) - parseInt(b));
   filteredNumbers = uniqueNumbers;
-
+  if (filteredNumbers.length > 0) {
+    const start = filteredNumbers[0];
+    const end = filteredNumbers[filteredNumbers.length - 1];
+    document.getElementById("filteredrange").textContent = `${start} to ${end}`;
+  } else {
+    document.getElementById("filteredrange").textContent = "No numbers in the list.";
+  }
   displayTable(filteredNumbers);
   displayStatistics(filteredNumbers);
   document.getElementById("numbersInput").value = ""; // Clear the input field
@@ -73,15 +79,16 @@ function displayStatistics(numbers) {
   });
 
   let combinedStatisticsHTML = "";
-  for (let i = 1; i <= 9; i++) {
-    combinedStatisticsHTML += `
-      <tr>
-        <td>${i}</td>
-        <td>${totalCounts[i]}</td>
-        <td>${selectedCounts[i]}</td>
-      </tr>
-    `;
-  }
+for (let i = 1; i <= 9; i++) {
+  combinedStatisticsHTML += `
+    <tr>
+      <td class="color-${i}">${i}</td>
+      <td class="color-${i}">${totalCounts[i]}</td>
+      <td class="color-${i}">${selectedCounts[i]}</td>
+    </tr>
+  `;
+}
+
 
   document.getElementById('statistics').innerHTML = `
     <div class="statistics-container">

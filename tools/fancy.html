@@ -16,15 +16,19 @@
 
     <!-- Input Area and Statistics Area -->
     <div class="input-area-container">
+      
       <textarea class="input-area" id="numbersInput" placeholder="Paste numbers here"></textarea>
-      <div class="statistics-area" id="statistics"></div>
+      <div class="statistics-area" id="statistics">
+      </div>
+      
     </div>
 
     <!-- Generate Button -->
     <button class="btn-generate" onclick="generateTableFromInput()">Generate Table</button>
     <button class="btn-print" onclick="printResults('table-container')">print</button>
-
+    <p id="filteredrange"></p>
     <div class="filter-group">
+      
       <!-- Filter options will be added here dynamically -->
     </div>
     
