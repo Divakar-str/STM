@@ -13,10 +13,10 @@ const charToNumberMapping = {
 };
 
 
-    const migaathirstam= [19,23,37,41,45];
+    const migaathirstam= [19,37,41,45];
     const athirstam = [1,3,5,6,9,10,14,15,16,18,21,23,24,27,28,32,33,36,42,46,50,51];
     const thuraathirstam= [4,7,8,11,13,17,22,31,40,49,58];
-    const aathiryaialipathu=[20,55];
+    const aathiryaialipathu=[55];
     const sothanai=[25,34,43,47];
     const sumar=[2,12,30,38,39,48,54,56,57];
     const aapathu=[20,26,29,35,44,53];
