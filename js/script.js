@@ -15,7 +15,7 @@ const cardData = [
     {
         title: "Vehicle",
         links: [
-            { url: "https://parivahan.gov.in/parivahan/", text: "Parivahan", class: "link-primary", icon: "fas fa-road" },
+            { url: "https://parivahan.gov.in/en", text: "Parivahan", class: "link-primary", icon: "fas fa-road" },
             { url: "https://vahan.parivahan.gov.in/vahanservice/vahan/ui/statevalidation/homepage.xhtml", text: "Vahan", class: "link-success", icon: "fas fa-truck" , additionalLinks: [
                 { url: "https://vahan.parivahan.gov.in/vahanservice/vahan/ui/eapplication/form_eAppCommonHome.xhtml", text: "Reverify Transaction" } ]
             },
@@ -60,17 +60,17 @@ const cardData = [
         links: [
             { url: "https://retail.onlinesbi.sbi/retail/login.htm", text: "SBI", class: "link-primary", icon: "fas fa-university" },
             { url: "https://internet-banking.retail.dbsbank.in/login", text: "DBS", class: "link-success", icon: "fas fa-building" },
-            { url: "https://online.canarabank.in/?module=login", text: "Canara", class: "link-danger", icon: "fas fa-landmark" },
-
+            { url: "https://online.canarabank.in/?module=login", text: "Canara", class: "link-danger", icon: "fas fa-landmark" }
         ]
     },
     {
-        title: "Social",
+        title: "Utilities",
         links: [
-            { url: "https://www.facebook.com/", text: "Facebook", class: "link-primary", icon: "fab fa-facebook" },
-            { url: "https://www.instagram.com/", text: "Instagram", class: "link-success", icon: "fab fa-instagram" },
-            { url: "https://twitter.com/", text: "Twitter", class: "link-danger", icon: "fab fa-twitter" },
-            { url: "https://www.linkedin.com/", text: "Linkedin", class: "link-info", icon: "fab fa-linkedin" }
+            { url: "https://www.indiapost.gov.in/", text: "Post", class: "link-primary", icon: "fas fa-envelope" },
+            { url: "https://fancy.parivahan.gov.in/", text: "Fancy Number", class: "link-success", icon: "fas fa-sort-numeric-desc" },
+            { url: "https://vahan.parivahan.gov.in/nrservices/faces/user/citizen/citizenlogin.xhtml", text: "RC Details", class: "link-danger", icon: "fas fa-info-circle" },
+            { url: "#", text: "Police Status",  class: "link-info",  icon: "fab fa-product-hunt",id: "pstatus"  }
+
         ]
     },
 
@@ -84,6 +84,29 @@ const cardData = [
         ]
     }
 ];
+
+document.addEventListener("click", function (e) {
+    const link = e.target.closest("#pstatus");
+    if (link) {
+        e.preventDefault(); // ⛔ stops the page from reloading or jumping
+
+        // 🧠 Get previously searched value from localStorage
+        const lastSearch = localStorage.getItem("lastPVR") || "";
+
+        // 📥 Prompt with the previous value prefilled
+        const part = prompt("Enter the PVR Number", lastSearch);
+
+        if (part && part.trim() !== "") {
+            // 💾 Save to localStorage
+            localStorage.setItem("lastPVR", part.trim());
+
+            // 🌐 Open the full URL in new tab
+            const fullUrl = "https://eservices.tnpolice.gov.in/CCTNSNICSDC/PVSBarCodeGeneratedData?QRPVRGENECODE=" + part.trim();
+            window.open(fullUrl, "_blank");
+        }
+    }
+});
+
 
 const container = document.getElementById('card-container');
 const row = document.createElement('div');
@@ -115,6 +138,7 @@ cardData.forEach(card => {
         const a = document.createElement('a');
         a.href = link.url;
         a.className = link.class;
+        a.id = link.id || ''; // Optional ID for specific links
         a.target = '_blank';
 
         const icon = document.createElement('i');
@@ -241,3 +265,4 @@ const fancy = [
     3456, 4000, 4004, 4040, 4444, 4567, 4777, 5000, 5005, 5050, 5555, 5678, 6000, 6006, 6060, 6666, 6789, 7000, 7007, 7070, 7171, 7172, 
     7337, 7575, 7576, 7777, 8000, 8118, 8181, 8448, 8484, 8586, 8888, 9000, 9009, 9090, 9091, 9097, 9779, 9797, 9999  ];
   
+
