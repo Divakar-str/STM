@@ -9,7 +9,7 @@ const charToNumberMapping = {
   'E': 5, 'N': 5, 'X': 5,
   'U': 6, 'V': 6, 'W': 6,
   'O': 7, 'Z': 7,
-  'F': 8, 'P': 8
+  'F': 8, 'P': 8,H:0
 };
 
 
