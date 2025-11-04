@@ -8,7 +8,10 @@ const cardData = [
             ]},
             { url: "https://sarathi.parivahan.gov.in/paymentscov/", text: "Fees Payment", class: "link-success", icon: "fas fa-money-bill-wave" },
             { url: "https://sarathi.parivahan.gov.in/cas/login?service=https%3A%2F%2Fsarathi.parivahan.gov.in%2Fsarathi%2Flogin.do", text: "Sarathi login", class: "link-danger", icon: "fas fa-sign-in-alt" },
-            { url: "https://flagday.tn.gov.in/", text: "Flag", class: "link-info", icon: "fas fa-flag" }
+            { url: "https://flagday.tn.gov.in/index.aspx", text: "Flag", class: "link-info", icon: "fas fa-flag" ,additionalLinks: [
+                { url: "https://flagday.tn.gov.in/download_receipt_sms.aspx", text: "Download", icon: "fas fa-download"},
+               
+            ]}
         ]
         
     },
