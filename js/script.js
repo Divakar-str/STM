@@ -63,7 +63,8 @@ const cardData = [
         links: [
             { url: "https://retail.onlinesbi.sbi/retail/login.htm", text: "SBI", class: "link-primary", icon: "fas fa-university" },
             { url: "https://internet-banking.retail.dbsbank.in/login", text: "DBS", class: "link-success", icon: "fas fa-building" },
-            { url: "https://online.canarabank.in/?module=login", text: "Canara", class: "link-danger", icon: "fas fa-landmark" }
+            { url: "https://online.canarabank.in/?module=login", text: "Canara", class: "link-danger", icon: "fas fa-landmark" },
+            { url: "https://tathya.uidai.gov.in/access/login?role=resident", text: "Aadhaar", class: "link-info", icon: "fas fa-id-card" }
         ]
     },
     {
