@@ -1,0 +1,120 @@
+/* ===================================== */
+/* ULTRA MODERN WHITE NAVBAR */
+/* ===================================== */
+
+.custom-navbar {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fbff 50%, #eef6ff 100%);
+  padding: 18px 70px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.4s ease;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Smooth shrink on scroll */
+.custom-navbar.scrolled {
+  padding: 12px 60px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* ================= BRAND ================= */
+
+.navbar-brand {
+  font-size: 2.2rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #1a237e !important;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.navbar-brand:hover {
+  transform: scale(1.05);
+}
+
+.logo-img {
+  width: 50px;
+  height: 50px;
+  margin-right: 14px;
+  border-radius: 15px;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+  transition: 0.4s ease;
+}
+
+.logo-img:hover {
+  transform: rotate(-6deg) scale(1.1);
+}
+
+/* ================= NAV LINKS ================= */
+
+.navbar-nav .nav-link {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-left: 32px;
+  padding: 6px 4px;
+  color: #2c2d59 !important;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+/* Elegant underline animation */
+.navbar-nav .nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0%;
+  height: 3px;
+  background: linear-gradient(90deg, #ff9900, #ffcc00);
+  border-radius: 50px;
+  transition: width 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover::after {
+  width: 100%;
+}
+
+/* Hover effect */
+.navbar-nav .nav-link:hover {
+  color: #ff9900 !important;
+  transform: translateY(-2px);
+}
+
+/* Active link */
+.navbar-nav .nav-link.active {
+  color: #ff9900 !important;
+  font-weight: 700;
+}
+
+.navbar-nav .nav-link.active::after {
+  width: 100%;
+}
+
+/* ================= TOGGLER ================= */
+
+.navbar-toggler {
+  border: none;
+}
+
+.navbar-toggler:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 992px) {
+
+  .custom-navbar {
+    padding: 15px 25px;
+  }
+
+  .navbar-nav .nav-link {
+    margin: 15px 0;
+    text-align: center;
+  }
+}

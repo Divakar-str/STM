@@ -1,32 +1,36 @@
-/* Center-align text inside the container */
+/* ===============================
+   GLOBAL TEXT & LAYOUT
+=================================*/
+
 .text-center {
     text-align: center;
 }
 
-/* Specific styling for the ani class */
 .ani {
     padding: 20px;
     width: 100%;
-    box-sizing: border-box; /* Ensure padding is included in the total width */
+    box-sizing: border-box;
 }
 
-/* Display class styling */
 .display-4 {
     font-size: 2.5rem;
-    font-weight: 300;
+    font-weight: 400;
     line-height: 1.2;
 }
 
-/* Additional styling to prevent overflow */
 .text {
-    word-wrap: break-word; /* Break long words to prevent overflow */
-    margin: 0; /* Reset margin */
+    word-wrap: break-word;
+    margin: 0;
 }
 
-/* Row and Column styling */
+/* ===============================
+   GRID SYSTEM
+=================================*/
+
 .row {
     display: flex;
     flex-wrap: wrap;
+    margin: 0 -15px;
 }
 
 .col-md-3 {
@@ -36,222 +40,238 @@
 }
 
 .mb-4 {
-    margin-bottom: 1.5rem !important;
+    margin-bottom: 1.5rem;
 }
 
-/* Custom card styling */
+/* ===============================
+   CARD DESIGN
+=================================*/
+
 .custom-card {
-    background: linear-gradient(to bottom, #ffffff, #f2f2f2) !important;
-    border-radius: 15px !important;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
-    transition: transform 0.3s, box-shadow 0.3s !important;
-    height: 100% !important;
+    background: linear-gradient(145deg, #ffffff, #f4f6f9);
+    border-radius: 18px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    transition: all 0.35s ease;
+    height: 100%;
+    overflow: hidden;
 }
 
 .custom-card:hover {
-    transform: translateY(-5px) !important;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15) !important;
+    transform: translateY(-8px);
+    box-shadow: 0 18px 35px rgba(0, 0, 0, 0.12);
 }
 
-/* Card body styling */
 .custom-card .card-body {
-    background-color: rgba(255, 255, 255, 0.9) !important;
-    border-radius: 15px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: space-between !important;
-    height: 100% !important;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding: 20px;
 }
 
-/* Card title styling */
+/* ===============================
+   CARD TITLE
+=================================*/
+
 .custom-card .card-title {
-    color: #333 !important;
-    border-bottom: 2px solid #495057 !important;
-    padding-bottom: 0.75rem !important;
-    margin-bottom: 1.5rem !important;
-    font-weight: bold !important;
-    font-size: 1.25rem !important;
+    color: #222;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    font-size: 1.2rem;
+    letter-spacing: 0.5px;
 }
 
-/* Custom links list styling */
+/* ===============================
+   LINKS SECTION
+=================================*/
+
 .custom-links {
-    padding-left: 0 !important;
-    margin-top: auto !important; /* Pushes the list to the bottom */
+    padding-left: 0;
+    margin-top: auto;
+    list-style: none;
 }
 
 .custom-links li {
-    margin: 1rem 0 !important;
-    position: relative !important; /* Ensure dropdown positioning works */
+    margin: 0.9rem 0;
+    position: relative;
 }
 
-/* Custom link styling */
+/* Link Base */
 .custom-links a {
-    display: flex !important; /* Display link as flex container */
-    align-items: center !important; /* Align items (icon and text) vertically */
-    padding: 1rem 1.25rem !important;
-    border-radius: 5px !important;
-    color: #fff ;
-    text-decoration: none !important;
-    font-weight: bold !important;
-    transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s !important;
-    width: 100% !important; /* Occupy all available space within the card */
+    display: flex;
+    align-items: center;
+    padding: 0.9rem 1.2rem;
+    border-radius: 12px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    width: 100%;
 }
 
+/* Hover Effect */
 .custom-links a:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
-    transform: scale(1.02) !important;
+    transform: translateX(6px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
 }
 
-/* Link color variations */
+/* Brand Gradient Colors */
 .custom-links .link-primary {
-    background-color: #007bff !important;
-}
-
-.custom-links .link-primary:hover {
-    background-color: #0056b3 !important;
+    background: linear-gradient(135deg, #007bff, #0056b3);
 }
 
 .custom-links .link-success {
-    background-color: #28a745 !important;
-}
-
-.custom-links .link-success:hover {
-    background-color: #218838 !important;
+    background: linear-gradient(135deg, #28a745, #1e7e34);
 }
 
 .custom-links .link-danger {
-    background-color: #dc3545 !important;
-}
-
-.custom-links .link-danger:hover {
-    background-color: #c82333 !important;
+    background: linear-gradient(135deg, #dc3545, #b21f2d);
 }
 
 .custom-links .link-info {
-    background-color: #17a2b8 !important;
+    background: linear-gradient(135deg, #17a2b8, #117a8b);
 }
 
-.custom-links .link-info:hover {
-    background-color: #117a8b !important;
-}
+/* ===============================
+   ICON STYLE
+=================================*/
 
-/* Icon styling */
 .custom-links i {
-    margin-right: 10px !important; /* Space between icon and text */
+    margin-right: 12px;
+    font-size: 1rem;
+    transition: transform 0.3s ease;
 }
 
-/* Dropdown menu styling */
+.custom-links a:hover i {
+    transform: scale(1.15);
+}
+
+/* ===============================
+   PREMIUM DROPDOWN
+=================================*/
+
+.position-relative {
+    position: relative;
+}
+
 .dropdown-menu {
     position: absolute;
-    top: 100%;
+    top: 110%;
     left: 0;
     display: none;
-    background: white;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    min-width: 180px;
+    padding: 10px 0;
+    border-radius: 12px;
+    background: #ffffff;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+    border: 1px solid rgba(0,0,0,0.05);
+    animation: dropdownFade 0.25s ease forwards;
     z-index: 1000;
-    min-width: 150px;
-  }
-  
-  .position-relative {
-    position: relative;
-  }
-  
+}
+
 .custom-links li:hover .dropdown-menu,
 .custom-links li:focus-within .dropdown-menu {
-    display: block; /* Show dropdown on hover or focus */
+    display: block;
 }
 
-/* Dropdown item styling */
 .dropdown-item {
     display: block;
-    padding: 0.25rem 0.5rem;
-    color: #333 !important; /* Ensure dropdown text is visible */
+    padding: 10px 18px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #000000 !important;
     text-decoration: none;
-    font-size: 0.875rem; /* Adjust font size to match overall design */
+    transition: all 0.25s ease;
+    border-left: 3px solid transparent;
 }
-
-
 
 .dropdown-item:hover {
-    background-color: #f8f9fa;
+    background: #f8f9fa;
+    padding-left: 22px;
+    border-left: 3px solid #007bff;
+    color: #007bff;
 }
 
-/* Media queries for responsiveness */
-@media (max-width: 768px) {
-    .container {
-        padding-left: 20px !important;
+/* Dropdown Animation */
+@keyframes dropdownFade {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
     }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===============================
+   RESPONSIVE DESIGN
+=================================*/
+
+@media (max-width: 992px) {
     .col-md-3 {
         flex: 0 0 50%;
         max-width: 50%;
     }
-    .custom-card {
-        margin-bottom: 15px !important;
-    }
-    .custom-card .card-title {
-        font-size: 1rem !important;
-        margin-bottom: 1rem !important;
-    }
-    .custom-links li {
-        margin: 0.5rem 0 !important;
-    }
-    .custom-links a {
-        padding: 0.75rem 1rem !important;
-        font-size: 0.9rem !important;
-    }
-
-    /* Dropdown menu adjustments for mobile */
-    .dropdown-menu {
-        position: relative;
-        width: 100%;
-    }
 }
 
-@media (max-width: 480px) {
-    .container {
-        padding-left: 10px !important;
-    }
-    .col-md-3 {
-        flex: 0 0 100%;
-        max-width: 100%;
-    }
-    .custom-card .card-title {
-        font-size: 0.875rem !important;
-    }
-    .custom-links a {
-        padding: 0.5rem 0.75rem !important;
-        font-size: 0.75rem !important;
-    }
-    .custom-links i {
-        margin-right: 5px !important;
-    }
-
-    /* Dropdown menu adjustments for smaller screens */
-    .dropdown-menu {
-        position: relative;
-        width: 100%;
-    }
-}
-
-/* Media queries for responsiveness */
 @media (max-width: 768px) {
+
     .ani {
         padding: 15px;
-        width: 100%;
     }
 
     .display-4 {
         font-size: 2rem;
     }
+
+    .custom-card {
+        margin-bottom: 20px;
+    }
+
+    .custom-links a {
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .dropdown-menu {
+        position: relative;
+        top: 0;
+        width: 100%;
+        box-shadow: none;
+        margin-top: 8px;
+    }
 }
 
 @media (max-width: 480px) {
+
+    .col-md-3 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
     .ani {
         padding: 10px;
-        width: 100%;
     }
 
     .display-4 {
         font-size: 1.5rem;
+    }
+
+    .custom-card .card-title {
+        font-size: 1rem;
+    }
+
+    .custom-links a {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.8rem;
+    }
+
+    .custom-links i {
+        margin-right: 8px;
     }
 }
