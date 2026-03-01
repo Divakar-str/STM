@@ -113,16 +113,15 @@ function printResults(divid) {
                 table { width: 100%; border-collapse: collapse; border: 1px solid black; }
                 td { border: 1px solid black; padding: 10px; text-align: center; font-size: 18px; font-weight: bold; }
 
-                .sum-1, .color-1 { background-color: #7fffd4 !important; }
-                .sum-2, .color-2 { background-color: #ff99c8 !important; }
-                .sum-3, .color-3 { background-color: #99ddff !important; }
-                .sum-4, .color-4 { background-color: #ffb3a1 !important; }
-                .sum-5, .color-5 { background-color: #c9a7ff !important; }
-                .sum-6, .color-6 { background-color: #b8f2d0 !important; }
-                .sum-7, .color-7 { background-color: #ffb380 !important; }
-                .sum-8, .color-8 { background-color: #86e3b8 !important; }
-                .sum-9, .color-9 { background-color: #99c2ff !important; }
-
+                .sum-1, .color-1 { background-color: #F2FFF4 !important; }
+                .sum-2, .color-2 { background-color: #E8FBEA !important; }
+                .sum-3, .color-3 { background-color: #DDF6E0 !important; }
+                .sum-4, .color-4 { background-color: #D2F1D6 !important; }
+                .sum-5, .color-5 { background-color: #C6ECCD !important; }
+                .sum-6, .color-6 { background-color: #BAE7C3 !important; }
+                .sum-7, .color-7 { background-color: #ADE2B9 !important; }
+                .sum-8, .color-8 { background-color: #9FDCB0 !important; }
+                .sum-9, .color-9 { background-color: #90D6A6 !important; }
 
 
                 /* Fancy Highlight */
@@ -158,7 +157,7 @@ function printResults(divid) {
 
     printWindow.onload = function () {
         printWindow.print();
-       };
+    };
 }
 
 
