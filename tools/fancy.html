@@ -1,40 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fancy Table Generator</title>
-  <link rel="stylesheet" href="css/fancy.css">
-  <link rel="icon" type="image/x-icon" href="../images/png logo.png">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-  <script src="js/fancy.js" defer></script>
-  <script src="../js/range.js"></script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Fancy Table Generator</title>
+
+<link rel="stylesheet" href="css/fancy.css">
+<link rel="icon" type="image/x-icon" href="../images/png logo.png">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+<script src="js/fancy.js" defer></script>
+<script src="../js/range.js"></script>
+
 </head>
+
 <body>
-  <div class="container">
-    <h1>Custom Fancy Number</h1>
 
-    <!-- Input Area and Statistics Area -->
-    <div class="input-area-container">
-      
-      <textarea class="input-area" id="numbersInput" placeholder="Paste numbers here"></textarea>
-      <div class="statistics-area" id="statistics">
-      </div>
-      
-    </div>
+<div class="container">
 
-    <!-- Generate Button -->
-    <button class="btn-generate" onclick="generateTableFromInput()">Generate Table</button>
-    <button class="btn-print" onclick="printResults('table-container')">print</button>
-    <p id="filteredrange"></p>
-    <div class="filter-group">
-      
-      <!-- Filter options will be added here dynamically -->
-    </div>
-    
+<h1>Custom Fancy Number</h1>
 
-    <!-- Container for Table -->
-    <div id="table-container"></div>
-  </div>
+<div class="input-area-container">
+
+<textarea
+class="input-area"
+id="numbersInput"
+placeholder="Paste numbers here">
+</textarea>
+
+<div class="statistics-area" id="statistics"></div>
+
+</div>
+
+<button class="btn-generate" onclick="generateTableFromInput()">Generate Table</button>
+<button class="btn-print" onclick="printResults('table-container')">Print</button>
+
+<p id="filteredrange"></p>
+
+<div class="filter-group"></div>
+
+<div id="table-container"></div>
+
+</div>
+
 </body>
 </html>

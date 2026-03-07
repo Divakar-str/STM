@@ -34,8 +34,8 @@ const cardData = [
         title: "NP permit",
         links: [
             { url: "https://vahan.parivahan.gov.in/onlinepermit/vahan/loginpage.xhtml?statecd=Mzc2MzM2MzAzNjY0MzIzODM3NjIzNjY0MzY2MjM3NTQ0ZQ==", text: "Online Permit", class: "link-info", icon: "fas fa-receipt" },            { url: "https://vahan.parivahan.gov.in/npermit/faces/np/jsp/nationalpermit.jsp", text: "NP Permit Home", class: "link-primary", icon: "fas fa-id-card" },
-            { url: "https://vahan.parivahan.gov.in/npermit/faces/np/jsp/nationalpermit.jsp", text: "Permit Pay", class: "link-success", icon: "fas fa-receipt" },
-            { url: "https://vahan.parivahan.gov.in/npermit/faces/np/jsp/printpermitreceipt.jsp", text: "Print Receipt", class: "link-danger", icon: "fas fa-print" }
+            { url: "https://vahan.parivahan.gov.in/npermit/faces/np/jsp/nationalpermit.jsp", text: "Permit Pay", class: "link-success", icon: "fas fa-rupee" },
+            { url: "https://vahan.parivahan.gov.in/npermit/faces/np/jsp/printpermituser.jsp", text: "Print Permit", class: "link-danger", icon: "fas fa-print" }
             
         ]
     },
@@ -59,21 +59,20 @@ const cardData = [
         ]
     },
     {
-        title: "Bank",
+        title: "Vehicle",
         links: [
-            { url: "https://retail.onlinesbi.sbi/retail/login.htm", text: "SBI", class: "link-primary", icon: "fas fa-university" },
-            { url: "https://internet-banking.retail.dbsbank.in/login", text: "DBS", class: "link-success", icon: "fas fa-building" },
-            { url: "https://online.canarabank.in/?module=login", text: "Canara", class: "link-danger", icon: "fas fa-landmark" },
-            { url: "https://tathya.uidai.gov.in/access/login?role=resident", text: "Aadhaar", class: "link-info", icon: "fas fa-id-card" }
+            
+            { url: "https://puc.parivahan.gov.in/puc/views/PucCertificate.xhtml", text: "PUCC", class: "link-primary", icon: "fas fa-smog" },
+            { url: "https://fancy.parivahan.gov.in/", text: "Fancy Number", class: "link-success", icon: "fas fa-sort-numeric-desc" },
+            { url: "https://vahan.parivahan.gov.in/nrservices/faces/user/citizen/citizenlogin.xhtml", text: "RC Details", class: "link-danger", icon: "fas fa-info-circle" }
         ]
     },
     {
         title: "Utilities",
         links: [
             { url: "https://www.indiapost.gov.in/", text: "Post", class: "link-primary", icon: "fas fa-envelope" },
-            { url: "https://fancy.parivahan.gov.in/", text: "Fancy Number", class: "link-success", icon: "fas fa-sort-numeric-desc" },
-            { url: "https://vahan.parivahan.gov.in/nrservices/faces/user/citizen/citizenlogin.xhtml", text: "RC Details", class: "link-danger", icon: "fas fa-info-circle" },
-            { url: "#", text: "Police Status",  class: "link-info",  icon: "fab fa-product-hunt",id: "pstatus"  }
+            { url: "#", text: "Police Status",  class: "link-success",  icon: "fab fa-product-hunt",id: "pstatus"  },
+            { url: "https://tathya.uidai.gov.in/access/login?role=resident", text: "Aadhaar", class: "link-danger", icon: "fas fa-id-card" }
 
         ]
     },
@@ -82,8 +81,9 @@ const cardData = [
         title:"Tools",
         links:[
             {url:"tools/print.html",text:"Print",class: "link-primary", icon: "fas fa-print"},
-            {url:"tools/pdf.html",text:"Pdf",class: "link-success", icon: "fas fa-file-pdf"},
-            {url:"tools/fancy.html",text:"Fancy",class: "link-danger", icon: "fas fa-sort-numeric-asc"},
+            {url:"tools/pdf.html",text:"PDF ",class: "link-success", icon: "fas fa-file-pdf"},
+            {url:"tools/fancy.html",text:"Fancy Calculator",class: "link-danger", icon: "fas fa-sort-numeric-asc"},
+            {url:"tools/compressor.html",text:"File Compressor",class: "link-info", icon: "fas fa-compress"}
           
         ]
     }
