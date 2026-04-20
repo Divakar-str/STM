@@ -71,7 +71,7 @@ const cardData = [
         title: "Utilities",
         links: [
             { url: "https://www.indiapost.gov.in/", text: "Post", class: "link-primary", icon: "fas fa-envelope" },
-            { url: "#", text: "Police Status",  class: "link-success",  icon: "fab fa-product-hunt",id: "pstatus"  },
+            { url: "https://www.police.tn.gov.in/citizenportal", text: "Police E-service",  class: "link-success",  icon: "fab fa-product-hunt"  },
             { url: "https://tathya.uidai.gov.in/access/login?role=resident", text: "Aadhaar", class: "link-danger", icon: "fas fa-id-card" }
 
         ]
@@ -89,27 +89,7 @@ const cardData = [
     }
 ];
 
-document.addEventListener("click", function (e) {
-    const link = e.target.closest("#pstatus");
-    if (link) {
-        e.preventDefault(); // ⛔ stops the page from reloading or jumping
 
-        // 🧠 Get previously searched value from localStorage
-        const lastSearch = localStorage.getItem("lastPVR") || "";
-
-        // 📥 Prompt with the previous value prefilled
-        const part = prompt("Enter the PVR Number", lastSearch);
-
-        if (part && part.trim() !== "") {
-            // 💾 Save to localStorage
-            localStorage.setItem("lastPVR", part.trim());
-
-            // 🌐 Open the full URL in new tab
-            const fullUrl = "https://eservices.tnpolice.gov.in/CCTNSNICSDC/PVSBarCodeGeneratedData?QRPVRGENECODE=" + part.trim();
-            window.open(fullUrl, "_blank");
-        }
-    }
-});
 
 
 const container = document.getElementById('card-container');
