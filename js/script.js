@@ -72,7 +72,7 @@ const cardData = [
         links: [
             { url: "https://www.indiapost.gov.in/", text: "Post", class: "link-primary", icon: "fas fa-envelope" },
             { url: "https://www.police.tn.gov.in/citizenportal", text: "Police E-service",  class: "link-success",  icon: "fab fa-product-hunt"  },
-            { url: "https://tathya.uidai.gov.in/access/login?role=resident", text: "Aadhaar", class: "link-danger", icon: "fas fa-id-card" }
+            { url: "https://myaadhaar.uidai.gov.in/", text: "Aadhaar", class: "link-danger", icon: "fas fa-id-card" }
 
         ]
     },
