@@ -1,35 +1,49 @@
-/* ===================================== */
-/* ULTRA MODERN WHITE NAVBAR */
-/* ===================================== */
+/* ==========================================================================
+   NAVBAR TOKENS & STYLES
+   ========================================================================== */
+:root {
+  --nav-glass: rgba(255, 255, 255, 0.85);
+  --nav-border: rgba(226, 232, 240, 0.8);
+  --nav-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
+  --nav-text: #0f172a;
+  --nav-accent: #2563eb;
+  --nav-accent-glow: linear-gradient(90deg, #2563eb, #8b5cf6);
+}
 
+/* ==========================================================================
+   GLASSMORPHIC STICKY NAVBAR
+   ========================================================================== */
 .custom-navbar {
-  background: linear-gradient(135deg, #ffffff 0%, #f8fbff 50%, #eef6ff 100%);
-  padding: 18px 70px;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.05);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  transition: all 0.4s ease;
+  background: var(--nav-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 16px 40px;
+  border-bottom: 1px solid var(--nav-border);
+  box-shadow: var(--nav-shadow);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   position: sticky;
   top: 0;
   z-index: 1000;
 }
 
-/* Smooth shrink on scroll */
+/* Compact Scroll State */
 .custom-navbar.scrolled {
-  padding: 12px 60px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  padding: 10px 40px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.12);
 }
 
-/* ================= BRAND ================= */
-
+/* ==========================================================================
+   BRAND & LOGO
+   ========================================================================== */
 .navbar-brand {
-  font-size: 2.2rem;
+  font-size: 1.8rem;
   font-weight: 900;
-  letter-spacing: 2px;
-  color: #1a237e !important;
+  letter-spacing: -0.03em;
+  color: var(--nav-text) !important;
   display: flex;
   align-items: center;
-  transition: all 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .navbar-brand:hover {
@@ -37,83 +51,120 @@
 }
 
 .logo-img {
-  width: 50px;
-  height: 50px;
-  margin-right: 14px;
-  border-radius: 15px;
-  transition: 0.4s ease;
+  width: 44px;
+  height: 44px;
+  margin-right: 12px;
+  border-radius: 12px;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.logo-img:hover {
-  transform: rotate(-6deg) scale(1.1);
+.navbar-brand:hover .logo-img {
+  transform: rotate(-12deg) scale(1.15);
 }
 
-/* ================= NAV LINKS ================= */
-
+/* ==========================================================================
+   ANIMATED NAV LINKS
+   ========================================================================== */
 .navbar-nav .nav-link {
-  font-size: 1.05rem;
-  font-weight: 600;
-  margin-left: 32px;
-  padding: 6px 4px;
-  color: #2c2d59 !important;
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-left: 16px;
+  padding: 8px 14px !important;
+  color: var(--nav-text) !important;
+  border-radius: 10px;
   position: relative;
-  transition: all 0.3s ease;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Elegant underline animation */
 .navbar-nav .nav-link::after {
   content: "";
   position: absolute;
-  left: 0;
-  bottom: -6px;
-  width: 0%;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 80%;
   height: 3px;
-  background: linear-gradient(90deg, #ff9900, #ffcc00);
-  border-radius: 50px;
-  transition: width 0.3s ease;
+  background: var(--nav-accent-glow);
+  border-radius: 4px;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.navbar-nav .nav-link:hover::after {
-  width: 100%;
+.navbar-nav .nav-link:hover::after,
+.navbar-nav .nav-link.active::after {
+  transform: translateX(-50%) scaleX(1);
 }
 
-/* Hover effect */
 .navbar-nav .nav-link:hover {
-  color: #ff9900 !important;
+  color: var(--nav-accent) !important;
+  background: rgba(37, 99, 235, 0.05);
   transform: translateY(-2px);
 }
 
-/* Active link */
 .navbar-nav .nav-link.active {
-  color: #ff9900 !important;
-  font-weight: 700;
+  color: var(--nav-accent) !important;
+  background: rgba(37, 99, 235, 0.08);
 }
 
-.navbar-nav .nav-link.active::after {
-  width: 100%;
-}
-
-/* ================= TOGGLER ================= */
-
+/* ==========================================================================
+   MOBILE MENU TOGGLER
+   ========================================================================== */
 .navbar-toggler {
   border: none;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: rgba(37, 99, 235, 0.08);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.navbar-toggler:active {
+  transform: scale(0.92);
 }
 
 .navbar-toggler:focus {
   outline: none;
-  box-shadow: none;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
 }
 
-/* ================= MOBILE ================= */
-
+/* ==========================================================================
+   MOBILE DRAWER & RESPONSIVE LAYOUT
+   ========================================================================== */
 @media (max-width: 992px) {
+  .custom-navbar,
+  .custom-navbar.scrolled {
+    padding: 12px 20px;
+  }
 
-  .custom-navbar {
-    padding: 15px 25px;
+  .navbar-collapse {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 16px;
+    margin-top: 12px;
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--nav-border);
+    animation: drawerSlide 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
   .navbar-nav .nav-link {
-    margin: 15px 0;
-    text-align: center;
+    margin: 6px 0;
+    padding: 12px 16px !important;
+    text-align: left;
+    border-radius: 12px;
+  }
+
+  .navbar-nav .nav-link::after {
+    display: none;
+  }
+
+  @keyframes drawerSlide {
+    from {
+      opacity: 0;
+      transform: translateY(-12px) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
   }
 }

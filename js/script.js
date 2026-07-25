@@ -42,9 +42,10 @@ const cardData = [
     {
         title: "Echallan",
         links: [
+            
+            { url: "https://echallan.parivahan.nic.in/challan/challan-services", text: "Next Gen  Echallan", class: "link-success", icon: "fa fa-traffic-light" },
+            { url: "https://echallan.parivahan.nic.in/challan/payment-verification", text: "Pending Transaction", class: "link-danger", icon: "fas fa-spinner" },
             { url: "https://echallan.parivahan.gov.in/index/accused-challan", text: "Echallan Pay", class: "link-primary", icon: "fas fa-receipt" },
-            { url: "https://echallan.parivahan.gov.in/payment-verification/re-double-verification", text: "Failed Transaction", class: "link-success", icon: "fas fa-circle-exclamation" },
-            { url: "https://echallan.parivahan.gov.in/payment-verification", text: "Pending Transaction", class: "link-danger", icon: "fas fa-spinner" },
             { url: "https://vahan.parivahan.gov.in/eTransPgi/paymentDetails", text: "Status", class: "link-info", icon: "fas fa-list" }
         ]
     },
