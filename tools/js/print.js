@@ -1,0 +1,514 @@
+document.addEventListener("DOMContentLoaded", () => {
+    const croppers = {};
+    const selectedRatios = { image: NaN, imageFront: NaN, imageBack: NaN };
+    
+    // Per-slot stacks for Undo and Filter Reversion
+    const historyStacks = { image: [], imageFront: [], imageBack: [] };
+    const preFilterBases = { image: null, imageFront: null, imageBack: null };
+
+    let userCardScale = 0.60; // Default: each card occupies 38% of half A4 page
+    let activeContainer = document.getElementById("canvas-container-main");
+
+    // Push state into undo stack
+    function pushHistory(imgId, dataUrl) {
+        if (!historyStacks[imgId]) historyStacks[imgId] = [];
+        historyStacks[imgId].push(dataUrl);
+        if (historyStacks[imgId].length > 15) historyStacks[imgId].shift();
+    }
+
+    // Undo action
+    function undoAction(imgId) {
+        if (!historyStacks[imgId] || historyStacks[imgId].length <= 1) {
+            alert("No earlier steps to undo.");
+            return;
+        }
+
+        if (croppers[imgId]) {
+            croppers[imgId].destroy();
+            croppers[imgId] = null;
+            updateCropBtnUI(imgId, false);
+        }
+
+        historyStacks[imgId].pop(); // Pop current
+        const previousState = historyStacks[imgId][historyStacks[imgId].length - 1];
+
+        const img = document.getElementById(imgId);
+        img.src = previousState;
+        preFilterBases[imgId] = previousState;
+    }
+
+    // Normalizes oversized images without distorting aspect ratios
+    function normalizeImage(dataUrl, maxDim = 2400) {
+        return new Promise((resolve) => {
+            const img = new Image();
+            img.onload = () => {
+                let w = img.naturalWidth;
+                let h = img.naturalHeight;
+
+                if (w > maxDim || h > maxDim) {
+                    if (w > h) {
+                        h = Math.round((h * maxDim) / w);
+                        w = maxDim;
+                    } else {
+                        w = Math.round((w * maxDim) / h);
+                        h = maxDim;
+                    }
+                }
+
+                const canvas = document.createElement("canvas");
+                canvas.width = w;
+                canvas.height = h;
+                const ctx = canvas.getContext("2d");
+                ctx.drawImage(img, 0, 0, w, h);
+                resolve(canvas.toDataURL("image/jpeg", 0.95));
+            };
+            img.src = dataUrl;
+        });
+    }
+
+    async function setupImageToZone(imgId, dataUrl) {
+        const img = document.getElementById(imgId);
+        if (!img) return;
+
+        const container = img.closest(".canvas-workspace");
+        const placeholder = container.querySelector(".drop-zone-placeholder");
+
+        if (croppers[imgId]) {
+            croppers[imgId].destroy();
+            croppers[imgId] = null;
+            updateCropBtnUI(imgId, false);
+        }
+
+        const cleanData = await normalizeImage(dataUrl);
+        img.src = cleanData;
+        img.style.display = "block";
+        if (placeholder) placeholder.style.display = "none";
+
+        preFilterBases[imgId] = cleanData;
+        historyStacks[imgId] = [];
+        pushHistory(imgId, cleanData);
+    }
+
+    function setRatio(imgId, ratioValue, btnElement) {
+        selectedRatios[imgId] = ratioValue;
+
+        const parent = btnElement.parentElement;
+        parent.querySelectorAll("button").forEach(b => b.classList.remove("active"));
+        btnElement.classList.add("active");
+
+        if (croppers[imgId]) {
+            croppers[imgId].setAspectRatio(ratioValue);
+        }
+    }
+
+    function toggleCrop(imgId) {
+        const img = document.getElementById(imgId);
+        if (!img || !img.src || img.style.display === "none") {
+            alert("Please load an image first.");
+            return;
+        }
+
+        if (croppers[imgId]) {
+            const canvas = croppers[imgId].getCroppedCanvas({
+                imageSmoothingEnabled: true,
+                imageSmoothingQuality: "high"
+            });
+
+            if (canvas) {
+                const croppedData = canvas.toDataURL("image/jpeg", 0.95);
+                croppers[imgId].destroy();
+                croppers[imgId] = null;
+                img.src = croppedData;
+                preFilterBases[imgId] = croppedData;
+                pushHistory(imgId, croppedData);
+                updateCropBtnUI(imgId, false);
+            }
+        } else {
+            croppers[imgId] = new Cropper(img, {
+                aspectRatio: selectedRatios[imgId],
+                viewMode: 1,
+                autoCropArea: 0.95,
+                responsive: true,
+                movable: true,
+                zoomable: true,
+                rotatable: false,
+                scalable: false
+            });
+            updateCropBtnUI(imgId, true);
+        }
+    }
+
+    function updateCropBtnUI(imgId, isCropping) {
+        const btn = document.getElementById(`btnCrop-${imgId}`);
+        if (!btn) return;
+        if (isCropping) {
+            btn.innerHTML = `<i class="fa-solid fa-check me-1"></i> Apply`;
+            btn.classList.add("btn-crop-active");
+        } else {
+            btn.innerHTML = `<i class="fa-solid fa-crop-simple me-1"></i> Crop`;
+            btn.classList.remove("btn-crop-active");
+        }
+    }
+
+    function rotateImage(imgId) {
+        const img = document.getElementById(imgId);
+        if (!img || !img.src || img.style.display === "none") return;
+
+        if (croppers[imgId]) {
+            croppers[imgId].destroy();
+            croppers[imgId] = null;
+            updateCropBtnUI(imgId, false);
+        }
+
+        const source = new Image();
+        source.crossOrigin = "anonymous";
+        source.onload = () => {
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+
+            canvas.width = source.naturalHeight;
+            canvas.height = source.naturalWidth;
+
+            ctx.translate(canvas.width / 2, canvas.height / 2);
+            ctx.rotate((90 * Math.PI) / 180);
+            ctx.drawImage(source, -source.naturalWidth / 2, -source.naturalHeight / 2);
+
+            const rotatedData = canvas.toDataURL("image/jpeg", 0.95);
+            img.src = rotatedData;
+            preFilterBases[imgId] = rotatedData;
+            pushHistory(imgId, rotatedData);
+        };
+        source.src = img.src;
+    }
+
+    // Resolves Filter Override Issue: Always renders from preFilterBases[imgId]
+    function applyFilter(imgId, type) {
+        const img = document.getElementById(imgId);
+        if (!img || !img.src || img.style.display === "none") return;
+
+        const baseImageSrc = preFilterBases[imgId] || img.src;
+
+        if (type === "none") {
+            img.src = baseImageSrc;
+            pushHistory(imgId, baseImageSrc);
+            return;
+        }
+
+        const temp = new Image();
+        temp.crossOrigin = "anonymous";
+        temp.onload = () => {
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+            canvas.width = temp.naturalWidth;
+            canvas.height = temp.naturalHeight;
+            ctx.drawImage(temp, 0, 0);
+
+            const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const d = imgData.data;
+
+            for (let i = 0; i < d.length; i += 4) {
+                const gray = 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2];
+                if (type === "grayscale") {
+                    d[i] = gray; d[i + 1] = gray; d[i + 2] = gray;
+                } else if (type === "bw") {
+                    const bin = gray > 142 ? 255 : 0;
+                    d[i] = bin; d[i + 1] = bin; d[i + 2] = bin;
+                }
+            }
+
+            ctx.putImageData(imgData, 0, 0);
+            const filteredData = canvas.toDataURL("image/jpeg", 0.95);
+            img.src = filteredData;
+            pushHistory(imgId, filteredData);
+        };
+        temp.src = baseImageSrc;
+    }
+
+    function resetImage(imgId) {
+        const img = document.getElementById(imgId);
+        if (!img) return;
+
+        if (croppers[imgId]) {
+            croppers[imgId].destroy();
+            croppers[imgId] = null;
+            updateCropBtnUI(imgId, false);
+        }
+
+        img.src = "";
+        img.style.display = "none";
+        historyStacks[imgId] = [];
+        preFilterBases[imgId] = null;
+
+        const container = img.closest(".canvas-workspace");
+        const placeholder = container.querySelector(".drop-zone-placeholder");
+        const input = container.querySelector("input[type='file']");
+
+        if (placeholder) placeholder.style.display = "block";
+        if (input) input.value = "";
+    }
+
+    function updateCardScale(value) {
+        userCardScale = parseInt(value, 10) / 100;
+        document.getElementById("scaleValLabel").textContent = `${value}%`;
+    }
+
+    function saveFull(imgId) {
+        const img = document.getElementById(imgId);
+        if (!img || !img.src || img.style.display === "none") return alert("No image loaded.");
+        const a = document.createElement("a");
+        a.href = img.src;
+        a.download = `DocuPrint_${Date.now()}.jpeg`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
+
+    function printFullPage(imgId) {
+        const img = document.getElementById(imgId);
+        if (!img || !img.src || img.style.display === "none") return alert("Upload an image first.");
+
+        const win = window.open("", "_blank");
+        win.document.write(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Print Document</title>
+                <style>
+                    @page { size: A4 portrait; margin: 10mm; }
+                    body { margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+                    img { max-width: 100%; max-height: 96vh; object-fit: contain; }
+                </style>
+            </head>
+            <body>
+                <img src="${img.src}" onload="window.print(); window.close();" />
+            </body>
+            </html>
+        `);
+        win.document.close();
+    }
+
+    // Save ID Sheet obeying custom scale (30% - 55%)
+    function saveIDCopy(fId, bId) {
+        const fImg = document.getElementById(fId);
+        const bImg = document.getElementById(bId);
+
+        const hasF = fImg && fImg.src && fImg.style.display !== "none";
+        const hasB = bImg && bImg.src && bImg.style.display !== "none";
+
+        if (!hasF && !hasB) return alert("Upload at least one side of the ID.");
+
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = 2480;
+        canvas.height = 3508;
+
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        const halfPageH = canvas.height / 2;
+        const targetCardH = halfPageH * userCardScale;
+
+        const drawSlot = (src, yCenter) => {
+            return new Promise((resolve) => {
+                if (!src) return resolve();
+                const image = new Image();
+                image.onload = () => {
+                    const aspect = image.naturalWidth / image.naturalHeight;
+                    const drawH = targetCardH;
+                    const drawW = drawH * aspect;
+                    const x = (canvas.width - drawW) / 2;
+                    const y = yCenter - (drawH / 2);
+
+                    ctx.drawImage(image, x, y, drawW, drawH);
+                    ctx.strokeStyle = "#94a3b8";
+                    ctx.lineWidth = 2;
+                    ctx.strokeRect(x, y, drawW, drawH);
+                    resolve();
+                };
+                image.src = src;
+            });
+        };
+
+        Promise.all([
+            drawSlot(hasF ? fImg.src : null, canvas.height * 0.25),
+            drawSlot(hasB ? bImg.src : null, canvas.height * 0.75)
+        ]).then(() => {
+            const a = document.createElement("a");
+            a.href = canvas.toDataURL("image/jpeg", 0.95);
+            a.download = `ID_Sheet_${Math.round(userCardScale * 100)}pct_${Date.now()}.jpeg`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        });
+    }
+
+    // Print ID Sheet obeying custom scale percentage
+    function printIDCopy(fId, bId) {
+        const fImg = document.getElementById(fId);
+        const bImg = document.getElementById(bId);
+
+        const fSrc = (fImg && fImg.src && fImg.style.display !== "none") ? fImg.src : "";
+        const bSrc = (bImg && bImg.src && bImg.style.display !== "none") ? bImg.src : "";
+
+        if (!fSrc && !bSrc) return alert("Upload at least one side to print.");
+
+        // Percentage calculated for each half (e.g., 38vh inside 50vh)
+        const scalePctHeight = Math.round(50 * userCardScale);
+
+        const win = window.open("", "_blank");
+        win.document.write(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Print ID Duplex</title>
+                <style>
+                    @page { size: A4 portrait; margin: 0; }
+                    body {
+                        margin: 0;
+                        padding: 0;
+                        height: 100vh;
+                        display: flex;
+                        flex-direction: column;
+                    }
+                    .half-page {
+                        height: 50vh;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        box-sizing: border-box;
+                    }
+                    .card-box {
+                        height: ${scalePctHeight}vh;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        border: 1px  #94a3b8;
+                    }
+                    .card-box img {
+                        height: 100%;
+                        width: auto;
+                        object-fit: contain;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="half-page">
+                    ${fSrc ? `<div class="card-box"><img src="${fSrc}"></div>` : ''}
+                </div>
+                <div class="half-page">
+                    ${bSrc ? `<div class="card-box"><img src="${bSrc}"></div>` : ''}
+                </div>
+                <script>
+                    window.onload = function() { window.print(); window.close(); };
+                <\/script>
+            </body>
+            </html>
+        `);
+        win.document.close();
+    }
+
+    function switchMode(mode) {
+        const fullSec = document.getElementById("fullPageSection");
+        const idSec = document.getElementById("idCopySection");
+        const tabFull = document.getElementById("tabFullBtn");
+        const tabId = document.getElementById("tabIdBtn");
+        const fullActs = document.getElementById("fullHeaderActions");
+        const idActs = document.getElementById("idHeaderActions");
+        const idScale = document.getElementById("idScaleControl");
+
+        if (mode === "full") {
+            fullSec.classList.remove("d-none");
+            idSec.classList.add("d-none");
+            tabFull.classList.add("active");
+            tabId.classList.remove("active");
+            fullActs.classList.remove("d-none");
+            fullActs.classList.add("d-flex");
+            idActs.classList.add("d-none");
+            idActs.classList.remove("d-flex");
+            idScale.classList.add("d-none");
+            idScale.classList.remove("d-flex");
+            setActiveTarget(document.getElementById("canvas-container-main"));
+        } else {
+            fullSec.classList.add("d-none");
+            idSec.classList.remove("d-none");
+            tabFull.classList.remove("active");
+            tabId.classList.add("active");
+            fullActs.classList.add("d-none");
+            fullActs.classList.remove("d-flex");
+            idActs.classList.remove("d-none");
+            idActs.classList.add("d-flex");
+            idScale.classList.remove("d-none");
+            idScale.classList.add("d-flex");
+            setActiveTarget(document.getElementById("canvas-container-front"));
+        }
+    }
+
+    function setActiveTarget(container) {
+        document.querySelectorAll(".canvas-workspace").forEach(c => c.classList.remove("active-target"));
+        if (container) {
+            container.classList.add("active-target");
+            activeContainer = container;
+        }
+    }
+
+    document.querySelectorAll(".canvas-workspace").forEach(box => {
+        box.addEventListener("click", () => setActiveTarget(box));
+        box.addEventListener("focus", () => setActiveTarget(box));
+        box.addEventListener("mouseenter", () => setActiveTarget(box));
+
+        box.addEventListener("dragover", (e) => {
+            e.preventDefault();
+            box.classList.add("drag-active");
+        });
+        box.addEventListener("dragleave", () => box.classList.remove("drag-active"));
+        box.addEventListener("drop", (e) => {
+            e.preventDefault();
+            box.classList.remove("drag-active");
+            const file = e.dataTransfer.files[0];
+            if (file && file.type.startsWith("image/")) {
+                const reader = new FileReader();
+                reader.onload = ev => setupImageToZone(box.querySelector("img").id, ev.target.result);
+                reader.readAsDataURL(file);
+            }
+        });
+    });
+
+    document.addEventListener("paste", (e) => {
+        if (!activeContainer) return;
+        const items = (e.clipboardData || window.clipboardData).items;
+        for (const item of items) {
+            if (item.type.startsWith("image")) {
+                const file = item.getAsFile();
+                const reader = new FileReader();
+                reader.onload = ev => {
+                    const targetImg = activeContainer.querySelector("img");
+                    if (targetImg) setupImageToZone(targetImg.id, ev.target.result);
+                };
+                reader.readAsDataURL(file);
+                break;
+            }
+        }
+    });
+
+    function loadImage(event, imgId) {
+        const file = event.target.files && event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = e => setupImageToZone(imgId, e.target.result);
+        reader.readAsDataURL(file);
+    }
+
+    window.switchMode = switchMode;
+    window.loadImage = loadImage;
+    window.setRatio = setRatio;
+    window.toggleCrop = toggleCrop;
+    window.rotateImage = rotateImage;
+    window.applyFilter = applyFilter;
+    window.undoAction = undoAction;
+    window.resetImage = resetImage;
+    window.updateCardScale = updateCardScale;
+    window.saveFull = saveFull;
+    window.saveIDCopy = saveIDCopy;
+    window.printFullPage = printFullPage;
+    window.printIDCopy = printIDCopy;
+});

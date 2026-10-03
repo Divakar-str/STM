@@ -1,50 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Fancy Table Generator</title>
-
-<link rel="stylesheet" href="css/fancy.css">
-<link rel="icon" type="image/x-icon" href="../images/png logo.png">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-
-<script src="js/fancy.js" defer></script>
-<script src="../js/range.js"></script>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Fancy Number Generator</title>
+  <link rel="stylesheet" href="css/fancy.css">
+  <link rel="icon" type="image/x-icon" href="../images/png logo.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <script src="js/fancy.js" defer></script>
+  <script src="../js/range.js"></script>
 </head>
-
 <body>
+  <div class="container-fluid px-3 py-3 main-wrapper">
+    <!-- Screen Controls & Statistics -->
+    <div class="card p-3 mb-3 no-print border-0 shadow-sm">
+      <h2 class="h5 fw-bold text-success mb-3">Custom Fancy Number Generator</h2>
+      
+      <div class="row g-3 mb-3">
+        <div class="col-lg-6 d-flex flex-column">
+          <textarea class="form-control mb-3 flex-grow-1" id="numbersInput" rows="5" placeholder="Paste 4-digit numbers here (one per line)..."></textarea>
+          
+          <div class="d-flex flex-wrap align-items-center gap-2">
+            <button class="btn btn-success fw-bold px-4" onclick="generateTableFromInput()">Generate</button>
+            <button class="btn btn-outline-secondary px-3" onclick="clearFilter()">Clear Filters</button>
 
-<div class="container">
+            <!-- Styled Dynamic Print Mode Selector -->
+            <select class="form-select w-auto fw-bold print-mode-dropdown" id="printModeSelect" onchange="updatePrintMode()">
+              <option value="plain">Print: B&W </option>
+              <option value="color">Print: Color </option>
+            </select>
 
-<h1>Custom Fancy Number</h1>
+            <button class="btn btn-dark fw-bold px-3" onclick="window.print()">Print</button>
+          </div>
+        </div>
 
-<div class="input-area-container">
+        <div class="col-lg-6">
+          <div class="statistics-area h-100" id="statistics"></div>
+        </div>
+      </div>
 
-<textarea
-class="input-area"
-id="numbersInput"
-placeholder="Paste numbers here">
-</textarea>
+      <!-- Range Box Highlight -->
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-2">
+        <div id="filteredrange-box" class="range-badge d-none">
+          <span class="range-label">Range:</span>
+          <span id="filteredrange" class="range-values"></span>
+        </div>
+      </div>
 
-<div class="statistics-area" id="statistics"></div>
+      <!-- Number Filter Circles -->
+      <div class="filter-group d-flex flex-wrap gap-2 justify-content-center"></div>
+    </div>
 
-</div>
-
-<button class="btn-generate" onclick="generateTableFromInput()">Generate Table</button>
-<button class="btn-print" onclick="printResults('table-container')">Print</button>
-
-<p id="filteredrange"></p>
-
-<div class="filter-group"></div>
-
-<div id="table-container"></div>
-
-</div>
-
+    <!-- Output Section (Optimized for Screen & Print) -->
+    <div class="card  border-0 shadow-sm printable-area" id="print-wrapper">
+      <div id="table-container"></div>
+    </div>
+  </div>
 </body>
 </html>

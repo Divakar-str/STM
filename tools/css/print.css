@@ -1,0 +1,467 @@
+/* ========================================================
+   Clean White Studio Architecture - Refined Edition
+   Inspired by Apple & Notion Workspace UI
+   ======================================================== */
+:root {
+    --bg-page: #f8fafc;
+    --surface-card: #ffffff;
+    --border-subtle: #e2e8f0;
+    --border-strong: #0f172a;
+    --text-primary: #0f172a;
+    --text-secondary: #64748b;
+    --text-muted: #94a3b8;
+    --hover-surface: #f1f5f9;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+}
+
+body.studio-app {
+    background-color: var(--bg-page);
+    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ========================================================
+   Top Navigation Bar
+   ======================================================== */
+.studio-header {
+    height: 64px;
+    background: #ffffff;
+    border-bottom: 1px solid var(--border-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-box {
+    width: 36px;
+    height: 36px;
+    background: #0f172a;
+    color: #ffffff;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+}
+
+.brand-title {
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: -0.3px;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.badge-tag {
+    font-size: 10px;
+    background: #f1f5f9;
+    color: #334155;
+    border: 1px solid #cbd5e1;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-weight: 700;
+}
+
+/* Mode Switcher Pill */
+.mode-switch-pill {
+    background: #f1f5f9;
+    border: 1px solid var(--border-subtle);
+    padding: 3px;
+    border-radius: 30px;
+    display: flex;
+    gap: 2px;
+}
+
+.pill-btn {
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 16px;
+    border-radius: 20px;
+    transition: all 0.2s ease;
+}
+
+.pill-btn:hover {
+    color: var(--text-primary);
+}
+
+.pill-btn.active {
+    background: #ffffff;
+    color: var(--text-primary);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* Header Action Buttons */
+.btn-clean-primary {
+    background: #0f172a;
+    color: #ffffff;
+    border: 1px solid #0f172a;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 7px 16px;
+    border-radius: var(--radius-sm);
+    transition: all 0.15s ease;
+}
+
+.btn-clean-primary:hover {
+    background: #1e293b;
+    border-color: #1e293b;
+    color: #ffffff;
+}
+
+.btn-clean-subtle {
+    background: #ffffff;
+    color: var(--text-primary);
+    border: 1px solid #cbd5e1;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 7px 16px;
+    border-radius: var(--radius-sm);
+    transition: all 0.15s ease;
+}
+
+.btn-clean-subtle:hover {
+    background: var(--hover-surface);
+    border-color: #94a3b8;
+}
+
+/* Scale Controls */
+.scale-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    white-space: nowrap;
+}
+
+.custom-slider {
+    width: 100px;
+    accent-color: #0f172a;
+}
+
+/* ========================================================
+   Main Stage & Cards
+   ======================================================== */
+.studio-stage {
+    flex: 1;
+    padding: 24px;
+    max-width: 1380px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.workspace-card {
+    background: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+/* Floating Action Ribbon */
+.ribbon-bar {
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 6px 12px;
+    margin-bottom: 16px;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.ribbon-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.group-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+.ribbon-divider {
+    width: 1px;
+    height: 18px;
+    background: var(--border-subtle);
+}
+
+.btn-ratio {
+    background: #ffffff;
+    border: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: var(--radius-sm);
+    transition: all 0.15s ease;
+}
+
+.btn-ratio.active {
+    background: #0f172a;
+    color: #ffffff;
+    border-color: #0f172a;
+}
+
+.btn-action {
+    background: #ffffff;
+    border: 1px solid var(--border-subtle);
+    color: var(--text-primary);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: var(--radius-sm);
+    transition: all 0.15s ease;
+}
+
+.btn-action:hover {
+    background: var(--hover-surface);
+    border-color: #cbd5e1;
+}
+
+.btn-action.btn-crop-active {
+    background: #0f172a !important;
+    color: #ffffff !important;
+    border-color: #0f172a !important;
+}
+
+/* ========================================================
+   Drop / Paste Workspace Area (High Contrast Boundaries)
+   ======================================================== */
+.canvas-workspace {
+    position: relative;
+    width: 100%;
+    height: 480px;
+    background-color: #ffffff;
+    background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+    background-size: 16px 16px;
+    border: 2px dashed #94a3b8;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.canvas-workspace.id-box {
+    height: 380px;
+}
+
+/* Distinct Active Target Highlight on Hover or Click */
+.canvas-workspace:focus,
+.canvas-workspace.active-target {
+    border: 2px solid var(--border-strong) !important;
+    box-shadow: 0 0 0 4px rgba(15, 23, 42, 0.08);
+    background-color: #fafbfc;
+}
+
+/* Dragging Over Zone */
+.canvas-workspace.drag-active {
+    border: 2px dashed #0f172a !important;
+    background-color: #f1f5f9 !important;
+    box-shadow: 0 0 0 4px rgba(15, 23, 42, 0.12) !important;
+}
+
+/* Visual Target Label */
+.zone-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: #ffffff;
+    border: 1px solid var(--border-subtle);
+    color: #334155;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 6px;
+    z-index: 5;
+    pointer-events: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.canvas-workspace.active-target .zone-badge {
+    background: #0f172a;
+    color: #ffffff;
+    border-color: #0f172a;
+}
+
+.drop-zone-placeholder {
+    text-align: center;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 24px;
+    z-index: 1;
+}
+
+.drop-icon-ring {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #f1f5f9;
+    border: 1px solid var(--border-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    margin: 0 auto 12px auto;
+    color: #0f172a;
+}
+
+.drop-zone-placeholder h6 {
+    color: var(--text-primary);
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+/* ========================================================
+   Image Clamping & Fit Logic (Fixes Distortion & Stretch)
+   ======================================================== */
+.image-stage-wrap {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+.stage-img {
+    max-width: 100% !important;
+    max-height: 100% !important;
+    width: auto !important;
+    height: auto !important;
+    object-fit: contain !important;
+    display: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-radius: 4px;
+    background-color: #ffffff;
+}
+
+/* ========================================================
+   ID Copy Card Headers & Ratios
+   ======================================================== */
+.card-header-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.card-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.ratio-strip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+}
+
+.badge-ratio {
+    background: #ffffff;
+    border: 1px solid var(--border-subtle);
+    color: #475569;
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.badge-ratio:hover {
+    background: var(--hover-surface);
+}
+
+.badge-ratio.active {
+    background: #0f172a;
+    color: #ffffff;
+    border-color: #0f172a;
+}
+
+.id-banner {
+    background: #ffffff;
+    border: 1px solid var(--border-subtle);
+    border-left: 4px solid #0f172a;
+    padding: 12px 18px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+}
+
+/* ========================================================
+   Cropper JS Minimalist Skin
+   ======================================================== */
+.cropper-view-box {
+    outline: 2px solid #0f172a !important;
+    outline-color: #0f172a !important;
+}
+
+.cropper-line {
+    background-color: #0f172a !important;
+}
+
+.cropper-dashed {
+    border-color: rgba(15, 23, 42, 0.5) !important;
+}
+
+.cropper-point {
+    background-color: #ffffff !important;
+    border: 2px solid #0f172a !important;
+    width: 10px !important;
+    height: 10px !important;
+    border-radius: 2px !important;
+}
+
+/* ========================================================
+   Dropdown Menus
+   ======================================================== */
+.dropdown-menu {
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    padding: 4px;
+}
+
+.dropdown-item {
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-weight: 500;
+}
+
+.dropdown-item:active, 
+.dropdown-item:hover {
+    background-color: var(--hover-surface);
+    color: var(--text-primary);
+}

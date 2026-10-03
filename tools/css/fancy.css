@@ -1,259 +1,216 @@
-/* ===== BODY ===== */
-body{
-  font-family: "Segoe UI", Arial, sans-serif;
-  margin:0;
-  padding:0;
-  background:#f6f8fb;
-  color:#333;
+/* Global Screen Styling */
+body {
+  background-color: #f3f8f5 !important;
+  color: #11261b;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
-/* ===== MAIN CONTAINER ===== */
-.container{
-  width:85%;
-  margin:25px auto;
-  padding:25px;
-  background:#ffffff;
-  border-radius:12px;
-  box-shadow:0 8px 25px rgba(0,0,0,0.08);
+.main-wrapper {
+  max-width: 1250px;
+  margin: 0 auto;
 }
 
-/* ===== TITLE ===== */
-h1{
-  text-align:center;
-  color:#2e7d32;
-  font-weight:600;
-  margin-bottom:20px;
+/* Range Badge Highlight Box */
+.range-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #e8f5e9;
+  border: 2px solid #2e7d32;
+  border-radius: 8px;
+  padding: 6px 14px;
+  box-shadow: 0 2px 4px rgba(46, 125, 50, 0.08);
+}
+.range-label {
+  font-weight: 700;
+  color: #1b5e20;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+.range-values {
+  font-weight: 800;
+  font-size: 15px;
+  color: #0f3d14;
 }
 
-/* ===== INPUT + STATISTICS LAYOUT ===== */
-.input-area-container{
-  display:flex;
-  gap:20px;
-  margin-bottom:20px;
+/* Statistics Active Row Highlight */
+.stats-row-active {
+  outline: 2px solid #1b5e20 !important;
+  background-color: #c8e6c9 !important;
+}
+.stats-row-active td {
+  font-weight: 800 !important;
 }
 
-/* ===== TEXTAREA ===== */
-.input-area{
-  width:50%;
-  height:130px;
-  padding:12px;
-  font-size:15px;
-  border:1px solid #d9d9d9;
-  border-radius:8px;
-  resize:none;
-  transition:all .2s;
+/* Styled Print Dropdown (Dynamic Mode) */
+.print-mode-dropdown {
+  border: 2px solid #495057;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+.print-mode-dropdown.dropdown-multicolor {
+  border-color: #00897b !important;
+  background: linear-gradient(135deg, #e8f5e9, #e0f2f1) !important;
+  color: #004d40 !important;
+  box-shadow: 0 0 0 3px rgba(0, 137, 123, 0.2);
 }
 
-.input-area:focus{
-  border-color:#4CAF50;
-  outline:none;
-  box-shadow:0 0 4px rgba(76,175,80,0.4);
+/* Screen Table Layout (Optimized Spacing & Larger Font) */
+.custom-main-table {
+  width: 100% !important;
+  table-layout: fixed !important;
+  border-collapse: separate !important;
+  border-spacing: 4px !important;
+}
+.custom-main-table td {
+  width: 10% !important;
+  padding: 0;
+  text-align: center;
+  vertical-align: middle;
 }
 
-/* ===== STATISTICS BOX ===== */
-.statistics-area{
-  width:50%;
-  background:#fafafa;
-  border:1px solid #e5e5e5;
-  border-radius:8px;
-  padding:10px;
+/* Capsule Pills (View Mode) */
+.number-pill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 4px;
+  border-radius: 50rem;
+  border: 2px solid;
+  font-weight: 700;
+  font-size: 15px; /* Increased font size */
+  box-sizing: border-box;
+  width: 100%;
+}
+.pill-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: currentColor;
+  opacity: 0.8;
+  flex-shrink: 0;
+}
+.pill-text {
+  flex-grow: 1;
+  text-align: center;
+  white-space: nowrap;
 }
 
-/* ===== BUTTONS ===== */
-.btn-generate,
-.btn-print{
-  padding:10px 22px;
-  border:none;
-  border-radius:6px;
-  font-size:15px;
-  font-weight:500;
-  cursor:pointer;
-  transition:.2s;
+/* 9 Harmonized Color Palette */
+.color-1 { border-color: #2e7d32 !important; background-color: #e8f5e9 !important; color: #1b5e20 !important; }
+.color-2 { border-color: #388e3c !important; background-color: #ebfbee !important; color: #145a32 !important; }
+.color-3 { border-color: #1b5e20 !important; background-color: #d7f5dd !important; color: #0d3813 !important; }
+.color-4 { border-color: #43a047 !important; background-color: #f1fbe9 !important; color: #1e6b24 !important; }
+.color-5 { border-color: #00796b !important; background-color: #e0f2f1 !important; color: #004d40 !important; }
+.color-6 { border-color: #4caf50 !important; background-color: #eafaf1 !important; color: #196f3d !important; }
+.color-7 { border-color: #00897b !important; background-color: #e8f8f5 !important; color: #0e6251 !important; }
+.color-8 { border-color: #2e8b57 !important; background-color: #edf7ed !important; color: #1e4620 !important; }
+.color-9 { border-color: #198754 !important; background-color: #d1e7dd !important; color: #0f5132 !important; }
+
+/* Filter Circles */
+.number-circle {
+  transition: transform 0.15s ease;
+  border: 2px solid transparent;
+}
+.number-circle:hover {
+  transform: scale(1.1);
+}
+.number-circle.selected {
+  box-shadow: 0 0 0 4px rgba(25, 135, 84, 0.4) !important;
+  border-color: #198754 !important;
 }
 
-.btn-generate{
-  background:#43a047;
-  color:white;
+/* ============================================================
+   A4 PRINT CONFIGURATION
+   ============================================================ */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 6mm;
+  }
+
+  *, *::before, *::after {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  body {
+    background: #ffffff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .printable-area {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+  }
+
+  /* BASE TABLE STRUCTURE FOR BOTH PRINT MODES (Full A4 Width, Edge-to-Edge) */
+  .custom-main-table {
+    width: 100% !important;
+    table-layout: fixed !important;
+    border-collapse: collapse !important;
+    border-spacing: 0 !important;
+  }
+
+  /* Flatten all pill styling in both print options */
+  .number-pill {
+    display: block !important;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    width: 100% !important;
+    font-size: 13px !important;
+    font-weight: 800 !important;
+  }
+  .pill-dot {
+    display: none !important;
+  }
+
+  /* ----------------------------------------------------
+     MODE 1: B&W PRINT (No colors, no shadows, black border)
+     ---------------------------------------------------- */
+  #print-wrapper:not(.print-as-color) .custom-main-table td {
+    border: 1.5px solid #000000 !important;
+    padding: 5px 2px !important;
+    text-align: center !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  #print-wrapper:not(.print-as-color) .number-pill {
+    color: #000000 !important;
+  }
+
+  /* ----------------------------------------------------
+     MODE 2: COLOR PRINT (Flat Table Grid + Colors)
+     ---------------------------------------------------- */
+  #print-wrapper.print-as-color .custom-main-table td {
+    border: 1px solid #757575 !important;
+    padding: 5px 2px !important;
+    text-align: center !important;
+  }
+
+  /* Direct cell background tints for color table print */
+  #print-wrapper.print-as-color td.cell-root-1 { background-color: #e8f5e9 !important; color: #1b5e20 !important; }
+  #print-wrapper.print-as-color td.cell-root-2 { background-color: #ebfbee !important; color: #145a32 !important; }
+  #print-wrapper.print-as-color td.cell-root-3 { background-color: #d7f5dd !important; color: #0d3813 !important; }
+  #print-wrapper.print-as-color td.cell-root-4 { background-color: #f1fbe9 !important; color: #1e6b24 !important; }
+  #print-wrapper.print-as-color td.cell-root-5 { background-color: #e0f2f1 !important; color: #004d40 !important; }
+  #print-wrapper.print-as-color td.cell-root-6 { background-color: #eafaf1 !important; color: #196f3d !important; }
+  #print-wrapper.print-as-color td.cell-root-7 { background-color: #e8f8f5 !important; color: #0e6251 !important; }
+  #print-wrapper.print-as-color td.cell-root-8 { background-color: #edf7ed !important; color: #1e4620 !important; }
+  #print-wrapper.print-as-color td.cell-root-9 { background-color: #d1e7dd !important; color: #0f5132 !important; }
+  
+  #print-wrapper.print-as-color td .number-pill {
+    color: inherit !important;
+  }
 }
-
-.btn-generate:hover{
-  background:#388e3c;
-}
-
-.btn-print{
-  background:#1e88e5;
-  color:white;
-}
-
-.btn-print:hover{
-  background:#1565c0;
-}
-
-/* ===== FILTER SECTION ===== */
-.filter-group{
-  margin-top:25px;
-  display:flex;
-  justify-content:center;
-  gap:12px;
-  flex-wrap:wrap;
-}
-
-/* ===== FILTER OPTION ===== */
-.filter-option{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-/* ===== FILTER CIRCLE ===== */
-.number-circle{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#222;
-  font-weight:600;
-  width:42px;
-  height:42px;
-  border-radius:50%;
-  cursor:pointer;
-  transition:all .2s;
-  border:1px solid #e5e5e5;
-}
-
-.number-circle:hover{
-  animation: swing 0.6s ease !important;
-  transform-origin: top center !important;
-}
-
-@keyframes swing{
-  0%{ transform: rotate(0deg); }
-  25%{ transform: rotate(8deg); }
-  50%{ transform: rotate(-8deg); }
-  75%{ transform: rotate(4deg); }
-  100%{ transform: rotate(0deg); }
-}
-/* ===== FILTER SELECTED ===== */
-.selected{
-  border:2px solid #000;
-}
-
-/* ===== NUMBER INSIDE ===== */
-.number-inside{
-  z-index:2;
-}
-
-input[type="checkbox"].d-none{
-  display:none;
-}
-
-/* ===== COLOR SYSTEM (KEEPING YOUR ORIGINAL) ===== */
-.sum-1, .color-1{background:#9FDCB0!important;}
-.sum-2, .color-2{background:#E8FBEA !important;}
-.sum-3, .color-3{background:#ADE2B9 !important;}
-.sum-4, .color-4{background:#D2F1D6 !important;}
-.sum-5, .color-5{background:#C6ECCD !important;}
-.sum-6, .color-6{background:#BAE7C3 !important;}
-.sum-7, .color-7{background:#DDF6E0 !important;}
-.sum-8, .color-8{background:#F2FFF4  !important;}
-.sum-9, .color-9{background:#90D6A6 !important;}
-
-/* ===== NUMBER GRID STYLE ===== */
-
-.number-table{
-  width:100%;
-  border-collapse:separate;
-  border-spacing:10px; /* space between boxes */
-  margin-top:25px;
-}
-
-.number-table td{
-
-  padding:6px 14px;  /* reduced width */
-
-  font-size:17px;
-  font-weight:600;
-
-  text-align:center;
-
-  border-radius:14px;
-  border:2px solid #1fa739;
-
-  color:#0b39d6;
-
-  position:relative;
-
-  white-space:nowrap; /* prevent stretch */
-
-  width:80px; /* perfect width for ● 6313 ● */
-
-  box-shadow:0 3px 6px rgba(0,0,0,0.08);
-}
-
-/* left dot */
-.number-table td::before{
-  content:"";
-  position:absolute;
-  left:8px;
-  top:50%;
-  transform:translateY(-50%);
-  width:7px;
-  height:7px;
-  background:#79d38a;
-  border-radius:50%;
-}
-
-/* right dot */
-.number-table td::after{
-  content:"";
-  position:absolute;
-  right:8px;
-  top:50%;
-  transform:translateY(-50%);
-  width:7px;
-  height:7px;
-  background:#79d38a;
-  border-radius:50%;
-}
-
-/* hover effect */
-.number-table td:hover{
-  transform:translateY(-2px);
-  box-shadow:0 5px 10px rgba(0,0,0,0.15);
-}
-
-/* ===== STATISTICS TABLE ===== */
-.statistics-container{
-  padding:5px;
-}
-
-.statistics-table{
-  width:100%;
-  border-collapse:collapse;
-  font-size:14px;
-}
-
-.statistics-table th{
-  background:#f1f3f6;
-  font-weight:600;
-}
-
-.statistics-table th,
-.statistics-table td{
-  padding:8px;
-  border:1px solid #e5e5e5;
-  text-align:center;
-}
-
-/* ===== RANGE TEXT ===== */
-#filteredrange{
-  font-size:16px;
-  font-weight:600;
-  color:#37474f;
-  padding:8px 14px;
-  margin:15px 0;
-  display:inline-block;
-  background:#f2f5f9;
-  border-radius:6px;
-}
-
-
