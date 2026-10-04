@@ -61,7 +61,7 @@ const cardData = [
     },
     {
         title: "Vehicle",
-        links: [
+        links: [ 
             
             { url: "https://puc.parivahan.gov.in/puc/views/PucCertificate.xhtml", text: "PUCC", class: "link-primary", icon: "fas fa-smog" },
             { url: "https://fancy.parivahan.gov.in/", text: "Fancy Number", class: "link-success", icon: "fas fa-sort-numeric-desc" },
@@ -71,9 +71,10 @@ const cardData = [
     {
         title: "Utilities",
         links: [
-            { url: "https://www.indiapost.gov.in/", text: "Post", class: "link-primary", icon: "fas fa-envelope" },
-            { url: "https://www.police.tn.gov.in/citizenportal", text: "Police E-service",  class: "link-success",  icon: "fab fa-product-hunt"  },
-            { url: "https://myaadhaar.uidai.gov.in/", text: "Aadhaar", class: "link-danger", icon: "fas fa-id-card" }
+             {url:"tools/PVC/pvc.html",text:"Print",class: "link-primary", icon: "fas fa-credit-card"},
+            { url: "https://www.indiapost.gov.in/", text: "Post", class: "link-success", icon: "fas fa-envelope" },
+            { url: "https://www.police.tn.gov.in/citizenportal", text: "Police E-service",  class: "link-danger",  icon: "fab fa-product-hunt"  },
+            { url: "https://myaadhaar.uidai.gov.in/", text: "Aadhaar", class: "link-info", icon: "fas fa-id-card" }
 
         ]
     },
