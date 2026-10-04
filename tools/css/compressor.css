@@ -1,113 +1,276 @@
-/* --- Root Variables for a Modern Palette --- */
 :root {
-    --primary-blue: #0d6efd;
-    --success-green: #198754;
-    --border-color: #cbd5e0;
-    --bg-light: #f8fafc;
+    --bg-main: #f4f6fa;
+    --card-bg: #ffffff;
+    --primary-color: #2563eb;
+    --danger-color: #dc2626;
+    --border-color: #e2e8f0;
+    --text-main: #0f172a;
     --text-muted: #64748b;
+    --card-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
-    background-color: #f1f5f9;
-    font-family: 'Inter', -apple-system, sans-serif;
-    color: #1e293b;
-    line-height: 1.5;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    min-height: 100vh;
+    padding-bottom: 24px;
 }
 
-/* --- Card Styling --- */
-.pro-card {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 2px solid transparent !important;
-    outline: none;
-    cursor: pointer;
-    background: #ffffff;
-    border-radius: 16px !important;
+/* Header & Mobile Sticky Nav Scroller */
+.app-header {
+    background: rgba(244, 246, 250, 0.95);
+    backdrop-filter: blur(8px);
+    z-index: 1020;
 }
 
-/* The "Active" state when a tool is clicked/focused for Paste */
-.pro-card:focus, 
-.pro-card:focus-within {
-    border-color: var(--primary-blue) !important;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 
-                0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
-    transform: translateY(-2px);
-}
-
-/* --- Upload Box (Drop Zone) --- */
-.upload-container {
-    border: 2px dashed var(--border-color);
-    border-radius: 12px;
-    min-height: 220px;
-    background: var(--bg-light);
+.nav-scroller {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.nav-scroller::-webkit-scrollbar {
+    display: none;
+}
+
+.custom-nav {
+    background: #ffffff;
+    display: inline-flex;
+    padding: 4px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border: 1px solid var(--border-color);
+    flex-wrap: nowrap;
+    white-space: nowrap;
+}
+
+.custom-nav .nav-link {
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 0.85rem;
+    border-radius: 9px;
+    padding: 7px 16px;
+    transition: all 0.2s ease;
+}
+
+.custom-nav .nav-link.active {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+}
+
+/* Action Cards */
+.action-card {
+    background-color: var(--card-bg);
+    border-radius: 16px;
+    border: 2px solid transparent;
+    box-shadow: var(--card-shadow);
+    padding: 16px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.action-card.active-target,
+.action-card:focus,
+.action-card:focus-within {
+    border-color: var(--primary-color) !important;
+}
+
+.card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.badge-title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+.tag-badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 6px;
+}
+
+.settings-strip {
+    background-color: #f8fafc;
+    border-radius: 10px;
+    padding: 8px 10px;
+    border: 1px solid #edf2f7;
+}
+
+.settings-strip label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 2px;
+}
+
+/* Upload & Drop Zones */
+.drop-zone {
+    border: 2px dashed #cbd5e1;
+    border-radius: 12px;
+    min-height: 140px;
+    background: #f8fafc;
+    display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
     position: relative;
     overflow: hidden;
-    transition: background 0.2s ease;
+    touch-action: manipulation;
 }
 
-.upload-container:hover {
+.drop-zone:hover,
+.drop-zone:active,
+.drop-zone.dragover {
     background: #eff6ff;
-    border-color: var(--primary-blue);
+    border-color: var(--primary-color);
 }
 
-.upload-container i {
-    transition: transform 0.2s ease;
-}
-
-.upload-container:hover i {
-    transform: scale(1.1);
-}
-
-/* --- Live Preview Styling --- */
-.preview-img {
-    width: 100%;
-    height: 100%;
-    max-height: 200px;
-    object-fit: contain;
-    padding: 12px;
+.icon-circle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
     background: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-color);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    margin: 0 auto;
+}
+
+.preview-rendered-img {
+    width: 100%;
+    height: 160px;
+    object-fit: contain;
+    padding: 4px;
+    background: #ffffff;
+}
+
+/* ==========================================
+   HOVER ZOOM MAGNIFIER STYLES
+   ========================================== */
+.preview-stage-card {
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.04);
+}
+
+.zoom-container {
+    position: relative;
+    width: 100%;
+    min-height: 200px;
+    max-height: 290px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: #f8fafc;
     border-radius: 8px;
-    /* Animation for when the preview appears */
-    animation: imageReveal 0.4s ease-out;
+    cursor: crosshair;
 }
 
-@keyframes imageReveal {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
+.live-preview-rendered {
+    max-width: 100%;
+    max-height: 280px;
+    object-fit: contain;
+    border-radius: 6px;
+    transition: transform 0.12s ease-out;
+    transform-origin: center center;
+    pointer-events: none;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
 }
 
-/* --- Results / Download Bar --- */
-#res-photo, #res-sign {
-    animation: slideUp 0.3s ease-out;
+/* Class applied dynamically on mousemove / touchmove */
+.zoom-container.is-zoomed .live-preview-rendered {
+    transform: scale(2.2);
 }
 
-@keyframes slideUp {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+/* Result Box */
+.result-box {
+    background-color: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 10px;
+    padding: 10px 14px;
 }
 
-.bg-light.border {
-    background-color: #f8fafc !important;
-    border-color: #e2e8f0 !important;
+.result-size {
+    font-size: 1rem;
+    font-weight: 800;
+    color: #15803d;
 }
 
-/* --- Loader Overlay --- */
-#loader {
+.result-meta {
+    font-size: 0.72rem;
+}
+
+/* Live Size Tags */
+.live-pill-tag {
+    background: #e0e7ff;
+    color: #3730a3;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.live-pill-tag.pdf-tag {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.live-slider {
+    height: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.custom-progress {
+    height: 8px;
+    border-radius: 999px;
+    background-color: #e2e8f0;
+}
+
+.btn {
+    min-height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    font-size: 0.9rem;
+}
+
+.btn-sm {
+    min-height: 34px;
+    font-size: 0.8rem;
+}
+
+.global-loader {
+    position: fixed;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(4px);
-    transition: opacity 0.3s ease;
+    z-index: 1050;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.spinner-border {
-    width: 3rem;
-    height: 3rem;
-}
-
-/* --- Responsive Adjustments --- */
-@media (max-width: 768px) {
-    .upload-container {
-        min-height: 180px;
-    }
+.loader-content {
+    background: #ffffff;
+    padding: 20px 30px;
+    border-radius: 14px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }

@@ -2,85 +2,373 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Compress Tool</title>
-    <link rel="icon" type="image/x-icon" href="../images/png logo.png">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        body { background-color: #f4f7f6; font-family: sans-serif; padding-top: 30px; }
-        .pro-card { transition: all 0.3s; border: 2px solid transparent !important; outline: none; cursor: pointer; }
-        .pro-card:focus { border-color: #0d6efd !important; box-shadow: 0 0 10px rgba(13,110,253,0.2) !important; }
-        .upload-container { 
-            border: 2px dashed #cbd5e0; border-radius: 12px; 
-            min-height: 220px; background: #fff; 
-            display: flex; align-items: center; justify-content: center;
-            position: relative; overflow: hidden;
-        }
-        .preview-img { width: 100%; height: 200px; object-fit: contain; }
-        #loader { z-index: 9999; }
-    </style>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/compressor.css">
 </head>
 <body>
 
-<div class="container">
-    <div class="text-center mb-4">
-        <h2 class="fw-bold">Photo & Signature Optimizer</h2>
-        <p class="text-muted">1. Click a box &nbsp; 2. Paste (Ctrl+V) &nbsp; 3. Download</p>
-    </div>
-
-    <div class="row g-4 justify-content-center">
-        <div class="col-md-5">
-            <div class="card pro-card shadow-sm p-4" id="photo-area" tabindex="0">
-                <div class="d-flex justify-content-between mb-3">
-                    <h6 class="fw-bold m-0">Passport Photo (420x525)</h6>
-                    <span class="badge bg-primary">Max 20KB</span>
-                </div>
-                <div class="upload-container" id="photo-drop">
-                    <div class="text-center text-muted">
-                        <i class="fas fa-camera fa-3x mb-2"></i>
-                        <p class="small">Click here & Paste</p>
-                    </div>
-                </div>
-                <input type="file" id="input-photo" hidden accept="image/*">
-                <div id="res-photo" class="mt-3 d-none">
-                    <div class="d-flex justify-content-between align-items-center bg-light p-2 rounded border">
-                        <small id="info-photo" class="fw-bold text-success"></small>
-                        <a href="#" id="dl-photo" class="btn btn-sm btn-success">Download</a>
-                    </div>
-                </div>
+    <!-- Header & Mobile-Optimized Navigation -->
+    <header class="app-header py-2 text-center sticky-top">
+        <div class="container px-2">
+            <div class="nav-scroller">
+                <ul class="nav nav-pills custom-nav justify-content-center" id="mainTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="tab-id-maker" data-bs-toggle="pill" data-bs-target="#panel-id-maker" type="button" role="tab">
+                            <i class="fa-solid fa-id-card me-1"></i> Photo & Sign
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="tab-image-shrinker" data-bs-toggle="pill" data-bs-target="#panel-image-shrinker" type="button" role="tab">
+                            <i class="fa-solid fa-images me-1"></i> Picture
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="tab-pdf-shrinker" data-bs-toggle="pill" data-bs-target="#panel-pdf-shrinker" type="button" role="tab">
+                            <i class="fa-solid fa-file-pdf me-1"></i> PDF
+                        </button>
+                    </li>
+                </ul>
             </div>
         </div>
+    </header>
 
-        <div class="col-md-5">
-            <div class="card pro-card shadow-sm p-4" id="sign-area" tabindex="0">
-                <div class="d-flex justify-content-between mb-3">
-                    <h6 class="fw-bold m-0">Signature (256x64)</h6>
-                    <span class="badge bg-info text-white">Max 20KB</span>
+    <!-- Main Content Container -->
+    <main class="container px-2 px-md-4 pb-5 mt-2">
+        <div class="tab-content" id="mainTabsContent">
+
+            <!-- TAB 1: Photo & Signature Optimizer -->
+            <section class="tab-pane fade show active" id="panel-id-maker" role="tabpanel">
+                <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                    <div class="small text-muted d-none d-sm-block">
+                        <i class="fa-solid fa-arrow-pointer me-1 text-primary"></i> 
+                        Tap box or paste with <kbd>Ctrl+V</kbd>
+                    </div>
+                    <button id="btn-download-both" class="btn btn-dark btn-sm w-100 w-sm-auto shadow-sm py-2" disabled>
+                        <i class="fa-solid fa-download me-1"></i> Download Both (Photo & Sign)
+                    </button>
                 </div>
-                <div class="upload-container" id="sign-drop">
-                    <div class="text-center text-muted">
-                        <i class="fas fa-pen-nib fa-3x mb-2"></i>
-                        <p class="small">Click here & Paste</p>
+
+                <div class="row g-3 justify-content-center">
+                    <!-- Photo Card -->
+                    <div class="col-12 col-md-6">
+                        <div class="action-card" id="card-photo" tabindex="0">
+                            <div class="card-top">
+                                <div class="badge-title">
+                                    <i class="fa-solid fa-camera text-primary"></i>
+                                    <span>Passport Photo</span>
+                                </div>
+                                <span class="tag-badge bg-primary-subtle text-primary">Max 20 KB</span>
+                            </div>
+
+                            <div class="settings-strip my-2">
+                                <div class="row g-2 align-items-center">
+                                    <div class="col-4">
+                                        <label class="form-label">Width</label>
+                                        <input type="number" id="photo-w" class="form-control form-control-sm" value="420">
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="form-label">Height</label>
+                                        <input type="number" id="photo-h" class="form-control form-control-sm" value="525">
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="form-label">Max KB</label>
+                                        <input type="number" id="photo-kb" class="form-control form-control-sm" value="20">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="drop-zone" id="drop-photo">
+                                <div class="drop-prompt text-center p-2">
+                                    <div class="icon-circle mb-1">
+                                        <i class="fa-solid fa-camera"></i>
+                                    </div>
+                                    <p class="mb-0 fw-semibold">Tap to Upload / Paste</p>
+                                    <small class="text-muted">JPG, PNG, WebP</small>
+                                </div>
+                            </div>
+                            <input type="file" id="file-photo" hidden accept="image/*">
+
+                            <div id="res-photo" class="result-box mt-3 d-none">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <div class="result-size" id="size-photo">0 KB</div>
+                                        <div class="result-meta text-muted" id="dims-photo">420x525 px</div>
+                                    </div>
+                                    <button type="button" id="dl-photo" class="btn btn-primary btn-sm px-3">
+                                        <i class="fa-solid fa-download me-1"></i> Save
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sign Card -->
+                    <div class="col-12 col-md-6">
+                        <div class="action-card" id="card-sign" tabindex="0">
+                            <div class="card-top">
+                                <div class="badge-title">
+                                    <i class="fa-solid fa-pen-nib text-info"></i>
+                                    <span>Signature</span>
+                                </div>
+                                <span class="tag-badge bg-info-subtle text-info">Max 20 KB</span>
+                            </div>
+
+                            <div class="settings-strip my-2">
+                                <div class="row g-2 align-items-center">
+                                    <div class="col-3">
+                                        <label class="form-label">Width</label>
+                                        <input type="number" id="sign-w" class="form-control form-control-sm" value="500">
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="form-label">Height</label>
+                                        <input type="number" id="sign-h" class="form-control form-control-sm" value="200">
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="form-label">Fit Mode</label>
+                                        <select id="sign-fit" class="form-select form-select-sm px-1">
+                                            <option value="contain" selected>Fit</option>
+                                            <option value="cover">Fill</option>
+                                            <option value="tight">Tight</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="form-label">Max KB</label>
+                                        <input type="number" id="sign-kb" class="form-control form-control-sm" value="20">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="drop-zone" id="drop-sign">
+                                <div class="drop-prompt text-center p-2">
+                                    <div class="icon-circle mb-1">
+                                        <i class="fa-solid fa-signature"></i>
+                                    </div>
+                                    <p class="mb-0 fw-semibold">Tap to Upload / Paste</p>
+                                    <small class="text-muted">JPG, PNG, WebP</small>
+                                </div>
+                            </div>
+                            <input type="file" id="file-sign" hidden accept="image/*">
+
+                            <div id="res-sign" class="result-box mt-3 d-none">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <div class="result-size" id="size-sign">0 KB</div>
+                                        <div class="result-meta text-muted" id="dims-sign">500x200 px</div>
+                                    </div>
+                                    <button type="button" id="dl-sign" class="btn btn-info btn-sm text-white px-3">
+                                        <i class="fa-solid fa-download me-1"></i> Save
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <input type="file" id="input-sign" hidden accept="image/*">
-                <div id="res-sign" class="mt-3 d-none">
-                    <div class="d-flex justify-content-between align-items-center bg-light p-2 rounded border">
-                        <small id="info-sign" class="fw-bold text-success"></small>
-                        <a href="#" id="dl-sign" class="btn btn-sm btn-info text-white">Download</a>
+            </section>
+
+            <!-- TAB 2: Picture Compressor with Hover Zoom -->
+            <section class="tab-pane fade" id="panel-image-shrinker" role="tabpanel">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-xl-11">
+                        <div class="action-card p-3 p-md-4">
+                            
+                            <!-- Initial Upload Drop Zone -->
+                            <div class="drop-zone" id="drop-batch-images">
+                                <div class="drop-prompt text-center p-3">
+                                    <div class="icon-circle mb-2">
+                                        <i class="fa-solid fa-cloud-arrow-up fa-xl"></i>
+                                    </div>
+                                    <h6 class="fw-bold mb-1">Tap to Pick Image or Paste</h6>
+                                    <p class="text-muted small mb-0">Drag & drop or select from files</p>
+                                </div>
+                            </div>
+                            <input type="file" id="file-batch-images" hidden accept="image/*">
+
+                            <!-- Live Split Controller & Preview -->
+                            <div id="image-live-control" class="mt-3 p-3 p-md-4 rounded-4 bg-light border d-none">
+                                <div class="row g-4 align-items-center">
+                                    
+                                    <!-- Controls -->
+                                    <div class="col-12 col-lg-6">
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <div class="text-truncate me-2">
+                                                <h6 class="fw-bold mb-0 text-dark text-truncate" id="live-img-filename">image.jpg</h6>
+                                                <small class="text-muted" id="live-img-original-size">Original: 0 KB</small>
+                                            </div>
+                                            <div class="live-pill-tag">
+                                                Output: <span class="fw-bold text-primary" id="live-img-target-display">0 KB</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Live Compression Slider -->
+                                        <div class="mb-3">
+                                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                                <label for="img-live-slider" class="form-label small fw-bold mb-0">Target File Size:</label>
+                                                <div class="input-group input-group-sm" style="width: 125px;">
+                                                    <input type="number" id="img-live-num" class="form-control text-center fw-bold" value="50" min="5">
+                                                    <span class="input-group-text bg-white">KB</span>
+                                                </div>
+                                            </div>
+                                            <input type="range" class="form-range live-slider" id="img-live-slider" min="5" max="100" step="1" value="50">
+                                            <div class="d-flex justify-content-between text-muted small mt-1">
+                                                <span id="slider-min-label">5 KB</span>
+                                                <span class="text-primary fw-bold" id="slider-savings-label">Saved 0%</span>
+                                                <span id="slider-max-label">100 KB</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="row g-2 align-items-center mb-3">
+                                            <div class="col-6">
+                                                <label class="form-label small fw-bold mb-1">Format</label>
+                                                <select id="img-output-type" class="form-select form-select-sm">
+                                                    <option value="image/jpeg" selected>JPG (Standard)</option>
+                                                    <option value="image/webp">WebP (Efficient)</option>
+                                                    <option value="image/png">PNG</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-6">
+                                                <label class="form-label small fw-bold mb-1">Dimensions</label>
+                                                <div class="small fw-semibold text-muted py-1 text-truncate" id="live-img-dimensions">0 × 0 px</div>
+                                            </div>
+                                        </div>
+
+                                        <button class="btn btn-primary w-100 fw-bold py-2 shadow-sm" id="btn-compress-image-now">
+                                            <i class="fa-solid fa-download me-1"></i> Download Image (<span id="btn-img-size-label">0 KB</span>)
+                                        </button>
+                                    </div>
+
+                                    <!-- Live Hover-Zoom Preview -->
+                                    <div class="col-12 col-lg-6 text-center">
+                                        <div class="preview-stage-card p-2 rounded-3 bg-white border">
+                                            <div class="d-flex justify-content-between align-items-center px-2 py-1 mb-1 border-bottom">
+                                                <span class="small fw-bold text-muted"><i class="fa-solid fa-magnifying-glass-plus me-1"></i> Hover to Zoom</span>
+                                                <span class="badge bg-light text-dark border" id="preview-clarity-badge">100% Quality</span>
+                                            </div>
+                                            <div class="zoom-container" id="img-zoom-box">
+                                                <img id="img-live-preview-element" class="live-preview-rendered" alt="Live Preview">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
-            </div>
+            </section>
+
+            <!-- TAB 3: PDF Compressor with Exact Single-Source Blob & Hover Zoom -->
+            <section class="tab-pane fade" id="panel-pdf-shrinker" role="tabpanel">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-xl-11">
+                        <div class="action-card p-3 p-md-4">
+                            
+                            <!-- PDF Drop Area -->
+                            <div class="drop-zone" id="drop-pdf">
+                                <div class="drop-prompt text-center p-3">
+                                    <div class="icon-circle mb-2 text-danger">
+                                        <i class="fa-solid fa-file-pdf fa-xl"></i>
+                                    </div>
+                                    <h6 class="fw-bold mb-1">Tap to Pick PDF Document</h6>
+                                    <p class="text-muted small mb-0">High-clarity text with exact size matching & live zoom</p>
+                                </div>
+                            </div>
+                            <input type="file" id="file-pdf" hidden accept="application/pdf">
+
+                            <!-- Live PDF Controller & Zoom Preview -->
+                            <div id="pdf-live-control" class="mt-3 p-3 p-md-4 rounded-4 bg-light border d-none">
+                                <div class="row g-4 align-items-center">
+                                    
+                                    <!-- Controls -->
+                                    <div class="col-12 col-lg-6">
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <div class="text-truncate me-2">
+                                                <h6 class="fw-bold mb-0 text-dark text-truncate" id="live-pdf-filename">document.pdf</h6>
+                                                <small class="text-muted" id="live-pdf-original-size">Original: 0 KB</small>
+                                            </div>
+                                            <div class="live-pill-tag pdf-tag">
+                                                Output: <span class="fw-bold text-danger" id="live-pdf-target-display">0 KB</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Slider Capped to Original Size -->
+                                        <div class="mb-3">
+                                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                                <label for="pdf-live-slider" class="form-label small fw-bold mb-0">Desired Target Size:</label>
+                                                <div class="input-group input-group-sm" style="width: 125px;">
+                                                    <input type="number" id="pdf-live-num" class="form-control text-center fw-bold" value="100" min="15">
+                                                    <span class="input-group-text bg-white">KB</span>
+                                                </div>
+                                            </div>
+                                            <input type="range" class="form-range live-slider pdf-slider" id="pdf-live-slider" min="15" max="500" step="5" value="100">
+                                            <div class="d-flex justify-content-between text-muted small mt-1">
+                                                <span id="pdf-slider-min">15 KB</span>
+                                                <span class="text-danger fw-bold" id="pdf-slider-savings-label">Calculating...</span>
+                                                <span id="pdf-slider-max">500 KB</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Status Indicator for Real-Time Background Compilation -->
+                                        <div class="d-flex align-items-center gap-2 mb-3">
+                                            <span class="spinner-border spinner-border-sm text-danger d-none" id="pdf-compile-spinner" role="status"></span>
+                                            <small class="text-muted" id="pdf-status-text">Ready for download</small>
+                                        </div>
+
+                                        <button class="btn btn-danger w-100 fw-bold py-2 shadow-sm" id="btn-compress-pdf-now">
+                                            <i class="fa-solid fa-download me-1"></i> Download PDF (<span id="btn-pdf-size-label">0 KB</span>)
+                                        </button>
+                                    </div>
+
+                                    <!-- Live Hover-Zoom PDF Preview -->
+                                    <div class="col-12 col-lg-6 text-center">
+                                        <div class="preview-stage-card p-2 rounded-3 bg-white border">
+                                            <div class="d-flex justify-content-between align-items-center px-2 py-1 mb-1 border-bottom">
+                                                <span class="small fw-bold text-muted"><i class="fa-solid fa-magnifying-glass-plus me-1"></i> Hover to Zoom Page 1</span>
+                                                <span class="badge bg-light text-danger border" id="pdf-clarity-badge">Sharp Text</span>
+                                            </div>
+                                            <div class="zoom-container" id="pdf-zoom-box">
+                                                <canvas id="pdf-live-preview-canvas" class="live-preview-rendered"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Global Processing Overlay -->
+    <div id="global-loader" class="global-loader d-none">
+        <div class="loader-content text-center">
+            <div class="spinner-border text-primary mb-2" role="status"></div>
+            <h6 class="fw-bold mb-0" id="loader-title">Processing...</h6>
+            <p class="text-muted small mb-0" id="loader-sub">Optimizing on your device</p>
         </div>
     </div>
-</div>
 
-<div id="loader" class="d-none position-fixed top-0 start-0 w-100 h-100 bg-white bg-opacity-75 d-flex flex-column align-items-center justify-content-center">
-    <div class="spinner-border text-primary"></div>
-    <p class="mt-2 fw-bold">Processing...</p>
-</div>
-
-<script src="js/compressor.js"></script>
+    <!-- External Libs -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <!-- Custom Logic -->
+    <script src="js/compressor.js"></script>
 </body>
 </html>
