@@ -6,17 +6,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const historyStacks = { image: [], imageFront: [], imageBack: [] };
     const preFilterBases = { image: null, imageFront: null, imageBack: null };
 
-    let userCardScale = 0.60; // Default: each card occupies 38% of half A4 page
+    // Default card size set to 80%
+    let userCardScale = 0.80; 
     let activeContainer = document.getElementById("canvas-container-main");
 
-    // Push state into undo stack
     function pushHistory(imgId, dataUrl) {
         if (!historyStacks[imgId]) historyStacks[imgId] = [];
         historyStacks[imgId].push(dataUrl);
         if (historyStacks[imgId].length > 15) historyStacks[imgId].shift();
     }
 
-    // Undo action
     function undoAction(imgId) {
         if (!historyStacks[imgId] || historyStacks[imgId].length <= 1) {
             alert("No earlier steps to undo.");
@@ -29,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
             updateCropBtnUI(imgId, false);
         }
 
-        historyStacks[imgId].pop(); // Pop current
+        historyStacks[imgId].pop();
         const previousState = historyStacks[imgId][historyStacks[imgId].length - 1];
 
         const img = document.getElementById(imgId);
@@ -37,7 +36,6 @@ document.addEventListener("DOMContentLoaded", () => {
         preFilterBases[imgId] = previousState;
     }
 
-    // Normalizes oversized images without distorting aspect ratios
     function normalizeImage(dataUrl, maxDim = 2400) {
         return new Promise((resolve) => {
             const img = new Image();
@@ -101,6 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    // Toggle crop with viewMode: 2 and full container scaling so it never appears tiny
     function toggleCrop(imgId) {
         const img = document.getElementById(imgId);
         if (!img || !img.src || img.style.display === "none") {
@@ -126,9 +125,10 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             croppers[imgId] = new Cropper(img, {
                 aspectRatio: selectedRatios[imgId],
-                viewMode: 1,
-                autoCropArea: 0.95,
+                viewMode: 2,           // Keeps image filling the viewport safely
+                autoCropArea: 0.98,     // Maximizes crop area inside workspace
                 responsive: true,
+                restore: false,
                 movable: true,
                 zoomable: true,
                 rotatable: false,
@@ -181,7 +181,6 @@ document.addEventListener("DOMContentLoaded", () => {
         source.src = img.src;
     }
 
-    // Resolves Filter Override Issue: Always renders from preFilterBases[imgId]
     function applyFilter(imgId, type) {
         const img = document.getElementById(imgId);
         if (!img || !img.src || img.style.display === "none") return;
@@ -243,7 +242,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const placeholder = container.querySelector(".drop-zone-placeholder");
         const input = container.querySelector("input[type='file']");
 
-        if (placeholder) placeholder.style.display = "block";
+        if (placeholder) placeholder.style.display = "flex";
         if (input) input.value = "";
     }
 
@@ -274,9 +273,9 @@ document.addEventListener("DOMContentLoaded", () => {
             <head>
                 <title>Print Document</title>
                 <style>
-                    @page { size: A4 portrait; margin: 10mm; }
-                    body { margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
-                    img { max-width: 100%; max-height: 96vh; object-fit: contain; }
+                    @page { size: A4 portrait; margin: 8mm; }
+                    body { margin: 0; display: flex; align-items: center; justify-content: center; height: 100vh; overflow: hidden; }
+                    img { max-width: 100%; max-height: 100%; object-fit: contain; }
                 </style>
             </head>
             <body>
@@ -287,7 +286,7 @@ document.addEventListener("DOMContentLoaded", () => {
         win.document.close();
     }
 
-    // Save ID Sheet obeying custom scale (30% - 55%)
+    // Export A4 Sheet with strict bounds
     function saveIDCopy(fId, bId) {
         const fImg = document.getElementById(fId);
         const bImg = document.getElementById(bId);
@@ -342,7 +341,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Print ID Sheet obeying custom scale percentage
+    // Print ID Sheet - Guaranteed strictly 1 single page
     function printIDCopy(fId, bId) {
         const fImg = document.getElementById(fId);
         const bImg = document.getElementById(bId);
@@ -352,8 +351,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!fSrc && !bSrc) return alert("Upload at least one side to print.");
 
-        // Percentage calculated for each half (e.g., 38vh inside 50vh)
-        const scalePctHeight = Math.round(50 * userCardScale);
+        // Calculate card height based on 50vh half-page slot
+        const scalePctHeight = Math.round(48 * userCardScale);
 
         const win = window.open("", "_blank");
         win.document.write(`
@@ -362,27 +361,42 @@ document.addEventListener("DOMContentLoaded", () => {
             <head>
                 <title>Print ID Duplex</title>
                 <style>
-                    @page { size: A4 portrait; margin: 0; }
-                    body {
+                    @page { 
+                        size: A4 portrait; 
+                        margin: 0mm; 
+                    }
+                    html, body {
+                        width: 100%;
+                        height: 100%;
                         margin: 0;
                         padding: 0;
-                        height: 100vh;
+                        overflow: hidden;
+                        page-break-after: avoid;
+                    }
+                    body {
                         display: flex;
                         flex-direction: column;
+                        justify-content: space-around;
+                        height: 100vh;
+                        box-sizing: border-box;
                     }
                     .half-page {
                         height: 50vh;
+                        max-height: 50vh;
                         display: flex;
                         align-items: center;
                         justify-content: center;
                         box-sizing: border-box;
+                        page-break-inside: avoid;
+                        overflow: hidden;
                     }
                     .card-box {
                         height: ${scalePctHeight}vh;
+                        max-height: 48vh;
                         display: flex;
                         align-items: center;
                         justify-content: center;
-                        border: 1px  #94a3b8;
+                        border: 1px solid #94a3b8;
                     }
                     .card-box img {
                         height: 100%;
@@ -414,7 +428,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const tabId = document.getElementById("tabIdBtn");
         const fullActs = document.getElementById("fullHeaderActions");
         const idActs = document.getElementById("idHeaderActions");
-        const idScale = document.getElementById("idScaleControl");
 
         if (mode === "full") {
             fullSec.classList.remove("d-none");
@@ -425,8 +438,6 @@ document.addEventListener("DOMContentLoaded", () => {
             fullActs.classList.add("d-flex");
             idActs.classList.add("d-none");
             idActs.classList.remove("d-flex");
-            idScale.classList.add("d-none");
-            idScale.classList.remove("d-flex");
             setActiveTarget(document.getElementById("canvas-container-main"));
         } else {
             fullSec.classList.add("d-none");
@@ -437,8 +448,6 @@ document.addEventListener("DOMContentLoaded", () => {
             fullActs.classList.remove("d-flex");
             idActs.classList.remove("d-none");
             idActs.classList.add("d-flex");
-            idScale.classList.remove("d-none");
-            idScale.classList.add("d-flex");
             setActiveTarget(document.getElementById("canvas-container-front"));
         }
     }

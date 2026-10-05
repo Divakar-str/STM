@@ -1,35 +1,26 @@
-/* ========================================================
-   Clean White Studio Architecture - Ultra Responsive Edition
-   Fluid & Adaptive for Mobile, Tablet, and Desktop
-   ======================================================== */
-
 :root {
-  /* Surface & Accents */
   --bg-page: #f8fafc;
   --surface-card: #ffffff;
   --border-subtle: #e2e8f0;
-  --border-strong: #0f172a;
+  --border-strong: #2563eb;
   --text-primary: #0f172a;
-  --text-secondary: #64748b;
+  --text-secondary: #475569;
   --text-muted: #94a3b8;
   --hover-surface: #f1f5f9;
 
-  /* Geometry & Radius */
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 14px;
 
-  /* Dynamic Layout Variables */
   --header-height: 64px;
-  --stage-padding: clamp(12px, 3vw, 24px);
-  --canvas-height: clamp(260px, 45dvh, 480px);
-  --canvas-id-height: clamp(220px, 35dvh, 380px);
-  --min-touch-target: 44px;
+  --stage-padding: clamp(12px, 2.5vw, 24px);
+  /* Significantly expanded heights for full page & ID previews */
+  --canvas-height: clamp(420px, 65vh, 720px);
+  --canvas-id-height: clamp(340px, 48vh, 520px);
+  --min-touch-target: 40px;
 }
 
-*,
-*::before,
-*::after {
+*, *::before, *::after {
   box-sizing: border-box;
 }
 
@@ -39,17 +30,13 @@ body.studio-app {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
-  min-height: 100dvh;
   margin: 0;
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
-  touch-action: manipulation;
 }
 
-/* ========================================================
-   Top Navigation Bar
-   ======================================================== */
+/* ================= Header ================= */
 .studio-header {
   min-height: var(--header-height);
   background: #ffffff;
@@ -57,153 +44,137 @@ body.studio-app {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 clamp(12px, 2.5vw, 24px);
+  padding: 0 clamp(14px, 3vw, 28px);
   position: sticky;
   top: 0;
   z-index: 1000;
-  gap: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
 }
 
 .header-left {
   display: flex;
   align-items: center;
-  gap: clamp(8px, 1.5vw, 12px);
-  flex-shrink: 0;
+  gap: 12px;
 }
 
 .logo-box {
-  width: 36px;
-  height: 36px;
-  min-width: 36px;
-  background: #0f172a;
+  width: 38px;
+  height: 38px;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
   color: #ffffff;
   border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 15px;
+  font-size: 17px;
+  box-shadow: 0 2px 5px rgba(37, 99, 235, 0.25);
 }
 
 .brand-title {
   font-weight: 700;
-  font-size: clamp(14px, 2vw, 16px);
-  letter-spacing: -0.3px;
+  font-size: 17px;
   color: var(--text-primary);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  white-space: nowrap;
 }
 
-.badge-tag {
-  font-size: 10px;
-  background: #f1f5f9;
-  color: #334155;
-  border: 1px solid #cbd5e1;
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-weight: 700;
-}
-
-/* Mode Switcher Pill */
 .mode-switch-pill {
-  background: #f1f5f9;
-  border: 1px solid var(--border-subtle);
-  padding: 3px;
+  background: #e2e8f0;
+  padding: 4px;
   border-radius: 30px;
   display: flex;
-  gap: 2px;
-  max-width: 100%;
+  gap: 4px;
 }
 
 .pill-btn {
   border: none;
   background: transparent;
   color: var(--text-secondary);
-  font-size: clamp(12px, 1.8vw, 13px);
+  font-size: 13px;
   font-weight: 600;
-  padding: 6px 14px;
+  padding: 6px 16px;
   border-radius: 20px;
   transition: all 0.2s ease;
-  white-space: nowrap;
-  min-height: 34px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.pill-btn:hover {
-  color: var(--text-primary);
 }
 
 .pill-btn.active {
-  background: #ffffff;
-  color: var(--text-primary);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  background: #2563eb;
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3);
 }
 
-/* Header Action Buttons */
-.btn-clean-primary,
-.btn-clean-subtle {
-  font-size: 13px;
+/* ================= Vibrant Color-Coded Action Buttons ================= */
+.btn-print {
+  background: #2563eb;
+  color: #ffffff;
+  border: 1px solid #1d4ed8;
   font-weight: 600;
-  padding: 8px 16px;
+  padding: 7px 16px;
   border-radius: var(--radius-sm);
-  transition: all 0.15s ease;
-  white-space: nowrap;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 38px;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.2);
 }
+.btn-print:hover { background: #1d4ed8; color: #fff; }
 
-.btn-clean-primary {
-  background: #0f172a;
+.btn-export {
+  background: #059669;
   color: #ffffff;
-  border: 1px solid #0f172a;
-}
-
-.btn-clean-primary:hover,
-.btn-clean-primary:active {
-  background: #1e293b;
-  border-color: #1e293b;
-  color: #ffffff;
-}
-
-.btn-clean-subtle {
-  background: #ffffff;
-  color: var(--text-primary);
-  border: 1px solid #cbd5e1;
-}
-
-.btn-clean-subtle:hover,
-.btn-clean-subtle:active {
-  background: var(--hover-surface);
-  border-color: #94a3b8;
-}
-
-/* Scale Controls */
-.scale-label {
-  font-size: 12px;
+  border: 1px solid #047857;
   font-weight: 600;
-  color: var(--text-secondary);
-  white-space: nowrap;
+  padding: 7px 16px;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 2px 6px rgba(5, 150, 105, 0.2);
+}
+.btn-export:hover { background: #047857; color: #fff; }
+
+.btn-crop {
+  background: #4f46e5;
+  color: #ffffff;
+  border: 1px solid #4338ca;
+  font-weight: 600;
+}
+.btn-crop:hover { background: #4338ca; color: #ffffff; }
+.btn-crop.btn-crop-active {
+  background: #eab308 !important;
+  border-color: #ca8a04 !important;
+  color: #0f172a !important;
+  font-weight: 700;
 }
 
-.custom-slider {
-  width: clamp(70px, 15vw, 110px);
-  accent-color: #0f172a;
-  cursor: pointer;
-  min-height: 30px;
+.btn-rotate {
+  background: #0284c7;
+  color: #ffffff;
+  border: 1px solid #0369a1;
+  font-weight: 600;
 }
+.btn-rotate:hover { background: #0369a1; color: #ffffff; }
 
-/* ========================================================
-   Main Stage & Cards
-   ======================================================== */
+.btn-filter {
+  background: #7c3aed;
+  color: #ffffff;
+  border: 1px solid #6d28d9;
+  font-weight: 600;
+}
+.btn-filter:hover { background: #6d28d9; color: #ffffff; }
+
+.btn-undo {
+  background: #64748b;
+  color: #ffffff;
+  border: 1px solid #475569;
+  font-weight: 600;
+}
+.btn-undo:hover { background: #475569; color: #ffffff; }
+
+.btn-reset {
+  background: #e11d48;
+  color: #ffffff;
+  border: 1px solid #be123c;
+  font-weight: 600;
+}
+.btn-reset:hover { background: #be123c; color: #ffffff; }
+
+/* ================= Stage & Cards ================= */
 .studio-stage {
   flex: 1;
   padding: var(--stage-padding);
-  max-width: 1380px;
+  max-width: 1440px;
   margin: 0 auto;
   width: 100%;
 }
@@ -212,240 +183,194 @@ body.studio-app {
   background: var(--surface-card);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
-  padding: clamp(14px, 2.5vw, 20px);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
-  width: 100%;
+  padding: 18px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
-/* Ribbon Controls & Quick Actions */
 .ribbon-bar {
   display: flex;
   align-items: center;
-  background: #ffffff;
+  background: #f8fafc;
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
-  padding: 8px 12px;
-  margin-bottom: 16px;
-  gap: 10px;
+  padding: 10px 14px;
+  margin-bottom: 18px;
+  gap: 12px;
   flex-wrap: wrap;
 }
 
 .ribbon-group {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
 .group-label {
   font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   color: var(--text-secondary);
   font-weight: 700;
 }
 
 .ribbon-divider {
   width: 1px;
-  height: 20px;
-  background: var(--border-subtle);
-}
-
-.btn-ratio,
-.btn-action {
-  font-size: 12px;
-  font-weight: 600;
-  padding: 6px 12px;
-  border-radius: var(--radius-sm);
-  transition: all 0.15s ease;
-  white-space: nowrap;
-  min-height: 34px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  height: 24px;
+  background: #cbd5e1;
 }
 
 .btn-ratio {
   background: #ffffff;
   border: 1px solid var(--border-subtle);
   color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
 }
-
 .btn-ratio.active {
   background: #0f172a;
   color: #ffffff;
   border-color: #0f172a;
 }
 
-.btn-action {
-  background: #ffffff;
-  border: 1px solid var(--border-subtle);
-  color: var(--text-primary);
-}
-
-.btn-action:hover {
-  background: var(--hover-surface);
-  border-color: #cbd5e1;
-}
-
-.btn-action.btn-crop-active {
-  background: #0f172a !important;
-  color: #ffffff !important;
-  border-color: #0f172a !important;
-}
-
-/* ========================================================
-   Drop / Paste Workspace Area (Fluid & Touch-First)
-   ======================================================== */
+/* ================= Fully Centered Workspace & Large View ================= */
 .canvas-workspace {
   position: relative;
   width: 100%;
   height: var(--canvas-height);
   background-color: #ffffff;
-  background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
-  background-size: 16px 16px;
+  background-image: radial-gradient(#cbd5e1 1.2px, transparent 1.2px);
+  background-size: 20px 20px;
   border: 2px dashed #94a3b8;
   border-radius: var(--radius-md);
   overflow: hidden;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
   cursor: pointer;
   outline: none;
-  touch-action: pan-x pan-y pinch-zoom;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .canvas-workspace.id-box {
   height: var(--canvas-id-height);
 }
 
-.canvas-workspace:focus,
-.canvas-workspace.active-target {
-  border: 2px solid var(--border-strong) !important;
-  box-shadow: 0 0 0 4px rgba(15, 23, 42, 0.08);
-  background-color: #fafbfc;
-}
-
-.canvas-workspace.drag-active {
-  border: 2px dashed #0f172a !important;
-  background-color: #f1f5f9 !important;
-  box-shadow: 0 0 0 4px rgba(15, 23, 42, 0.12) !important;
+.canvas-workspace:focus, .canvas-workspace.active-target {
+  border: 2px solid #2563eb !important;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
 }
 
 .zone-badge {
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 12px;
+  left: 12px;
   background: #ffffff;
   border: 1px solid var(--border-subtle);
-  color: #334155;
-  font-size: 10px;
+  color: #1e293b;
+  font-size: 11px;
   font-weight: 700;
-  padding: 4px 8px;
+  padding: 4px 10px;
   border-radius: 6px;
   z-index: 5;
-  pointer-events: none;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
 }
-
 .canvas-workspace.active-target .zone-badge {
-  background: #0f172a;
+  background: #2563eb;
   color: #ffffff;
-  border-color: #0f172a;
+  border-color: #2563eb;
 }
 
 .drop-zone-placeholder {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   color: var(--text-secondary);
   cursor: pointer;
-  padding: 16px;
-  z-index: 1;
+  padding: 24px;
+  margin: auto;
 }
 
 .drop-icon-ring {
-  width: 44px;
-  height: 44px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
-  background: #f1f5f9;
-  border: 1px solid var(--border-subtle);
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
-  margin: 0 auto 10px auto;
-  color: #0f172a;
+  font-size: 22px;
+  color: #2563eb;
+  margin-bottom: 12px;
 }
 
-.drop-zone-placeholder h6 {
-  color: var(--text-primary);
-  font-weight: 700;
-  font-size: clamp(14px, 2.5vw, 16px);
-  margin: 0 0 4px 0;
-}
-
-.drop-zone-placeholder p {
-  font-size: 12px;
-  margin: 0;
-}
-
-/* ========================================================
-   Image Clamping & Fit Logic
-   ======================================================== */
+/* ================= Image Stage Wrap (Wide & Adaptable) ================= */
 .image-stage-wrap {
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: clamp(8px, 2vw, 16px);
+  padding: 12px;
+  overflow: hidden;
 }
 
 .stage-img {
   max-width: 100% !important;
   max-height: 100% !important;
-  width: auto !important;
-  height: auto !important;
+  width: auto;
+  height: auto;
   object-fit: contain !important;
   display: none;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
   border-radius: 4px;
-  background-color: #ffffff;
-  user-select: none;
 }
 
-/* ========================================================
-   ID Copy Card Headers & Ratios
-   ======================================================== */
+/* ================= Cropper Large Workspace Fix ================= */
+.cropper-container {
+  width: 100% !important;
+  height: 100% !important;
+  max-height: 100% !important;
+}
+
+.cropper-view-box {
+  outline: 2px solid #2563eb !important;
+}
+.cropper-line {
+  background-color: #2563eb !important;
+}
+.cropper-point {
+  background-color: #ffffff !important;
+  border: 2px solid #2563eb !important;
+  width: 14px !important;
+  height: 14px !important;
+  border-radius: 50% !important;
+}
+
+/* ================= Ratio Strip & Banner ================= */
 .card-header-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
-  gap: 8px;
-  flex-wrap: wrap;
+  margin-bottom: 10px;
 }
 
 .card-label {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
-  color: var(--text-primary);
 }
 
 .ratio-strip {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 11px;
-  color: var(--text-secondary);
+  gap: 8px;
+  font-size: 12px;
   margin-bottom: 12px;
-  overflow-x: auto;
-  padding-bottom: 4px;
-  -webkit-overflow-scrolling: touch;
-}
-
-.ratio-strip::-webkit-scrollbar {
-  display: none;
 }
 
 .badge-ratio {
@@ -453,194 +378,31 @@ body.studio-app {
   border: 1px solid var(--border-subtle);
   color: #475569;
   border-radius: 4px;
-  padding: 4px 8px;
+  padding: 4px 10px;
   font-size: 11px;
   font-weight: 600;
-  cursor: pointer;
-  white-space: nowrap;
-  flex-shrink: 0;
 }
-
-.badge-ratio:active,
 .badge-ratio.active {
-  background: #0f172a;
+  background: #2563eb;
   color: #ffffff;
-  border-color: #0f172a;
+  border-color: #2563eb;
 }
 
 .id-banner {
-  background: #ffffff;
-  border: 1px solid var(--border-subtle);
-  border-left: 4px solid #0f172a;
-  padding: 12px 14px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-left: 4px solid #2563eb;
+  padding: 12px 18px;
   border-radius: var(--radius-sm);
-  font-size: 12px;
-  line-height: 1.4;
 }
 
-/* ========================================================
-   Cropper JS Skin (Touch-Optimized)
-   ======================================================== */
-.cropper-view-box {
-  outline: 2px solid #0f172a !important;
-  outline-color: #0f172a !important;
-}
-
-.cropper-line {
-  background-color: #0f172a !important;
-}
-
-.cropper-dashed {
-  border-color: rgba(15, 23, 42, 0.5) !important;
-}
-
-/* Larger corner handles for finger precision on touchscreens */
-.cropper-point {
-  background-color: #ffffff !important;
-  border: 2px solid #0f172a !important;
-  width: 14px !important;
-  height: 14px !important;
-  border-radius: 50% !important;
-  margin-left: -7px !important;
-  margin-top: -7px !important;
-}
-
-/* ========================================================
-   Dropdown Menus
-   ======================================================== */
-.dropdown-menu {
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-sm);
+.scale-label {
   font-size: 13px;
-  padding: 4px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  font-weight: 600;
+  color: #1e293b;
 }
 
-.dropdown-item {
-  border-radius: 4px;
-  padding: 8px 12px;
-  font-weight: 500;
-  min-height: 38px;
-  display: flex;
-  align-items: center;
-}
-
-.dropdown-item:active,
-.dropdown-item:hover {
-  background-color: var(--hover-surface);
-  color: var(--text-primary);
-}
-
-/* ========================================================
-   Mobile & Tablet Adaptive Media Queries
-   ======================================================== */
-
-/* Tablet & Mobile Landscape (<= 768px) */
-@media (max-width: 768px) {
-  :root {
-    --header-height: auto;
-  }
-
-  .studio-header {
-    flex-wrap: wrap;
-    padding: 10px 14px;
-    gap: 10px;
-  }
-
-  .header-left {
-    flex: 1 1 auto;
-  }
-
-  /* Mode Switcher moves to horizontal scroll strip */
-  .mode-switch-pill {
-    order: 3;
-    width: 100%;
-    justify-content: stretch;
-    background: #edf2f7;
-  }
-
-  .mode-switch-pill .pill-btn {
-    flex: 1;
-    text-align: center;
-    padding: 8px 4px;
-  }
-
-  /* Ribbon transforms into a swipeable carousel toolbar */
-  .ribbon-bar {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    padding: 6px 10px;
-    gap: 8px;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-
-  .ribbon-bar::-webkit-scrollbar {
-    display: none;
-  }
-
-  .ribbon-group {
-    flex-shrink: 0;
-  }
-
-  .btn-ratio,
-  .btn-action {
-    flex-shrink: 0;
-    min-height: var(--min-touch-target);
-    padding: 8px 14px;
-  }
-
-  .btn-clean-primary,
-  .btn-clean-subtle {
-    min-height: var(--min-touch-target);
-    padding: 8px 14px;
-  }
-}
-
-/* Mobile Portrait & Small Screens (<= 480px) */
-@media (max-width: 480px) {
-  .logo-box {
-    width: 32px;
-    height: 32px;
-    font-size: 13px;
-  }
-
-  .brand-title {
-    font-size: 14px;
-  }
-
-  .badge-tag {
-    display: none; /* Conserve header space */
-  }
-
-  .card-header-bar {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .id-banner {
-    font-size: 11px;
-    padding: 10px 12px;
-  }
-
-  /* Make drop zone hints clear and thumb-friendly */
-  .drop-zone-placeholder {
-    padding: 12px;
-  }
-
-  .drop-icon-ring {
-    width: 40px;
-    height: 40px;
-    font-size: 16px;
-    margin-bottom: 8px;
-  }
-
-  /* Handle cropper points touch target enlargement */
-  .cropper-point {
-    width: 18px !important;
-    height: 18px !important;
-    margin-left: -9px !important;
-    margin-top: -9px !important;
-  }
+.custom-slider {
+  width: 120px;
+  accent-color: #2563eb;
 }

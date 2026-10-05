@@ -3,23 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DL PVC  Print </title>
-
+  <title>DL PVC Print Studio</title>
   <!-- PDF.js Library CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-
   <!-- External Stylesheet -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
   <!-- Top App Navigation & Controls Header -->
   <header class="app-header no-print">
     <div class="header-left">
-      <div class="brand-badge">DL </div>
+      <div class="brand-badge">DL</div>
       <div class="header-title-block">
-        <h1>DL PVC  Print </h1>
-      
+        <h1>DL PVC Print Studio</h1>
       </div>
     </div>
     <div class="header-right">
@@ -36,24 +32,21 @@
           <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
           <rect x="6" y="14" width="12" height="8"></rect>
         </svg>
-        Print  Sheet
+        Print Sheet
       </button>
     </div>
   </header>
 
   <!-- Main Workspace -->
   <main class="workspace">
-    
     <!-- Left Configuration Sidebar -->
     <aside class="control-panel no-print">
-      
       <!-- Multi-File PDF Ingestion Zone -->
       <section class="card-section">
         <div class="section-title-row">
           <h2>1. Batch DL PDFs</h2>
           <span class="count-badge" id="loadedCountBadge">0 / 5 Loaded</span>
         </div>
-        
         <div class="dropzone" id="dropzone">
           <input type="file" id="batchFileInput" accept="application/pdf" multiple />
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="1.8">
@@ -64,7 +57,6 @@
           <p><strong>Click to browse</strong> or drag &amp; drop DL PDFs</p>
           <span class="hint">Select up to 5 DL files (2 pages each)</span>
         </div>
-
         <!-- 5 Slots (DL 1 - DL 5) -->
         <div class="slot-list" id="slotList">
           <!-- Dynamically populated via JS -->
@@ -74,20 +66,18 @@
       <!-- Fix White Strip & Bleed -->
       <section class="card-section">
         <div class="section-title-row">
-          <h2>2. Fix White Strip </h2>
+          <h2>2. Fix White Strip</h2>
           <button class="btn-text-action" id="btnResetBleed">Reset to Default</button>
         </div>
-
         <div class="form-item">
           <label for="stretchPreset">Bottom Strip Fix Preset</label>
           <select id="stretchPreset" class="form-select">
             <option value="1.017" selected>Mild Fill (+1.7%) [Default]</option>
-            <option value="1.028">Auto  Fill (+2.8%)</option>
-            <option value="1.040">Heavy  Fill (+4.0%)</option>
+            <option value="1.028">Auto Fill (+2.8%)</option>
+            <option value="1.040">Heavy Fill (+4.0%)</option>
             <option value="1.000">Exact 100% (No Stretch)</option>
           </select>
         </div>
-
         <div class="slider-row">
           <div class="slider-meta">
             <span>Front Height Stretch</span>
@@ -95,7 +85,6 @@
           </div>
           <input type="range" id="rngStretch" min="100" max="108" step="0.2" value="101.7" />
         </div>
-
         <div class="slider-row">
           <div class="slider-meta">
             <span>Front Y-Position Shift</span>
@@ -111,7 +100,6 @@
           <h2>3. Cut Calibration</h2>
           <button class="btn-text-action" id="btnResetCalib">Reset to Default</button>
         </div>
-        
         <div class="compact-grid">
           <div class="form-item">
             <label for="selGap">Blade Gap</label>
@@ -121,7 +109,6 @@
               <option value="2.5mm">2.5 mm (Wide)</option>
             </select>
           </div>
-
           <div class="form-item">
             <label for="selBleed">Outline</label>
             <select id="selBleed" class="form-select">
@@ -131,7 +118,6 @@
             </select>
           </div>
         </div>
-
         <div class="compact-grid">
           <div class="form-item">
             <label for="inpShiftX">Back X-Shift</label>
@@ -140,7 +126,6 @@
               <span>mm</span>
             </div>
           </div>
-
           <div class="form-item">
             <label for="inpShiftYBack">Back Y-Shift</label>
             <div class="input-unit">
@@ -149,7 +134,6 @@
             </div>
           </div>
         </div>
-
         <div class="form-item">
           <label for="selGuides">Cut Guide Lines</label>
           <select id="selGuides" class="form-select">
@@ -159,19 +143,16 @@
           </select>
         </div>
       </section>
-
     </aside>
 
     <!-- Right Preview Stage -->
     <section class="preview-area">
-      
       <div class="view-toolbar no-print">
         <div class="tab-pill-group">
           <button class="tab-pill active" data-view="split">Side-by-Side</button>
           <button class="tab-pill" data-view="front">Sheet 1 (Front View)</button>
           <button class="tab-pill" data-view="back">Sheet 2 (Back View)</button>
         </div>
-
         <div class="zoom-controls">
           <button class="btn-icon" id="btnZoomOut" title="Zoom Out">−</button>
           <span id="zoomLevel">65%</span>
@@ -179,28 +160,22 @@
           <button class="btn-pill-sm" id="btnZoomFit">Fit</button>
         </div>
       </div>
-
-      <!-- Scalable Sheet Stage Container -->
+      <!-- Scalable & Draggable Sheet Stage Container -->
       <div class="stage-viewport" id="stageViewport">
         <div class="sheets-wrapper" id="sheetsWrapper" style="transform: scale(0.65);">
-          
           <!-- SHEET 1: FRONT VIEW -->
           <div class="a4-sheet" id="sheet1">
             <div class="sheet-title-badge">SHEET 1 — FRONT VIEW (Left: Fronts | Right: Backs)</div>
             <div class="card-grid" id="grid1"></div>
           </div>
-
           <!-- SHEET 2: BACK VIEW -->
           <div class="a4-sheet" id="sheet2">
             <div class="sheet-title-badge">SHEET 2 — BACK VIEW (Left: Fronts | Right: Backs)</div>
             <div class="card-grid" id="grid2"></div>
           </div>
-
         </div>
       </div>
-
     </section>
-
   </main>
 
   <!-- 3D Card Flip Inspection Modal -->
@@ -213,7 +188,6 @@
         </div>
         <button class="btn-icon-close" id="btnCloseModal">✕</button>
       </div>
-
       <div class="modal-body">
         <div class="inspect-toolbar">
           <label for="inspectCardSelect">Inspect Slot:</label>
@@ -231,7 +205,6 @@
             Flip Card (180°)
           </button>
         </div>
-
         <div class="flip-stage">
           <div class="card-3d-wrapper" id="card3d">
             <!-- Front Face -->
@@ -248,7 +221,6 @@
             </div>
           </div>
         </div>
-
         <p class="flip-tip">Tip: Click the card directly or hit <strong>Flip Card</strong> to alternate between Front and Back.</p>
       </div>
     </div>
