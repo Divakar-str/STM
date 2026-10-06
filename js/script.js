@@ -71,7 +71,7 @@ const cardData = [
     {
         title: "Utilities",
         links: [
-             {url:"tools/PVC/pvc.html",text:"pvc",class: "link-primary", icon: "fas fa-credit-card"},
+             {url:"tools/PVC/pvc.html",text:"PVC",class: "link-primary", icon: "fas fa-credit-card"},
             { url: "https://www.indiapost.gov.in/", text: "Post", class: "link-success", icon: "fas fa-envelope" },
             { url: "https://www.police.tn.gov.in/citizenportal", text: "Police E-service",  class: "link-danger",  icon: "fab fa-product-hunt"  },
             { url: "https://myaadhaar.uidai.gov.in/", text: "Aadhaar", class: "link-info", icon: "fas fa-id-card" }

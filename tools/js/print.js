@@ -1,13 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
     const croppers = {};
     const selectedRatios = { image: NaN, imageFront: NaN, imageBack: NaN };
-    
-    // Per-slot stacks for Undo and Filter Reversion
     const historyStacks = { image: [], imageFront: [], imageBack: [] };
     const preFilterBases = { image: null, imageFront: null, imageBack: null };
 
-    // Default card size set to 80%
-    let userCardScale = 0.80; 
+    let userCardScale = 0.80;
     let activeContainer = document.getElementById("canvas-container-main");
 
     function pushHistory(imgId, dataUrl) {
@@ -21,16 +18,13 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("No earlier steps to undo.");
             return;
         }
-
         if (croppers[imgId]) {
             croppers[imgId].destroy();
             croppers[imgId] = null;
             updateCropBtnUI(imgId, false);
         }
-
         historyStacks[imgId].pop();
         const previousState = historyStacks[imgId][historyStacks[imgId].length - 1];
-
         const img = document.getElementById(imgId);
         img.src = previousState;
         preFilterBases[imgId] = previousState;
@@ -42,7 +36,6 @@ document.addEventListener("DOMContentLoaded", () => {
             img.onload = () => {
                 let w = img.naturalWidth;
                 let h = img.naturalHeight;
-
                 if (w > maxDim || h > maxDim) {
                     if (w > h) {
                         h = Math.round((h * maxDim) / w);
@@ -52,7 +45,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         h = maxDim;
                     }
                 }
-
                 const canvas = document.createElement("canvas");
                 canvas.width = w;
                 canvas.height = h;
@@ -89,7 +81,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function setRatio(imgId, ratioValue, btnElement) {
         selectedRatios[imgId] = ratioValue;
-
         const parent = btnElement.parentElement;
         parent.querySelectorAll("button").forEach(b => b.classList.remove("active"));
         btnElement.classList.add("active");
@@ -99,7 +90,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Toggle crop with viewMode: 2 and full container scaling so it never appears tiny
     function toggleCrop(imgId) {
         const img = document.getElementById(imgId);
         if (!img || !img.src || img.style.display === "none") {
@@ -112,7 +102,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 imageSmoothingEnabled: true,
                 imageSmoothingQuality: "high"
             });
-
             if (canvas) {
                 const croppedData = canvas.toDataURL("image/jpeg", 0.95);
                 croppers[imgId].destroy();
@@ -125,8 +114,8 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             croppers[imgId] = new Cropper(img, {
                 aspectRatio: selectedRatios[imgId],
-                viewMode: 2,           // Keeps image filling the viewport safely
-                autoCropArea: 0.98,     // Maximizes crop area inside workspace
+                viewMode: 2,
+                autoCropArea: 0.98,
                 responsive: true,
                 restore: false,
                 movable: true,
@@ -165,10 +154,8 @@ document.addEventListener("DOMContentLoaded", () => {
         source.onload = () => {
             const canvas = document.createElement("canvas");
             const ctx = canvas.getContext("2d");
-
             canvas.width = source.naturalHeight;
             canvas.height = source.naturalWidth;
-
             ctx.translate(canvas.width / 2, canvas.height / 2);
             ctx.rotate((90 * Math.PI) / 180);
             ctx.drawImage(source, -source.naturalWidth / 2, -source.naturalHeight / 2);
@@ -186,7 +173,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!img || !img.src || img.style.display === "none") return;
 
         const baseImageSrc = preFilterBases[imgId] || img.src;
-
         if (type === "none") {
             img.src = baseImageSrc;
             pushHistory(imgId, baseImageSrc);
@@ -204,7 +190,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
             const d = imgData.data;
-
             for (let i = 0; i < d.length; i += 4) {
                 const gray = 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2];
                 if (type === "grayscale") {
@@ -214,7 +199,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     d[i] = bin; d[i + 1] = bin; d[i + 2] = bin;
                 }
             }
-
             ctx.putImageData(imgData, 0, 0);
             const filteredData = canvas.toDataURL("image/jpeg", 0.95);
             img.src = filteredData;
@@ -256,7 +240,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!img || !img.src || img.style.display === "none") return alert("No image loaded.");
         const a = document.createElement("a");
         a.href = img.src;
-        a.download = `DocuPrint_${Date.now()}.jpeg`;
+        a.download = `PrintStudio_${Date.now()}.jpeg`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -286,7 +270,7 @@ document.addEventListener("DOMContentLoaded", () => {
         win.document.close();
     }
 
-    // Export A4 Sheet with strict bounds
+    // Export A4 Sheet with strict bounds and NO card outline border
     function saveIDCopy(fId, bId) {
         const fImg = document.getElementById(fId);
         const bImg = document.getElementById(bId);
@@ -318,10 +302,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     const x = (canvas.width - drawW) / 2;
                     const y = yCenter - (drawH / 2);
 
+                    // Image drawn cleanly with no border
                     ctx.drawImage(image, x, y, drawW, drawH);
-                    ctx.strokeStyle = "#94a3b8";
-                    ctx.lineWidth = 2;
-                    ctx.strokeRect(x, y, drawW, drawH);
                     resolve();
                 };
                 image.src = src;
@@ -341,7 +323,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Print ID Sheet - Guaranteed strictly 1 single page
+    // Print ID Sheet - Strictly no borders and single-page execution
     function printIDCopy(fId, bId) {
         const fImg = document.getElementById(fId);
         const bImg = document.getElementById(bId);
@@ -351,7 +333,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!fSrc && !bSrc) return alert("Upload at least one side to print.");
 
-        // Calculate card height based on 50vh half-page slot
         const scalePctHeight = Math.round(48 * userCardScale);
 
         const win = window.open("", "_blank");
@@ -361,10 +342,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <head>
                 <title>Print ID Duplex</title>
                 <style>
-                    @page { 
-                        size: A4 portrait; 
-                        margin: 0mm; 
-                    }
+                    @page { size: A4 portrait; margin: 0mm; }
                     html, body {
                         width: 100%;
                         height: 100%;
@@ -396,7 +374,8 @@ document.addEventListener("DOMContentLoaded", () => {
                         display: flex;
                         align-items: center;
                         justify-content: center;
-                        border: 1px solid #94a3b8;
+                        border: none !important;
+                        outline: none !important;
                     }
                     .card-box img {
                         height: 100%;
@@ -421,6 +400,7 @@ document.addEventListener("DOMContentLoaded", () => {
         win.document.close();
     }
 
+    // Dynamic mode switcher handling both sections and actions cleanly
     function switchMode(mode) {
         const fullSec = document.getElementById("fullPageSection");
         const idSec = document.getElementById("idCopySection");
@@ -432,22 +412,28 @@ document.addEventListener("DOMContentLoaded", () => {
         if (mode === "full") {
             fullSec.classList.remove("d-none");
             idSec.classList.add("d-none");
+
             tabFull.classList.add("active");
             tabId.classList.remove("active");
+
             fullActs.classList.remove("d-none");
             fullActs.classList.add("d-flex");
             idActs.classList.add("d-none");
             idActs.classList.remove("d-flex");
+
             setActiveTarget(document.getElementById("canvas-container-main"));
         } else {
             fullSec.classList.add("d-none");
             idSec.classList.remove("d-none");
+
             tabFull.classList.remove("active");
             tabId.classList.add("active");
+
             fullActs.classList.add("d-none");
             fullActs.classList.remove("d-flex");
             idActs.classList.remove("d-none");
             idActs.classList.add("d-flex");
+
             setActiveTarget(document.getElementById("canvas-container-front"));
         }
     }
