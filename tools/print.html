@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <meta name="theme-color" content="#ffffff">
     <link rel="icon" type="image/x-icon" href="../images/png logo.png">
-    <title>Print Studio</title>
+    <title>Print</title>
     <!-- Fonts & Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Framework & Plugins -->
@@ -22,7 +23,7 @@
                 <i class="fa-solid fa-print"></i>
             </div>
             <div>
-                <h5 class="brand-title mb-0">Print Studio</h5>
+                <h5 class="brand-title mb-0">Print </h5>
             </div>
         </div>
 
@@ -41,20 +42,20 @@
             <!-- Full Page Actions -->
             <div id="fullHeaderActions" class="d-flex gap-2">
                 <button class="btn btn-export" onclick="saveFull('image')">
-                    <i class="fa-solid fa-download me-1"></i> Export
+                    <i class="fa-solid fa-download me-1"></i> Download
                 </button>
                 <button class="btn btn-print" onclick="printFullPage('image')">
-                    <i class="fa-solid fa-print me-1"></i> Print A4
+                    <i class="fa-solid fa-print me-1"></i> Print 
                 </button>
             </div>
 
             <!-- ID Actions -->
             <div id="idHeaderActions" class="d-none gap-2">
                 <button class="btn btn-export" onclick="saveIDCopy('imageFront', 'imageBack')">
-                    <i class="fa-solid fa-download me-1"></i> Export Sheet
+                    <i class="fa-solid fa-download me-1"></i> Download
                 </button>
                 <button class="btn btn-print" onclick="printIDCopy('imageFront', 'imageBack')">
-                    <i class="fa-solid fa-print me-1"></i> Print ID Sheet
+                    <i class="fa-solid fa-print me-1"></i> Print 
                 </button>
             </div>
         </div>
@@ -101,8 +102,11 @@
                     <div class="ribbon-divider"></div>
 
                     <div class="ribbon-group ms-auto">
-                        <button class="btn btn-undo" onclick="undoAction('image')" title="Undo last step">
+                        <button class="btn btn-undo" id="btnUndo-image" onclick="undoAction('image')" title="Undo last step">
                             <i class="fa-solid fa-rotate-left me-1"></i> Undo
+                        </button>
+                        <button class="btn btn-redo" id="btnRedo-image" onclick="redoAction('image')" title="Redo next step">
+                            <i class="fa-solid fa-rotate-right me-1"></i> Redo
                         </button>
                         <button class="btn btn-reset" onclick="resetImage('image')">
                             <i class="fa-regular fa-trash-can me-1"></i> Reset
@@ -131,12 +135,13 @@
             <div class="id-banner mb-3 d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-center">
                     <i class="fa-solid fa-id-card text-primary fs-5 me-2"></i>
-                    <span class="fw-bold">Dual ID Duplex Setup</span>
-                </div>
-                <div id="idScaleControl" class="d-flex align-items-center gap-2">
+                    <span class="fw-bold">scale</span>
+                    <div id="idScaleControl" class="d-flex align-items-center gap-2">
                     <label for="cardScaleRange" class="scale-label">Card Size: <strong id="scaleValLabel">80%</strong></label>
                     <input type="range" class="form-range custom-slider" id="cardScaleRange" min="30" max="80" value="80" oninput="updateCardScale(this.value)">
                 </div>
+                </div>
+                
             </div>
 
             <div class="row g-4">
@@ -150,7 +155,7 @@
                                     <i class="fa-solid fa-crop-simple"></i> Crop
                                 </button>
                                 <button class="btn btn-sm btn-rotate" onclick="rotateImage('imageFront')">
-                                    <i class="fa-solid fa-rotate-right"></i>
+                                    <i class="fa-solid fa-rotate-right"></i> Rotate
                                 </button>
                                 <div class="dropdown">
                                     <button class="btn btn-sm btn-filter dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -162,11 +167,14 @@
                                         <li><a class="dropdown-item" href="javascript:applyFilter('imageFront', 'bw')">Xerox B&W</a></li>
                                     </ul>
                                 </div>
-                                <button class="btn btn-sm btn-undo" onclick="undoAction('imageFront')" title="Undo">
-                                    <i class="fa-solid fa-rotate-left"></i>
+                                <button class="btn btn-sm btn-undo" id="btnUndo-imageFront" onclick="undoAction('imageFront')" title="Undo">
+                                    <i class="fa-solid fa-rotate-left"></i> Undo
+                                </button>
+                                <button class="btn btn-sm btn-redo" id="btnRedo-imageFront" onclick="redoAction('imageFront')" title="Redo">
+                                    <i class="fa-solid fa-rotate-right"></i> Redo
                                 </button>
                                 <button class="btn btn-sm btn-reset" onclick="resetImage('imageFront')">
-                                    <i class="fa-regular fa-trash-can"></i>
+                                    <i class="fa-regular fa-trash-can"></i> Reset
                                 </button>
                             </div>
                         </div>
@@ -203,7 +211,7 @@
                                     <i class="fa-solid fa-crop-simple"></i> Crop
                                 </button>
                                 <button class="btn btn-sm btn-rotate" onclick="rotateImage('imageBack')">
-                                    <i class="fa-solid fa-rotate-right"></i>
+                                    <i class="fa-solid fa-rotate-right"></i> Rotate
                                 </button>
                                 <div class="dropdown">
                                     <button class="btn btn-sm btn-filter dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -215,11 +223,14 @@
                                         <li><a class="dropdown-item" href="javascript:applyFilter('imageBack', 'bw')">Xerox B&W</a></li>
                                     </ul>
                                 </div>
-                                <button class="btn btn-sm btn-undo" onclick="undoAction('imageBack')" title="Undo">
-                                    <i class="fa-solid fa-rotate-left"></i>
+                                <button class="btn btn-sm btn-undo" id="btnUndo-imageBack" onclick="undoAction('imageBack')" title="Undo">
+                                    <i class="fa-solid fa-rotate-left"></i>  Undo
+                                </button>
+                                <button class="btn btn-sm btn-redo" id="btnRedo-imageBack" onclick="redoAction('imageBack')" title="Redo">
+                                    <i class="fa-solid fa-rotate-right"></i> Redo
                                 </button>
                                 <button class="btn btn-sm btn-reset" onclick="resetImage('imageBack')">
-                                    <i class="fa-regular fa-trash-can"></i>
+                                    <i class="fa-regular fa-trash-can"></i> Reset
                                 </button>
                             </div>
                         </div>
