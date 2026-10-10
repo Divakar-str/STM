@@ -1,466 +1,632 @@
 /**
- * DL PVC Duplex Print Studio Engine
- * Production Logic: Multi-slot batch ingest, white-strip correction,
- * duplex mirroring, 3D card inspection, pan/drag viewport, and print dispatch.
- */ 
- pdfjsLib.GlobalWorkerOptions.workerSrc =
-   'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js'; 
+ * ID CARD COPY TOOL — JAVASCRIPT ENGINE
+ * Features:
+ * 1. DPI quality selection (300 DPI, 400 DPI, 600 DPI)
+ * 2. Real file names with individual remove button
+ * 3. Batch Select (Front, Back, All) & Batch Crop/Flip/Rotate/Reset
+ * 4. Whole-image zoom lightbox (no small lens)
+ * 5. 1-click clipboard copy to PhotoScape
+ */
 
-const TOTAL_SLOTS = 5; 
-const RENDER_DPI_SCALE = 3.5; 
-
-// System Defaults for instant reset (Mild Fill: 101.7%)
-const DEFAULTS = {
-   stretchPercent: 101.7,
-   shiftY: 0.0,
-   gap: '1.5mm',
-   bleed: '0.5mm',
-   guideColor: '#94a3b8',
-   backShiftX: 0.0,
-   backShiftY: 0.0
-}; 
-
-// Data store for DL 1..5 
-const slotsData = Array.from({ length: TOTAL_SLOTS }, (_, i) => ({
-   id: i + 1,
-   loaded: false,
-   fileName: '',
-   frontDataUrl: null,
-   backDataUrl: null
-})); 
-
-let currentZoom = 0.65; 
-
-// DOM Elements 
-const grid1 = document.getElementById('grid1'); 
-const grid2 = document.getElementById('grid2'); 
-const slotList = document.getElementById('slotList'); 
-const sheetsWrapper = document.getElementById('sheetsWrapper'); 
-const stageViewport = document.getElementById('stageViewport');
-const zoomLevelText = document.getElementById('zoomLevel'); 
-const loadedCountBadge = document.getElementById('loadedCountBadge'); 
-
-// 3D Inspector Elements 
-const inspectModal = document.getElementById('inspectModal'); 
-const card3d = document.getElementById('card3d'); 
-const inspectCardSelect = document.getElementById('inspectCardSelect'); 
-const img3dFront = document.getElementById('img3dFront'); 
-const img3dBack = document.getElementById('img3dBack'); 
-const emptyFrontState = document.getElementById('emptyFrontState'); 
-const emptyBackState = document.getElementById('emptyBackState'); 
-
-/* ==========================================================================
-   Initialization
-   ========================================================================== */ 
-
-function initializeApp() {
-   buildGrids();
-   buildSlotList();
-   bindControls();
-   bindInspection();
-   bindPanAndDrag();
-} 
-
-/**
- * Creates 5-Row x 2-Column layout labeled DL 1 to DL 5
- * Sheet 1 (Front View): Left: Front 1..5 | Right: Back 1..5
- * Sheet 2 (Back View):  Left: Front 1..5 | Right: Back 1..5
- */ 
-function buildGrids() {
-   grid1.innerHTML = '';
-   grid2.innerHTML = ''; 
-
-   for (let i = 1; i <= TOTAL_SLOTS; i++) {
-     grid1.appendChild(createCell(`s1-front-${i}`, `DL ${i} FRONT`, 'canvas-front'));
-     grid1.appendChild(createCell(`s1-back-${i}`, `DL ${i} BACK`, 'canvas-back')); 
-
-     grid2.appendChild(createCell(`s2-front-${i}`, `DL ${i} FRONT`, 'canvas-front'));
-     grid2.appendChild(createCell(`s2-back-${i}`, `DL ${i} BACK`, 'canvas-back'));
-   }
-} 
-
-function createCell(idPrefix, label, canvasClass) {
-   const cell = document.createElement('div');
-   cell.className = 'card-cell';
-   cell.id = `cell-${idPrefix}`; 
-
-   const placeholder = document.createElement('span');
-   placeholder.className = 'card-placeholder';
-   placeholder.textContent = label; 
-
-   const canvas = document.createElement('canvas');
-   canvas.id = `canv-${idPrefix}`;
-   canvas.className = canvasClass; 
-
-   cell.appendChild(placeholder);
-   cell.appendChild(canvas);
-   return cell;
-} 
-
-function buildSlotList() {
-   slotList.innerHTML = '';
-   let loadedCount = 0; 
-
-   slotsData.forEach((slot) => {
-     if (slot.loaded) loadedCount++;
-     const item = document.createElement('div');
-     item.className = `slot-item ${slot.loaded ? 'loaded' : ''}`;
-     item.innerHTML = `
-       <div class="slot-left-info">
-         <span class="slot-tag">DL ${slot.id}</span>
-         <span class="slot-file-text">${slot.loaded ? slot.fileName : 'Empty'}</span>
-       </div>
-       <div>
-         ${slot.loaded ? `<button class="btn-slot-remove" onclick="clearSlot(${slot.id})" title="Remove">✕</button>` : ''}
-       </div>
-     `;
-     slotList.appendChild(item);
-   }); 
-
-   loadedCountBadge.textContent = `${loadedCount} / ${TOTAL_SLOTS} Loaded`;
-} 
-
-/* ==========================================================================
-   Preview Stage Mouse Pan & Drag Interaction
-   ========================================================================== */ 
-
-function bindPanAndDrag() {
-   let isDown = false;
-   let startX, startY, scrollLeft, scrollTop;
-
-   stageViewport.addEventListener('mousedown', (e) => {
-     // Only trigger drag panning if clicking directly on the viewport background or spacing
-     if (e.target !== stageViewport && e.target !== sheetsWrapper) return;
-     isDown = true;
-     stageViewport.classList.add('is-dragging');
-     startX = e.pageX - stageViewport.offsetLeft;
-     startY = e.pageY - stageViewport.offsetTop;
-     scrollLeft = stageViewport.scrollLeft;
-     scrollTop = stageViewport.scrollTop;
-   });
-
-   stageViewport.addEventListener('mouseleave', () => {
-     isDown = false;
-     stageViewport.classList.remove('is-dragging');
-   });
-
-   stageViewport.addEventListener('mouseup', () => {
-     isDown = false;
-     stageViewport.classList.remove('is-dragging');
-   });
-
-   stageViewport.addEventListener('mousemove', (e) => {
-     if (!isDown) return;
-     e.preventDefault();
-     const x = e.pageX - stageViewport.offsetLeft;
-     const y = e.pageY - stageViewport.offsetTop;
-     const walkX = (x - startX) * 1.5;
-     const walkY = (y - startY) * 1.5;
-     stageViewport.scrollLeft = scrollLeft - walkX;
-     stageViewport.scrollTop = scrollTop - walkY;
-   });
+// PDF.js fallback for file:// protocol
+if (window.location.protocol === 'file:') {
+  pdfjsLib.GlobalWorkerOptions.workerSrc = '';
+} else {
+  pdfjsLib.GlobalWorkerOptions.workerSrc =
+    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 }
 
-/* ==========================================================================
-   Controls Binding & Default Resets
-   ========================================================================== */ 
+// App State
+const AppState = {
+  docs: [], // [{ docId, fileName, dpi, front: { id, type, originalCanvas, currentCanvas, selected }, back: ... }]
+  activeDpi: 400,
+  // Zoom Modal State
+  activeZoomCard: null,
+  zoomScale: 1.0,
+  panX: 0,
+  panY: 0,
+  isDragging: false,
+  dragStartX: 0,
+  dragStartY: 0
+};
 
-function bindControls() {
-   const fileInput = document.getElementById('batchFileInput');
-   fileInput.addEventListener('change', handleBatchFiles); 
+// UI Selectors
+const dropzone = document.getElementById('dropzone');
+const fileInput = document.getElementById('fileInput');
+const filesList = document.getElementById('filesList');
+const emptyState = document.getElementById('emptyState');
+const fileCounter = document.getElementById('fileCounter');
+const selectedCountBadge = document.getElementById('selectedCountBadge');
+const zoomModal = document.getElementById('zoomModal');
+const zoomCanvas = document.getElementById('zoomCanvas');
+const zoomCanvasWrapper = document.getElementById('zoomCanvasWrapper');
+const modalBody = document.getElementById('modalBody');
 
-   const dropzone = document.getElementById('dropzone');
-   dropzone.addEventListener('dragover', (e) => {
-     e.preventDefault();
-     dropzone.style.borderColor = 'var(--accent)';
-   });
-   dropzone.addEventListener('dragleave', () => {
-     dropzone.style.borderColor = 'var(--border-subtle)';
-   });
-   dropzone.addEventListener('drop', (e) => {
-     e.preventDefault();
-     dropzone.style.borderColor = 'var(--border-subtle)';
-     if (e.dataTransfer.files.length > 0) {
-       processFiles(Array.from(e.dataTransfer.files));
-     }
-   }); 
+/* ================= UPLOAD HANDLING ================= */
+dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('dragover'); });
+dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+dropzone.addEventListener('drop', (e) => {
+  e.preventDefault();
+  dropzone.classList.remove('dragover');
+  handleUploadedFiles(e.dataTransfer.files);
+});
+fileInput.addEventListener('change', (e) => handleUploadedFiles(e.target.files));
 
-   const rngStretch = document.getElementById('rngStretch');
-   const lblStretch = document.getElementById('lblStretch');
-   const rngShiftY = document.getElementById('rngShiftY');
-   const lblShiftY = document.getElementById('lblShiftY');
-   const stretchPreset = document.getElementById('stretchPreset'); 
+function changeDpi(val) {
+  AppState.activeDpi = parseInt(val, 10) || 400;
+  showToast(`DPI set to ${AppState.activeDpi}. Uploaded files will render at this quality.`);
+}
 
-   rngStretch.addEventListener('input', (e) => {
-     const val = parseFloat(e.target.value);
-     lblStretch.textContent = `${val.toFixed(1)}%`;
-     document.documentElement.style.setProperty('--front-scale-y', (val / 100).toString());
-   }); 
+async function handleUploadedFiles(fileList) {
+  const incoming = Array.from(fileList).filter((f) => f.type === 'application/pdf');
+  if (incoming.length === 0) {
+    showToast('Please select valid PDF files.');
+    return;
+  }
 
-   rngShiftY.addEventListener('input', (e) => {
-     const val = parseFloat(e.target.value);
-     lblShiftY.textContent = `${val.toFixed(1)} mm`;
-     document.documentElement.style.setProperty('--front-shift-y', `${val}mm`);
-   }); 
+  const freeSlots = 5 - AppState.docs.length;
+  if (freeSlots <= 0) {
+    showToast('Max 5 files reached. Remove a file first.');
+    return;
+  }
 
-   stretchPreset.addEventListener('change', (e) => {
-     const val = parseFloat(e.target.value);
-     rngStretch.value = (val * 100).toFixed(1);
-     lblStretch.textContent = `${rngStretch.value}%`;
-     document.documentElement.style.setProperty('--front-scale-y', val.toString());
-   }); 
+  const toProcess = incoming.slice(0, freeSlots);
+  for (const file of toProcess) {
+    await processPdfDocument(file);
+  }
 
-   document.getElementById('btnResetBleed').addEventListener('click', () => {
-     rngStretch.value = DEFAULTS.stretchPercent.toFixed(1);
-     lblStretch.textContent = `${DEFAULTS.stretchPercent.toFixed(1)}%`;
-     rngShiftY.value = DEFAULTS.shiftY;
-     lblShiftY.textContent = `${DEFAULTS.shiftY.toFixed(1)} mm`;
-     stretchPreset.value = '1.017'; 
+  updateWorkspaceUI();
+  fileInput.value = '';
+}
 
-     document.documentElement.style.setProperty('--front-scale-y', (DEFAULTS.stretchPercent / 100).toString());
-     document.documentElement.style.setProperty('--front-shift-y', `${DEFAULTS.shiftY}mm`);
-   }); 
+/* ================= HIGH-DPI PDF RENDERER ================= */
+async function processPdfDocument(file) {
+  try {
+    const buffer = await file.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({ data: buffer }).promise;
+    const docId = 'doc_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
 
-   const selGap = document.getElementById('selGap');
-   const selBleed = document.getElementById('selBleed');
-   const inpShiftX = document.getElementById('inpShiftX');
-   const inpShiftYBack = document.getElementById('inpShiftYBack');
-   const selGuides = document.getElementById('selGuides'); 
+    // PDF point standard: 72 points per inch
+    // Scale = DPI / 72 (e.g., 400 DPI => scale = 400/72 ≈ 5.55)
+    const renderScale = AppState.activeDpi / 72;
 
-   selGap.addEventListener('change', (e) => document.documentElement.style.setProperty('--cut-gap', e.target.value));
-   selBleed.addEventListener('change', (e) => document.documentElement.style.setProperty('--safe-bleed', e.target.value));
-   selGuides.addEventListener('change', (e) => document.documentElement.style.setProperty('--guide-color', e.target.value));
-   inpShiftX.addEventListener('input', (e) => document.documentElement.style.setProperty('--back-x-shift', `${e.target.value || 0}mm`));
-   inpShiftYBack.addEventListener('input', (e) => document.documentElement.style.setProperty('--back-y-shift', `${e.target.value || 0}mm`)); 
+    const docEntry = {
+      docId: docId,
+      fileName: file.name,
+      dpi: AppState.activeDpi,
+      front: null,
+      back: null
+    };
 
-   document.getElementById('btnResetCalib').addEventListener('click', () => {
-     selGap.value = DEFAULTS.gap;
-     selBleed.value = DEFAULTS.bleed;
-     selGuides.value = DEFAULTS.guideColor;
-     inpShiftX.value = DEFAULTS.backShiftX.toFixed(1);
-     inpShiftYBack.value = DEFAULTS.backShiftY.toFixed(1); 
+    // Render Front Side (Page 1)
+    if (pdf.numPages >= 1) {
+      const page1 = await pdf.getPage(1);
+      const vp1 = page1.getViewport({ scale: renderScale });
+      const c1 = document.createElement('canvas');
+      c1.width = vp1.width; c1.height = vp1.height;
+      await page1.render({ canvasContext: c1.getContext('2d', { willReadFrequently: true }), viewport: vp1 }).promise;
 
-     document.documentElement.style.setProperty('--cut-gap', DEFAULTS.gap);
-     document.documentElement.style.setProperty('--safe-bleed', DEFAULTS.bleed);
-     document.documentElement.style.setProperty('--guide-color', DEFAULTS.guideColor);
-     document.documentElement.style.setProperty('--back-x-shift', `${DEFAULTS.backShiftX}mm`);
-     document.documentElement.style.setProperty('--back-y-shift', `${DEFAULTS.backShiftY}mm`);
-   }); 
+      docEntry.front = {
+        id: `${docId}_front`,
+        type: 'Front',
+        dpi: AppState.activeDpi,
+        docName: file.name,
+        originalCanvas: cloneCanvas(c1),
+        currentCanvas: c1,
+        selected: false // Not selected at first
+      };
+    }
 
-   document.getElementById('btnPrint').addEventListener('click', () => {
-     const sheet1 = document.getElementById('sheet1');
-     const sheet2 = document.getElementById('sheet2'); 
+    // Render Back Side (Page 2)
+    if (pdf.numPages >= 2) {
+      const page2 = await pdf.getPage(2);
+      const vp2 = page2.getViewport({ scale: renderScale });
+      const c2 = document.createElement('canvas');
+      c2.width = vp2.width; c2.height = vp2.height;
+      await page2.render({ canvasContext: c2.getContext('2d', { willReadFrequently: true }), viewport: vp2 }).promise;
 
-     const prevDisplay1 = sheet1.style.display;
-     const prevDisplay2 = sheet2.style.display;
-     sheet1.style.display = 'flex';
-     sheet2.style.display = 'flex'; 
+      docEntry.back = {
+        id: `${docId}_back`,
+        type: 'Back',
+        dpi: AppState.activeDpi,
+        docName: file.name,
+        originalCanvas: cloneCanvas(c2),
+        currentCanvas: c2,
+        selected: false // Not selected at first
+      };
+    }
 
-     window.print(); 
+    AppState.docs.push(docEntry);
+  } catch (err) {
+    console.error(err);
+    showToast(`Could not read "${file.name}"`);
+  }
+}
 
-     setTimeout(() => {
-       sheet1.style.display = prevDisplay1;
-       sheet2.style.display = prevDisplay2;
-     }, 500);
-   }); 
+/* ================= RENDER WORKSPACE ================= */
+function updateWorkspaceUI() {
+  filesList.innerHTML = '';
+  const total = AppState.docs.length;
 
-   document.getElementById('btnResetAll').addEventListener('click', resetAllSlots); 
+  fileCounter.innerText = `${total} / 5 Files`;
+  emptyState.style.display = total === 0 ? 'block' : 'none';
 
-   document.querySelectorAll('.tab-pill').forEach((btn) => {
-     btn.addEventListener('click', (e) => {
-       document.querySelectorAll('.tab-pill').forEach((b) => b.classList.remove('active'));
-       e.target.classList.add('active');
-       const view = e.target.dataset.view;
-       if (view === 'front') {
-         document.getElementById('sheet1').style.display = 'flex';
-         document.getElementById('sheet2').style.display = 'none';
-       } else if (view === 'back') {
-         document.getElementById('sheet1').style.display = 'none';
-         document.getElementById('sheet2').style.display = 'flex';
-       } else {
-         document.getElementById('sheet1').style.display = 'flex';
-         document.getElementById('sheet2').style.display = 'flex';
-       }
-     });
-   }); 
+  AppState.docs.forEach((doc, idx) => {
+    const rowEl = document.createElement('div');
+    rowEl.className = 'file-row';
+    rowEl.id = `row_${doc.docId}`;
 
-   document.getElementById('btnZoomIn').addEventListener('click', () => setZoom(currentZoom + 0.1));
-   document.getElementById('btnZoomOut').addEventListener('click', () => setZoom(currentZoom - 0.1));
-   document.getElementById('btnZoomFit').addEventListener('click', () => setZoom(0.65));
-} 
+    rowEl.innerHTML = `
+      <div class="file-row-header">
+        <div class="file-name-title">
+          <span class="file-num-badge">File 0${idx + 1}</span>
+          <span>${escapeHtml(doc.fileName)}</span>
+        </div>
+        <button class="btn-remove-file" onclick="removeSingleDoc('${doc.docId}')" title="Remove this file">
+          ✕ Remove File
+        </button>
+      </div>
+      <div class="file-sides-split" id="split_${doc.docId}"></div>
+    `;
 
-function setZoom(val) {
-   currentZoom = Math.min(Math.max(val, 0.3), 1.2);
-   sheetsWrapper.style.transform = `scale(${currentZoom})`;
-   zoomLevelText.textContent = `${Math.round(currentZoom * 100)}%`;
-} 
+    filesList.appendChild(rowEl);
+    const split = rowEl.querySelector(`#split_${doc.docId}`);
 
-/* ==========================================================================
-   File Ingestion & High-Res Rendering
-   ========================================================================== */ 
+    if (doc.front) split.appendChild(buildCardUnit(doc.front));
+    if (doc.back) split.appendChild(buildCardUnit(doc.back));
+  });
 
-async function handleBatchFiles(e) {
-   const files = Array.from(e.target.files);
-   if (files.length === 0) return;
-   await processFiles(files);
-   e.target.value = '';
-} 
+  updateSelectedCount();
+}
 
-async function processFiles(files) {
-   const pdfFiles = files.filter(f => f.type === 'application/pdf' || f.name.toLowerCase().endsWith('.pdf'));
-   for (let i = 0; i < pdfFiles.length && i < TOTAL_SLOTS; i++) {
-     await loadSinglePDF(pdfFiles[i], i + 1);
-   }
-} 
+function buildCardUnit(card) {
+  const isFront = card.type === 'Front';
+  const unit = document.createElement('div');
+  unit.className = `card-unit ${isFront ? 'front' : 'back'} ${card.selected ? 'selected' : ''}`;
+  unit.id = `unit_${card.id}`;
 
-async function loadSinglePDF(file, slotIndex) {
-   try {
-     const arrayBuffer = await file.arrayBuffer();
-     const pdfDoc = await pdfjsLib.getDocument(new Uint8Array(arrayBuffer)).promise; 
+  unit.innerHTML = `
+    <div class="card-header-bar">
+      <label class="card-select-label" onclick="toggleCardSelect('${card.id}', event)">
+        <input type="checkbox" class="card-checkbox" ${card.selected ? 'checked' : ''} />
+        <span class="side-label ${isFront ? 'front' : 'back'}">${card.type} Side</span>
+      </label>
+      <span class="status-badge ${card.selected ? 'selected' : 'unselected'}" id="badge_${card.id}">
+        ${card.selected ? '✓ SELECTED' : 'NOT SELECTED'}
+      </span>
+    </div>
 
-     if (pdfDoc.numPages < 2) {
-       alert(`"${file.name}" must contain at least 2 pages (Front & Back).`);
-       return;
-     } 
+    <div class="card-body-row">
+      <!-- Click whole canvas to open whole image zoom -->
+      <div class="canvas-viewport" id="viewport_${card.id}" onclick="openZoomModal('${card.id}')" title="Click to view whole image zoomed">
+        <span class="zoom-hint-tag">🔍 Click to Zoom</span>
+      </div>
 
-     const page1 = await pdfDoc.getPage(1);
-     const page2 = await pdfDoc.getPage(2); 
+      <!-- Vertical Action Buttons on the Side -->
+      <div class="side-buttons">
+        <button class="btn btn-card-copy" id="btn_copy_${card.id}" onclick="copySingleCard('${card.id}')" title="Copy to PhotoScape">
+          📋 Copy
+        </button>
+        <button class="btn btn-outline" onclick="openZoomModal('${card.id}')" title="Zoom Whole Image">
+          🔍 Zoom
+        </button>
+        <button class="btn btn-outline" onclick="autoCropCard('${card.id}')" title="Cut White Border">
+          ✂️ Crop
+        </button>
+        <button class="btn btn-outline" onclick="flipCard('${card.id}', 'H')" title="Flip Left-Right">
+          ↔️ Flip
+        </button>
+        <button class="btn btn-outline" onclick="rotateCard('${card.id}', 90)" title="Turn 90 degrees">
+          🔄 Turn
+        </button>
+        <button class="btn btn-outline" onclick="resetCard('${card.id}')" title="Reset to original">
+          ↩️ Reset
+        </button>
+      </div>
+    </div>
 
-     const frontDataUrl = await renderPageToCanvas(page1, `canv-s1-front-${slotIndex}`);
-     const backDataUrl = await renderPageToCanvas(page2, `canv-s1-back-${slotIndex}`); 
+    <div class="card-meta-bar">
+      <span id="dim_${card.id}">${card.currentCanvas.width} × ${card.currentCanvas.height} px</span>
+      <span>${card.dpi} DPI</span>
+    </div>
+  `;
 
-     await renderPageToCanvas(page1, `canv-s2-front-${slotIndex}`);
-     await renderPageToCanvas(page2, `canv-s2-back-${slotIndex}`); 
+  const vp = unit.querySelector(`#viewport_${card.id}`);
+  vp.appendChild(card.currentCanvas);
 
-     slotsData[slotIndex - 1] = {
-       id: slotIndex,
-       loaded: true,
-       fileName: file.name,
-       frontDataUrl,
-       backDataUrl
-     };
-     buildSlotList();
-     update3DPreview();
-   } catch (err) {
-     console.error(`Error loading DL ${slotIndex}:`, err);
-     alert(`Could not render "${file.name}": ` + err.message);
-   }
-} 
+  return unit;
+}
 
-async function renderPageToCanvas(page, canvasId) {
-   const canvas = document.getElementById(canvasId);
-   if (!canvas) return null; 
+/* ================= SELECTION LOGIC ================= */
+function toggleCardSelect(cardId, e) {
+  if (e.target.tagName !== 'INPUT') e.preventDefault();
 
-   const ctx = canvas.getContext('2d');
-   const viewport = page.getViewport({ scale: RENDER_DPI_SCALE }); 
+  const card = findCard(cardId);
+  if (!card) return;
 
-   canvas.width = viewport.width;
-   canvas.height = viewport.height; 
+  card.selected = !card.selected;
+  refreshCardSelectVisual(card);
+  updateSelectedCount();
+}
 
-   await page.render({ canvasContext: ctx, viewport: viewport }).promise; 
+function selectByType(type, selectVal) {
+  getAllCards().forEach((card) => {
+    if (card.type === type) {
+      card.selected = selectVal;
+      refreshCardSelectVisual(card);
+    }
+  });
+  updateSelectedCount();
+}
 
-   canvas.style.display = 'block';
-   const ph = canvas.parentElement.querySelector('.card-placeholder');
-   if (ph) ph.style.display = 'none'; 
+function selectAll(selectVal) {
+  getAllCards().forEach((card) => {
+    card.selected = selectVal;
+    refreshCardSelectVisual(card);
+  });
+  updateSelectedCount();
+}
 
-   return canvas.toDataURL('image/png');
-} 
+function refreshCardSelectVisual(card) {
+  const unit = document.getElementById(`unit_${card.id}`);
+  if (!unit) return;
 
-function clearSlot(slotIndex) {
-   slotsData[slotIndex - 1] = {
-     id: slotIndex,
-     loaded: false,
-     fileName: '',
-     frontDataUrl: null,
-     backDataUrl: null
-   }; 
+  const checkbox = unit.querySelector('.card-checkbox');
+  const badge = document.getElementById(`badge_${card.id}`);
 
-   const canvasIds = [
-     `canv-s1-front-${slotIndex}`,
-     `canv-s1-back-${slotIndex}`,
-     `canv-s2-front-${slotIndex}`,
-     `canv-s2-back-${slotIndex}`
-   ]; 
+  if (card.selected) {
+    unit.classList.add('selected');
+    checkbox.checked = true;
+    badge.className = 'status-badge selected';
+    badge.innerText = '✓ SELECTED';
+  } else {
+    unit.classList.remove('selected');
+    checkbox.checked = false;
+    badge.className = 'status-badge unselected';
+    badge.innerText = 'NOT SELECTED';
+  }
+}
 
-   canvasIds.forEach((id) => {
-     const c = document.getElementById(id);
-     if (c) {
-       const ctx = c.getContext('2d');
-       ctx.clearRect(0, 0, c.width, c.height);
-       c.style.display = 'none';
-       const ph = c.parentElement.querySelector('.card-placeholder');
-       if (ph) ph.style.display = 'block';
-     }
-   });
-   buildSlotList();
-   update3DPreview();
-} 
+function updateSelectedCount() {
+  const count = getAllCards().filter((c) => c.selected).length;
+  selectedCountBadge.innerText = `${count} Selected`;
+}
 
-function resetAllSlots() {
-   for (let i = 1; i <= TOTAL_SLOTS; i++) {
-     clearSlot(i);
-   }
-} 
+/* ================= 1-CLICK CLIPBOARD COPY (PHOTOSCAPE) ================= */
+async function copySingleCard(cardId) {
+  const card = findCard(cardId);
+  if (!card) return;
 
-/* ==========================================================================
-   3D Card Flip Inspection
-   ========================================================================== */ 
+  const btn = document.getElementById(`btn_copy_${cardId}`);
+  await writeCanvasToClipboard(card.currentCanvas, btn, 'Copied! Press Ctrl + V in PhotoScape.');
+}
 
-function bindInspection() {
-   const btnInspect = document.getElementById('btnInspect');
-   const btnCloseModal = document.getElementById('btnCloseModal');
-   const btnTriggerFlip = document.getElementById('btnTriggerFlip'); 
+async function writeCanvasToClipboard(canvas, triggerBtn, successMsg) {
+  try {
+    canvas.toBlob(async (blob) => {
+      if (!blob) return;
+      try {
+        const item = new ClipboardItem({ 'image/png': blob });
+        await navigator.clipboard.write([item]);
 
-   btnInspect.addEventListener('click', () => {
-     inspectModal.style.display = 'flex';
-     update3DPreview();
-   }); 
+        if (triggerBtn) {
+          const oldText = triggerBtn.innerHTML;
+          triggerBtn.classList.add('copied');
+          triggerBtn.innerHTML = '✓ Copied!';
+          setTimeout(() => {
+            triggerBtn.classList.remove('copied');
+            triggerBtn.innerHTML = oldText;
+          }, 1800);
+        }
 
-   btnCloseModal.addEventListener('click', () => {
-     inspectModal.style.display = 'none';
-     card3d.classList.remove('flipped');
-   }); 
+        showToast(successMsg);
+      } catch (err) {
+        // Fallback save to download if clipboard blocked
+        const a = document.createElement('a');
+        a.download = 'dl_card.png';
+        a.href = canvas.toDataURL('image/png');
+        a.click();
+        showToast('Saved image to downloads.');
+      }
+    }, 'image/png', 1.0);
+  } catch (err) {
+    console.error(err);
+    showToast('Clipboard error occurred.');
+  }
+}
 
-   inspectModal.addEventListener('click', (e) => {
-     if (e.target === inspectModal) {
-       inspectModal.style.display = 'none';
-       card3d.classList.remove('flipped');
-     }
-   }); 
+/* ================= WHOLE IMAGE ZOOM MODAL (NO LENS) ================= */
+function openZoomModal(cardId) {
+  const card = findCard(cardId);
+  if (!card) return;
 
-   btnTriggerFlip.addEventListener('click', () => {
-     card3d.classList.toggle('flipped');
-   }); 
+  AppState.activeZoomCard = card;
+  AppState.zoomScale = 1.0;
+  AppState.panX = 0;
+  AppState.panY = 0;
 
-   card3d.addEventListener('click', () => {
-     card3d.classList.toggle('flipped');
-   }); 
+  document.getElementById('modalCardTitle').innerText = `${card.docName} — ${card.type} Side`;
+  document.getElementById('modalDpiBadge').innerText = `${card.dpi} DPI • ${card.currentCanvas.width} × ${card.currentCanvas.height} px`;
 
-   inspectCardSelect.addEventListener('change', update3DPreview);
-} 
+  // Draw onto modal canvas
+  zoomCanvas.width = card.currentCanvas.width;
+  zoomCanvas.height = card.currentCanvas.height;
+  const ctx = zoomCanvas.getContext('2d');
+  ctx.drawImage(card.currentCanvas, 0, 0);
 
-function update3DPreview() {
-   const selectedIndex = parseInt(inspectCardSelect.value, 10) - 1;
-   const slot = slotsData[selectedIndex]; 
+  // Fit initially
+  resetZoomScale();
 
-   if (slot && slot.loaded) {
-     img3dFront.src = slot.frontDataUrl;
-     img3dFront.style.display = 'block';
-     emptyFrontState.style.display = 'none'; 
+  zoomModal.classList.remove('hidden');
+}
 
-     img3dBack.src = slot.backDataUrl;
-     img3dBack.style.display = 'block';
-     emptyBackState.style.display = 'none';
-   } else {
-     img3dFront.style.display = 'none';
-     emptyFrontState.style.display = 'block';
-     emptyFrontState.textContent = `No DL Loaded in DL ${selectedIndex + 1}`; 
+function closeZoomModal() {
+  zoomModal.classList.add('hidden');
+  AppState.activeZoomCard = null;
+}
 
-     img3dBack.style.display = 'none';
-     emptyBackState.style.display = 'block';
-     emptyBackState.textContent = `No DL Loaded in DL ${selectedIndex + 1}`;
-   }
-} 
+function zoomImageChange(delta) {
+  AppState.zoomScale = Math.max(0.2, Math.min(4.0, AppState.zoomScale + delta));
+  applyZoomTransform();
+}
 
-// Boot application 
-document.addEventListener('DOMContentLoaded', initializeApp);
+function resetZoomScale() {
+  if (!AppState.activeZoomCard) return;
+
+  const bodyRect = modalBody.getBoundingClientRect();
+  const cardW = AppState.activeZoomCard.currentCanvas.width;
+  const cardH = AppState.activeZoomCard.currentCanvas.height;
+
+  // Compute best fit scale
+  const scaleW = (bodyRect.width - 60) / cardW;
+  const scaleH = (bodyRect.height - 60) / cardH;
+  AppState.zoomScale = Math.min(scaleW, scaleH, 1.0);
+
+  AppState.panX = 0;
+  AppState.panY = 0;
+  applyZoomTransform();
+}
+
+function applyZoomTransform() {
+  zoomCanvasWrapper.style.transform = `translate(${AppState.panX}px, ${AppState.panY}px) scale(${AppState.zoomScale})`;
+}
+
+// Drag to pan in modal
+modalBody.addEventListener('mousedown', (e) => {
+  AppState.isDragging = true;
+  AppState.dragStartX = e.clientX - AppState.panX;
+  AppState.dragStartY = e.clientY - AppState.panY;
+});
+
+window.addEventListener('mousemove', (e) => {
+  if (!AppState.isDragging) return;
+  AppState.panX = e.clientX - AppState.dragStartX;
+  AppState.panY = e.clientY - AppState.dragStartY;
+  applyZoomTransform();
+});
+
+window.addEventListener('mouseup', () => {
+  AppState.isDragging = false;
+});
+
+// Mouse wheel zoom in modal
+modalBody.addEventListener('wheel', (e) => {
+  e.preventDefault();
+  const delta = e.deltaY < 0 ? 0.15 : -0.15;
+  zoomImageChange(delta);
+}, { passive: false });
+
+async function copyFromModal() {
+  if (!AppState.activeZoomCard) return;
+  const btn = document.getElementById('modalCopyBtn');
+  await writeCanvasToClipboard(AppState.activeZoomCard.currentCanvas, btn, 'Copied! Press Ctrl + V in PhotoScape.');
+}
+
+/* ================= BATCH OPERATIONS ON SELECTED ================= */
+function getSelectedCards() {
+  return getAllCards().filter((c) => c.selected);
+}
+
+function batchCropSelected() {
+  const list = getSelectedCards();
+  if (list.length === 0) return showToast('Please select cards first.');
+  list.forEach((c) => autoCropCard(c.id));
+}
+
+function batchFlipSelected(dir) {
+  const list = getSelectedCards();
+  if (list.length === 0) return showToast('Please select cards first.');
+  list.forEach((c) => flipCard(c.id, dir));
+}
+
+function batchRotateSelected(deg) {
+  const list = getSelectedCards();
+  if (list.length === 0) return showToast('Please select cards first.');
+  list.forEach((c) => rotateCard(c.id, deg));
+}
+
+function batchResetSelected() {
+  const list = getSelectedCards();
+  if (list.length === 0) return showToast('Please select cards first.');
+  list.forEach((c) => resetCard(c.id));
+}
+
+/* ================= LOSSLESS AUTO-CROP, FLIP, ROTATE, RESET ================= */
+function autoCropCard(cardId) {
+  const card = findCard(cardId);
+  if (!card) return;
+
+  const src = card.currentCanvas;
+  const w = src.width;
+  const h = src.height;
+  const ctx = src.getContext('2d', { willReadFrequently: true });
+  const data = ctx.getImageData(0, 0, w, h).data;
+
+  // Sample perimeter border color
+  let bgR = 0, bgG = 0, bgB = 0, count = 0;
+  for (let x = 0; x < w; x += 10) {
+    let t = x * 4;
+    let b = ((h - 1) * w + x) * 4;
+    bgR += data[t] + data[b];
+    bgG += data[t + 1] + data[b + 1];
+    bgB += data[t + 2] + data[b + 2];
+    count += 2;
+  }
+  bgR /= count; bgG /= count; bgB /= count;
+
+  const tol = 26;
+  function isContent(x, y) {
+    const i = (y * w + x) * 4;
+    return Math.sqrt((data[i] - bgR)**2 + (data[i+1] - bgG)**2 + (data[i+2] - bgB)**2) > tol;
+  }
+
+  let minX = w, minY = h, maxX = 0, maxY = 0;
+  const step = 4;
+
+  topL: for (let y = 0; y < h; y += step) {
+    for (let x = 0; x < w; x += step) {
+      if (isContent(x, y)) { minY = Math.max(0, y - 6); break topL; }
+    }
+  }
+  botL: for (let y = h - 1; y >= 0; y -= step) {
+    for (let x = 0; x < w; x += step) {
+      if (isContent(x, y)) { maxY = Math.min(h, y + 6); break botL; }
+    }
+  }
+  leftL: for (let x = 0; x < w; x += step) {
+    for (let y = minY; y <= maxY; y += step) {
+      if (isContent(x, y)) { minX = Math.max(0, x - 6); break leftL; }
+    }
+  }
+  rightL: for (let x = w - 1; x >= 0; x -= step) {
+    for (let y = minY; y <= maxY; y += step) {
+      if (isContent(x, y)) { maxX = Math.min(w, x + 6); break rightL; }
+    }
+  }
+
+  const cropW = maxX - minX;
+  const cropH = maxY - minY;
+
+  if (cropW < 140 || cropH < 140) {
+    showToast('Card border not clear enough to crop.');
+    return;
+  }
+
+  const cropped = document.createElement('canvas');
+  cropped.width = cropW;
+  cropped.height = cropH;
+  cropped.getContext('2d').drawImage(src, minX, minY, cropW, cropH, 0, 0, cropW, cropH);
+
+  card.currentCanvas = cropped;
+  refreshCardDOM(card);
+  showToast(`Cut Border: ${cropW} × ${cropH} px`);
+}
+
+function flipCard(cardId, dir) {
+  const card = findCard(cardId);
+  if (!card) return;
+
+  const src = card.currentCanvas;
+  const flipped = document.createElement('canvas');
+  flipped.width = src.width;
+  flipped.height = src.height;
+  const ctx = flipped.getContext('2d');
+
+  ctx.save();
+  if (dir === 'H') {
+    ctx.translate(src.width, 0);
+    ctx.scale(-1, 1);
+  } else {
+    ctx.translate(0, src.height);
+    ctx.scale(1, -1);
+  }
+  ctx.drawImage(src, 0, 0);
+  ctx.restore();
+
+  card.currentCanvas = flipped;
+  refreshCardDOM(card);
+}
+
+function rotateCard(cardId, deg) {
+  const card = findCard(cardId);
+  if (!card) return;
+
+  const src = card.currentCanvas;
+  const rotated = document.createElement('canvas');
+  rotated.width = src.height;
+  rotated.height = src.width;
+
+  const ctx = rotated.getContext('2d');
+  ctx.translate(rotated.width / 2, rotated.height / 2);
+  ctx.rotate((deg * Math.PI) / 180);
+  ctx.drawImage(src, -src.width / 2, -src.height / 2);
+
+  card.currentCanvas = rotated;
+  refreshCardDOM(card);
+}
+
+function resetCard(cardId) {
+  const card = findCard(cardId);
+  if (!card) return;
+
+  card.currentCanvas = cloneCanvas(card.originalCanvas);
+  refreshCardDOM(card);
+  showToast('Card reset back to original.');
+}
+
+function refreshCardDOM(card) {
+  const vp = document.getElementById(`viewport_${card.id}`);
+  if (vp) {
+    const existing = vp.querySelector('canvas');
+    if (existing) existing.remove();
+    vp.appendChild(card.currentCanvas);
+  }
+  const dim = document.getElementById(`dim_${card.id}`);
+  if (dim) dim.innerText = `${card.currentCanvas.width} × ${card.currentCanvas.height} px`;
+}
+
+/* ================= HELPERS ================= */
+function getAllCards() {
+  const res = [];
+  AppState.docs.forEach((d) => {
+    if (d.front) res.push(d.front);
+    if (d.back) res.push(d.back);
+  });
+  return res;
+}
+
+function findCard(id) {
+  return getAllCards().find((c) => c.id === id);
+}
+
+function cloneCanvas(src) {
+  const c = document.createElement('canvas');
+  c.width = src.width; c.height = src.height;
+  c.getContext('2d').drawImage(src, 0, 0);
+  return c;
+}
+
+function removeSingleDoc(docId) {
+  AppState.docs = AppState.docs.filter((d) => d.docId !== docId);
+  updateWorkspaceUI();
+  showToast('File removed.');
+}
+
+function clearAllWorkspace() {
+  AppState.docs = [];
+  updateWorkspaceUI();
+  showToast('All files removed.');
+}
+
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.innerText = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2200);
+}
+
+function escapeHtml(str) {
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
