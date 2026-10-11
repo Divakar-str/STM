@@ -1,202 +1,239 @@
-/* ==========================================================================
-   DESIGN TOKENS & SYSTEM VARIABLES
-   ========================================================================== */
-:root {
-  --font-main: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  
-  /* Modern Vibrant Gradients */
-  --grad-primary: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-  --grad-success: linear-gradient(135deg, #059669 0%, #047857 100%);
-  --grad-danger:  linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
-  --grad-info:    linear-gradient(135deg, #0891b2 0%, #0e7490 100%);
-  --grad-title:   linear-gradient(135deg, #0f172a 0%, #2563eb 100%);
+/* ========================================================
+   CLICKABLE & REFINED DROPDOWN + CARD STYLES (NO BODY CSS)
+   ======================================================== */
 
-  /* UI Colors */
-  --bg-card: #ffffff;
-  --border-card: #e2e8f0;
-  --text-primary: #0f172a;
-  --text-muted: #64748b;
-
-  /* Composite-only performance transitions */
-  --fast-transform: transform 0.15s cubic-bezier(0, 0, 0.2, 1);
-  --fast-fade: opacity 0.15s ease;
+#card-container {
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
-/* ==========================================================================
-   GLOBAL TEXT & HERO SECTION
-   ========================================================================== */
-.text-center {
-  text-align: center;
-}
-
-.ani {
-  padding: 5px 5px;
-  width: 100%;
+#card-container * {
+  -webkit-tap-highlight-color: transparent;
   box-sizing: border-box;
 }
 
-.display-4 {
-  font-size: clamp(2rem, 5vw, 3.25rem);
-  font-weight: 900;
-  letter-spacing: -0.03em;
-  background: var(--grad-title);
-
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  color: transparent;
-}
-
-/* ==========================================================================
-   GRID LAYOUT
-   ========================================================================== */
-.row {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0 -10px;
-}
-
-.col-md-3 {
-  flex: 0 0 25%;
-  max-width: 25%;
-  padding: 0 10px;
-}
-
-.mb-4 {
-  margin-bottom: 1.5rem;
-}
-
-/* ==========================================================================
-   INTERACTIVE CARDS (Strictly GPU-Accelerated)
-   ========================================================================== */
+/* Card Container (overflow: visible ensures dropdowns are never clipped) */
 .custom-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-card);
-  border-radius: 16px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-  height: 100%;
   position: relative;
-  transition: var(--fast-transform);
-  contain: paint; /* Keeps repaints localized to the card */
-  isolation: isolate;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 18px;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  height: 100%;
+  overflow: visible !important;
 }
 
 .custom-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 16px rgba(15, 23, 42, 0.08);
+  transform: translateY(-3px);
+  border-color: #cbd5e1;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.1);
+}
+
+/* Elevate card when its dropdown is open or hovered */
+.custom-card:has(.has-dropdown:hover),
+.custom-card:has(.has-dropdown.show) {
+  z-index: 100 !important;
 }
 
 .custom-card .card-body {
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
+  padding: 1.15rem;
 }
 
-/* ==========================================================================
-   CARD TITLES
-   ========================================================================== */
 .custom-card .card-title {
-  color: var(--text-primary);
+  font-size: 1.05rem;
   font-weight: 800;
-  font-size: 1.15rem;
-  letter-spacing: -0.01em;
-  padding-bottom: 12px;
-  margin-bottom: 16px;
+  color: #0f172a;
+  margin-bottom: 0.95rem;
+  padding-bottom: 0.45rem;
   border-bottom: 2px solid #f1f5f9;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 }
 
-.custom-card .card-title::after {
-  content: "•";
-  color: #2563eb;
-  font-size: 1.25rem;
-}
-
-/* ==========================================================================
-   LINK BUTTONS
-   ========================================================================== */
+/* Links & Layout */
 .custom-links {
-  padding-left: 0;
-  margin-top: auto;
-  margin-bottom: 0;
-  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .custom-links li {
-  margin: 8px 0;
   position: relative;
-}
-
-.custom-links a {
   display: flex;
   align-items: center;
-  padding: 0.8rem 1rem;
-  border-radius: 12px;
-  color: #ffffff;
+  margin-bottom: 0.65rem;
+}
+
+.custom-links li:last-child {
+  margin-bottom: 0;
+}
+
+.custom-links li > a {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 0.55rem 0.85rem;
+  border-radius: 13px;
   text-decoration: none !important;
+  font-size: 0.92rem;
   font-weight: 700;
-  font-size: 0.95rem;
-  letter-spacing: 0.01em;
-  transition: var(--fast-transform);
-  width: 100%;
-  position: relative;
+  border: 1.5px solid transparent;
+  transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.custom-links li > a:active {
+  transform: scale(0.98);
+}
+
+.custom-links .link-text {
+  flex: 1;
+  white-space: nowrap;
   overflow: hidden;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  text-overflow: ellipsis;
 }
 
-.custom-links a:hover {
-  transform: translateX(4px);
+/* Punchy Solid Icon Badges */
+.custom-links li > a i {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9px;
+  color: #ffffff;
+  font-size: 0.92rem;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
 }
 
-.custom-links a:active {
-  transform: translateX(1px);
+/* Caret Toggle Button for Dropdowns */
+.dropdown-caret-btn {
+  background: transparent;
+  border: none;
+  color: #64748b;
+  width: 38px;
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  margin-left: -38px; /* Overlays the right edge of the pill */
+  z-index: 2;
+  transition: transform 0.2s ease, color 0.2s ease;
 }
 
-.custom-links .link-primary { background: var(--grad-primary); }
-.custom-links .link-success { background: var(--grad-success); }
-.custom-links .link-danger  { background: var(--grad-danger); }
-.custom-links .link-info    { background: var(--grad-info); }
-
-.custom-links i {
-  margin-right: 10px;
-  font-size: 1.1rem;
+.dropdown-caret-btn:hover {
+  color: #0f172a;
 }
 
-/* ==========================================================================
-   DROPDOWN MENU (FIXED & HIGH PERFORMANCE)
-   ========================================================================== */
-.position-relative {
-  position: relative;
+.has-dropdown:hover .dropdown-caret-btn,
+.has-dropdown.show .dropdown-caret-btn {
+  transform: rotate(180deg);
 }
+
+/* ========================================================
+   VIBRANT PILL PALETTES
+   ======================================================== */
+
+/* Blue */
+.custom-links a.link-primary {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+  color: #1d4ed8 !important;
+}
+.custom-links a.link-primary i {
+  background: linear-gradient(135deg, #0284c7, #2563eb);
+}
+.custom-links a.link-primary:hover {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #ffffff !important;
+}
+.custom-links a.link-primary:hover i {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* Green */
+.custom-links a.link-success {
+  background: #ecfdf5;
+  border-color: #a7f3d0;
+  color: #047857 !important;
+}
+.custom-links a.link-success i {
+  background: linear-gradient(135deg, #10b981, #059669);
+}
+.custom-links a.link-success:hover {
+  background: #059669;
+  border-color: #059669;
+  color: #ffffff !important;
+}
+.custom-links a.link-success:hover i {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* Red */
+.custom-links a.link-danger {
+  background: #fff1f2;
+  border-color: #fecdd3;
+  color: #e11d48 !important;
+}
+.custom-links a.link-danger i {
+  background: linear-gradient(135deg, #ff1361, #f43f5e);
+}
+.custom-links a.link-danger:hover {
+  background: #e11d48;
+  border-color: #e11d48;
+  color: #ffffff !important;
+}
+.custom-links a.link-danger:hover i {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* Cyan */
+.custom-links a.link-info {
+  background: #f0fdfa;
+  border-color: #99f6e4;
+  color: #0f766e !important;
+}
+.custom-links a.link-info i {
+  background: linear-gradient(135deg, #06b6d4, #0d9488);
+}
+.custom-links a.link-info:hover {
+  background: #0d9488;
+  border-color: #0d9488;
+  color: #ffffff !important;
+}
+.custom-links a.link-info:hover i {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* Brand Overrides */
+.custom-links a[href*="whatsapp"] i { background: linear-gradient(135deg, #25d366, #128c7e); }
+.custom-links a[href*="telegram"] i { background: linear-gradient(135deg, #0088cc, #00b4d8); }
+.custom-links a[href*="messenger"] i { background: linear-gradient(135deg, #00b2fe, #006aff); }
+
+/* ========================================================
+   CLICK-SAFE FLOATING DROPDOWN
+   ======================================================== */
 
 .dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
+  display: none !important;
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  margin-top: 6px !important;
+  background: #ffffff !important;
+  border: 1.5px solid #e2e8f0 !important;
+  border-radius: 14px;
+  box-shadow: 0 16px 36px -4px rgba(15, 23, 42, 0.16);
+  padding: 0.45rem;
   min-width: 210px;
-  padding: 6px;
-  margin-top: 4px;
-  border-radius: 12px;
-  background-color: #ffffff;
-  border: 1px solid var(--border-card);
-  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.05);
-  z-index: 1050;
-
-  /* Non-blocking hover animation */
-  visibility: hidden;
-  opacity: 0;
-  transform: translateY(-6px);
-  transition: opacity 0.18s cubic-bezier(0, 0, 0.2, 1),
-              transform 0.18s cubic-bezier(0, 0, 0.2, 1),
-              visibility 0.18s linear;
-  pointer-events: none;
+  z-index: 1050 !important;
+  pointer-events: auto !important;
 }
 
-/* Invisible bridge so diagonal cursor movements don't close the dropdown */
+/* Invisible Bridge: keeps cursor hovered when transitioning to the menu */
 .dropdown-menu::before {
   content: "";
   position: absolute;
@@ -204,91 +241,54 @@
   left: 0;
   right: 0;
   height: 8px;
-}
-
-/* Show Menu on Hover or Focus */
-.custom-links li:hover .dropdown-menu,
-.custom-links li:focus-within .dropdown-menu {
-  visibility: visible;
-  opacity: 1;
-  transform: translateY(0);
+  background: transparent;
   pointer-events: auto;
 }
 
+/* Open on hover OR open on click/tap */
+.has-dropdown:hover > .dropdown-menu,
+.has-dropdown.show > .dropdown-menu {
+  display: flex !important;
+  flex-direction: column;
+}
+
+/* Dropdown Item */
 .dropdown-item {
   display: flex;
   align-items: center;
-  width: 100%;
-  padding: 9px 12px;
-  font-size: 0.875rem;
-  font-weight: 600;
+  min-height: 42px;
   color: #334155 !important;
-  text-decoration: none !important;
-  border-radius: 8px;
-  box-sizing: border-box;
+  font-size: 0.88rem;
+  font-weight: 700;
+  padding: 0.55rem 0.85rem;
+  border-radius: 9px;
+  text-decoration: none;
+  cursor: pointer !important;
+  pointer-events: auto !important;
   transition: background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
 }
 
+.dropdown-item::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #cbd5e1;
+  margin-right: 9px;
+  flex-shrink: 0;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
 .dropdown-item:hover,
-.dropdown-item:focus {
-  background-color: #eff6ff;
-  color: #2563eb !important;
+.dropdown-item:active {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
   transform: translateX(3px);
 }
 
-.dropdown-item:active {
-  background-color: #dbeafe;
-}
-
-/* ==========================================================================
-   RESPONSIVE ADAPTABILITY
-   ========================================================================== */
-@media (max-width: 992px) {
-  .col-md-3 {
-    flex: 0 0 50%;
-    max-width: 50%;
-  }
-}
-
-@media (max-width: 768px) {
-  .ani {
-    padding: 10px 5px;
-  }
-
-  .custom-card {
-    margin-bottom: 12px;
-  }
-
-  .dropdown-menu {
-    position: static;
-    top: auto;
-    left: auto;
-    width: 100%;
-    min-width: 100%;
-    margin-top: 6px;
-    box-shadow: none;
-    background-color: #f8fafc;
-    pointer-events: auto;
-    display: none;
-    visibility: visible;
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-
-  .custom-links li:hover .dropdown-menu,
-  .custom-links li:focus-within .dropdown-menu {
-    display: block;
-  }
-
-  .dropdown-item {
-    padding: 10px 14px;
-  }
-}
-
-@media (max-width: 480px) {
-  .col-md-3 {
-    flex: 0 0 100%;
-    max-width: 100%;
-  }
+.dropdown-item:hover::before,
+.dropdown-item:active::before {
+  background: #2563eb;
+  transform: scale(1.4);
 }

@@ -1,170 +1,188 @@
 /* ==========================================================================
-   NAVBAR TOKENS & STYLES
+   ULTRA-MODERN FLOATING SEGMENTED NAVBAR (LIGHT, PUNCHY, ZERO-LAG)
    ========================================================================== */
-:root {
-  --nav-glass: rgba(255, 255, 255, 0.85);
-  --nav-border: rgba(226, 232, 240, 0.8);
-  --nav-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
-  --nav-text: #0f172a;
-  --nav-accent: #2563eb;
-  --nav-accent-glow: linear-gradient(90deg, #2563eb, #8b5cf6);
-}
 
-/* ==========================================================================
-   GLASSMORPHIC STICKY NAVBAR
-   ========================================================================== */
+/* 1. Navbar Container & Sticky Elevation */
 .custom-navbar {
-  background: var(--nav-glass);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  padding: 16px 40px;
-  border-bottom: 1px solid var(--nav-border);
-  box-shadow: var(--nav-shadow);
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   position: sticky;
   top: 0;
-  z-index: 1000;
+  z-index: 1050;
+  background: #ffffff !important;
+  border-bottom: 1px solid #e2e8f0;
+  box-shadow: 
+    0 1px 2px rgba(15, 23, 42, 0.03),
+    0 12px 24px -6px rgba(15, 23, 42, 0.06);
+  padding: 0.65rem 1.25rem;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Compact Scroll State */
-.custom-navbar.scrolled {
-  padding: 10px 40px;
-  background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.12);
-}
-
-/* ==========================================================================
-   BRAND & LOGO
-   ========================================================================== */
-.navbar-brand {
-  font-size: 1.8rem;
-  font-weight: 900;
-  letter-spacing: -0.03em;
-  color: var(--nav-text) !important;
-  display: flex;
+/* 2. Brand Identity & Interactive Logo */
+.custom-navbar .navbar-brand {
+  display: inline-flex;
   align-items: center;
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  gap: 10px;
+  font-weight: 900;
+  font-size: 1.35rem;
+  letter-spacing: -0.6px;
+  background: linear-gradient(135deg, #0284c7 0%, #2563eb 50%, #4f46e5 100%);
+ background-clip: text;
+  -webkit-text-fill-color: transparent;
+  padding: 0;
+  margin-right: 2rem;
+  transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.15s ease;
 }
 
-.navbar-brand:hover {
-  transform: scale(1.05);
+.custom-navbar .navbar-brand:hover {
+  opacity: 0.9;
 }
 
-.logo-img {
-  width: 44px;
-  height: 44px;
-  margin-right: 12px;
-  border-radius: 12px;
-  object-fit: cover;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+.custom-navbar .navbar-brand:active {
+  transform: scale(0.96);
 }
 
-.navbar-brand:hover .logo-img {
-  transform: rotate(-12deg) scale(1.15);
-}
-
-/* ==========================================================================
-   ANIMATED NAV LINKS
-   ========================================================================== */
-.navbar-nav .nav-link {
-  font-size: 0.95rem;
-  font-weight: 700;
-  margin-left: 16px;
-  padding: 8px 14px !important;
-  color: var(--nav-text) !important;
+.custom-navbar .logo-img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
   border-radius: 10px;
+  background: #ffffff;
+  padding: 2px;
+  border: 1px solid #f1f5f9;
+  box-shadow: 0 4px 8px rgba(15, 23, 42, 0.08);
+}
+
+/* 3. Segmented Navigation Pill Dock (Desktop) */
+@media (min-width: 992px) {
+  .custom-navbar .navbar-nav {
+    display: inline-flex;
+    align-items: center;
+    background: #f8fafc;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 9999px;
+    padding: 4px;
+    gap: 3px;
+    box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.04);
+  }
+}
+
+.custom-navbar .nav-item {
+  list-style: none;
+}
+
+/* 4. Segmented Links & Interactive Micro-States */
+.custom-navbar .nav-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0.45rem 0.95rem !important;
+  border-radius: 9999px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #64748b !important;
   position: relative;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1),
+              background 0.15s ease,
+              color 0.15s ease,
+              box-shadow 0.15s ease;
 }
 
-.navbar-nav .nav-link::after {
+/* Hover State */
+.custom-navbar .nav-link:hover {
+  color: #0f172a !important;
+  background-color: #ffffff;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
+}
+
+/* Tactile Click / Touch Feedback */
+.custom-navbar .nav-link:active {
+  transform: scale(0.96);
+}
+
+/* Active Segment Tab (Punchy Gradient with Luminous Inset) */
+.custom-navbar .nav-link.active {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+  color: #ffffff !important;
+  box-shadow: 
+    0 4px 12px rgba(37, 99, 235, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Subtle Active Dot Indicator */
+.custom-navbar .nav-link.active::after {
   content: "";
-  position: absolute;
-  bottom: 2px;
-  left: 50%;
-  transform: translateX(-50%) scaleX(0);
-  width: 80%;
-  height: 3px;
-  background: var(--nav-accent-glow);
-  border-radius: 4px;
-  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #93c5fd;
+  margin-left: 6px;
+  box-shadow: 0 0 6px #ffffff;
 }
 
-.navbar-nav .nav-link:hover::after,
-.navbar-nav .nav-link.active::after {
-  transform: translateX(-50%) scaleX(1);
-}
-
-.navbar-nav .nav-link:hover {
-  color: var(--nav-accent) !important;
-  background: rgba(37, 99, 235, 0.05);
-  transform: translateY(-2px);
-}
-
-.navbar-nav .nav-link.active {
-  color: var(--nav-accent) !important;
-  background: rgba(37, 99, 235, 0.08);
-}
-
-/* ==========================================================================
-   MOBILE MENU TOGGLER
-   ========================================================================== */
-.navbar-toggler {
-  border: none;
-  padding: 8px 12px;
+/* 5. Minimalist Mobile Toggler Button */
+.custom-navbar .navbar-toggler {
+  border: 1.5px solid #e2e8f0 !important;
+  background: #f8fafc;
   border-radius: 12px;
-  background: rgba(37, 99, 235, 0.08);
-  transition: transform 0.2s ease, background 0.2s ease;
+  padding: 0.5rem 0.65rem;
+  outline: none !important;
+  box-shadow: none !important;
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
 }
 
-.navbar-toggler:active {
-  transform: scale(0.92);
+.custom-navbar .navbar-toggler:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1 !important;
 }
 
-.navbar-toggler:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+.custom-navbar .navbar-toggler:active {
+  transform: scale(0.94);
 }
 
-/* ==========================================================================
-   MOBILE DRAWER & RESPONSIVE LAYOUT
-   ========================================================================== */
-@media (max-width: 992px) {
-  .custom-navbar,
-  .custom-navbar.scrolled {
-    padding: 12px 20px;
-  }
+.custom-navbar .navbar-toggler-icon {
+  width: 1.25em;
+  height: 1.25em;
+}
 
-  .navbar-collapse {
+/* 6. Floating Mobile Sheet (< 992px) */
+@media (max-width: 991.98px) {
+  .custom-navbar .navbar-collapse {
     background: #ffffff;
+    border: 1.5px solid #e2e8f0;
     border-radius: 20px;
-    padding: 16px;
-    margin-top: 12px;
-    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
-    border: 1px solid var(--nav-border);
-    animation: drawerSlide 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    box-shadow: 
+      0 4px 6px -1px rgba(15, 23, 42, 0.05),
+      0 20px 40px -6px rgba(15, 23, 42, 0.14);
+    margin-top: 0.75rem;
+    padding: 0.75rem;
   }
 
-  .navbar-nav .nav-link {
-    margin: 6px 0;
-    padding: 12px 16px !important;
-    text-align: left;
-    border-radius: 12px;
+  .custom-navbar .navbar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
   }
 
-  .navbar-nav .nav-link::after {
-    display: none;
+  .custom-navbar .nav-link {
+    width: 100%;
+    min-height: 48px; /* Strict mobile touch target standard */
+    justify-content: flex-start;
+    padding: 0.65rem 1rem !important;
+    border-radius: 14px;
+    font-size: 0.92rem;
   }
 
-  @keyframes drawerSlide {
-    from {
-      opacity: 0;
-      transform: translateY(-12px) scale(0.98);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
+  .custom-navbar .nav-link:hover {
+    background-color: #f8fafc;
+  }
+
+  .custom-navbar .nav-link.active {
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.28);
+  }
+
+  .custom-navbar .nav-link.active::after {
+    margin-left: auto; /* Pushes glowing indicator dot to the far right on mobile */
   }
 }
