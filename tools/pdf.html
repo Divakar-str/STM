@@ -2,32 +2,50 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title> PDF Tools</title>
+  <title>PDF Studio </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<link rel="icon" type="image/x-icon" href="../images/png logo.png">
+  <link rel="icon" type="image/x-icon" href="../images/png logo.png">
+
   <!-- Typography & Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
+  
+  <!-- Cropper.js for Interactive Cropping -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+  
+  <!-- App Stylesheet -->
   <link rel="stylesheet" href="css/pdf.css">
 
   <!-- Core Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 </head>
 <body>
+  <!-- Ambient Top-Lit Glow Layers -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+  <div class="ambient-glow glow-3"></div>
 
   <div class="container-fluid py-2 py-md-4 px-2 px-md-4 px-lg-5 main-shell">
     <div class="row g-3 g-md-4">
-      
-      <!-- Responsive Navigation: Desktop Sidebar / Mobile Swipeable Rail -->
+
+      <!-- Navigation: Desktop Top-View Deck / Mobile Swipeable Rail -->
       <aside class="col-12 col-md-4 col-lg-3">
-        <div class="sidebar-panel">
-          <div class="sidebar-heading d-none d-md-block"> PDF Tools</div>
+        <div class="topview-glass-panel sidebar-panel">
+          <div class="brand-badge mb-2 mb-md-3">
+            <div class="brand-icon"><i class="bi bi-file-earmark-pdf-fill"></i></div>
+            <div>
+              <div class="sidebar-heading">PDF Studio</div>
+              
+            </div>
+          </div>
+
           <div class="tool-list-container">
             <ul class="tool-list">
               <li>
@@ -35,7 +53,7 @@
                   <div class="tool-icon organize"><i class="bi bi-grid-fill"></i></div>
                   <div class="tool-meta">
                     <span class="tool-name">Organize PDF</span>
-                    <small class="tool-desc d-none d-md-block">Sort, rotate & delete</small>
+               
                   </div>
                 </button>
               </li>
@@ -44,7 +62,7 @@
                   <div class="tool-icon merge"><i class="bi bi-arrows-angle-contract"></i></div>
                   <div class="tool-meta">
                     <span class="tool-name">Merge PDF</span>
-                    <small class="tool-desc d-none d-md-block">Combine multiple files</small>
+                  
                   </div>
                 </button>
               </li>
@@ -53,34 +71,16 @@
                   <div class="tool-icon split"><i class="bi bi-arrows-angle-expand"></i></div>
                   <div class="tool-meta">
                     <span class="tool-name">Split PDF</span>
-                    <small class="tool-desc d-none d-md-block">Extract custom ranges</small>
-                  </div>
-                </button>
-              </li>
-              <li>
-                <button class="tool-btn" data-tool="remove">
-                  <div class="tool-icon remove"><i class="bi bi-x-lg"></i></div>
-                  <div class="tool-meta">
-                    <span class="tool-name">Remove pages</span>
-                    <small class="tool-desc d-none d-md-block">Delete unwanted pages</small>
-                  </div>
-                </button>
-              </li>
-              <li>
-                <button class="tool-btn" data-tool="extract">
-                  <div class="tool-icon extract"><i class="bi bi-box-arrow-up-right"></i></div>
-                  <div class="tool-meta">
-                    <span class="tool-name">Extract pages</span>
-                    <small class="tool-desc d-none d-md-block">Select pages to save</small>
+
                   </div>
                 </button>
               </li>
               <li>
                 <button class="tool-btn" data-tool="scan">
-                  <div class="tool-icon scan"><i class="bi bi-camera-viewfinder"></i></div>
+                  <div class="tool-icon scan"><i class="bi bi-camera"></i></div>
                   <div class="tool-meta">
                     <span class="tool-name">Scan to PDF</span>
-                    <small class="tool-desc d-none d-md-block">Upload or capture images</small>
+                    
                   </div>
                 </button>
               </li>
@@ -89,7 +89,7 @@
                   <div class="tool-icon convert"><i class="bi bi-images"></i></div>
                   <div class="tool-meta">
                     <span class="tool-name">PDF to Image</span>
-                    <small class="tool-desc d-none d-md-block">Lossless PNG / JPEG</small>
+                   
                   </div>
                 </button>
               </li>
@@ -100,95 +100,137 @@
 
       <!-- Main Workspace -->
       <main class="col-12 col-md-8 col-lg-9">
-        <div class="studio-card">
-          
-          <header class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3 mb-md-4">
+        <div class="topview-glass-card studio-card">
+
+          <header class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3 mb-md-4 border-bottom pb-3 border-white-50">
             <div>
               <h4 class="fw-bold mb-1 fs-5 fs-md-4" id="workspaceHeading">Organize PDF</h4>
-              <p class="text-muted small mb-0 d-none d-sm-block" id="workspaceSubheading">Drag cards or tap move buttons to sort, rotate, and delete pages.</p>
+              <p class="text-muted small mb-0" id="workspaceSubheading">High-DPI workspace. Reorder, rotate, crop, or extract pages.</p>
             </div>
-            <button id="resetBtn" class="btn btn-outline-secondary btn-sm rounded-pill px-3 py-1 d-none">
-              <i class="bi bi-arrow-counterclockwise me-1"></i> <span class="d-none d-sm-inline">Clear</span>
+            <button id="resetBtn" class="topview-btn topview-btn-secondary btn-sm px-3 py-1 d-none">
+              <i class="bi bi-arrow-counterclockwise me-1"></i> <span>Reset</span>
             </button>
           </header>
 
-          <!-- File Upload Drop Zone -->
-          <div id="dropZone" class="drop-zone mb-3 mb-md-4">
+          <!-- Standard Drop Zone -->
+          <div id="dropZone" class="topview-drop-zone mb-3 mb-md-4">
             <div class="drop-badge mb-2">
-              <i class="bi bi-file-earmark-pdf-fill" id="dropIcon"></i>
+              <i class="bi bi-cloud-arrow-up-fill" id="dropIcon"></i>
             </div>
             <h5 class="fw-bold mb-1 fs-6 fs-md-5" id="dropTitle">Tap or Drag PDF here</h5>
-            <p class="text-muted small mb-0" id="dropSubtitle">In-browser processing • No uploads to external servers</p>
+            <p class="text-muted small mb-0" id="dropSubtitle">Full native resolution rendering • Private in-browser sandbox</p>
             <input type="file" id="pdfFileInput" accept="application/pdf" hidden>
+            <input type="file" id="multiPdfInput" accept="application/pdf" multiple hidden>
           </div>
 
-          <!-- SCAN TO PDF DUAL MODE (Upload First, Mobile Ready) -->
-          <div id="scannerSection" class="scanner-container d-none mb-4">
+          <!-- Scan to PDF Studio -->
+          <div id="scannerSection" class="topview-glass-panel scanner-container d-none mb-4 p-3 p-md-4">
             <ul class="nav nav-pills justify-content-center mb-3 gap-2" id="scanModeTabs">
               <li class="nav-item">
-                <button class="nav-link active rounded-pill px-3 py-2 text-white small" id="tabUploadMode">
-                  <i class="bi bi-upload me-1"></i> Upload Photos
+                <button class="topview-pill active" id="tabUploadMode">
+                  <i class="bi bi-images me-1"></i> Upload Photos
                 </button>
               </li>
               <li class="nav-item">
-                <button class="nav-link rounded-pill px-3 py-2 text-white small" id="tabCameraMode">
-                  <i class="bi bi-camera me-1"></i> Camera
+                <button class="topview-pill" id="tabCameraMode">
+                  <i class="bi bi-camera me-1"></i> Live Camera
                 </button>
               </li>
             </ul>
 
-            <!-- Priority 1: Gallery / Image File Upload -->
+            <!-- Gallery Mode -->
             <div id="imageUploadBox">
-              <div id="imageDropZone" class="drop-zone border-secondary text-white bg-dark mb-3 p-4">
-                <div class="drop-badge text-white mb-2"><i class="bi bi-images"></i></div>
-                <h6 class="fw-bold mb-1">Select Images from Gallery / Device</h6>
-                <small class="text-light opacity-75">Tap or drag images here (JPG, PNG, WebP)</small>
+              <div id="imageDropZone" class="topview-drop-zone sub-zone p-4">
+                <div class="drop-badge mb-2"><i class="bi bi-file-earmark-image"></i></div>
+                <h6 class="fw-bold mb-1">Select Images from Device</h6>
+                <small class="text-muted">High-resolution JPEG, PNG, WebP supported</small>
                 <input type="file" id="imageFileInput" accept="image/*" multiple hidden>
               </div>
             </div>
 
-            <!-- Priority 2: Live Camera Viewfinder -->
+            <!-- Live Camera Mode -->
             <div id="cameraBox" class="d-none">
               <div class="video-preview-wrapper mb-3">
                 <video id="cameraVideo" autoplay playsinline muted></video>
                 <canvas id="cameraCaptureCanvas" class="d-none"></canvas>
               </div>
               <div class="text-center">
-                <button id="snapBtn" class="btn btn-danger btn-lg px-4 rounded-pill fw-semibold shadow">
-                  <i class="bi bi-camera-fill me-1"></i> Capture
+                <button id="snapBtn" class="topview-btn topview-btn-primary btn-lg px-4 shadow-sm">
+                  <i class="bi bi-camera-fill me-1"></i> Capture Page
                 </button>
               </div>
             </div>
 
-            <!-- Mobile Scanned Items Horizontal Scroll -->
-            <div class="mt-3 border-top border-secondary pt-3">
-              <div class="d-flex justify-content-between align-items-center mb-2">
-                <span class="small text-light">Staged Pages: <strong id="scanCount">0</strong></span>
-                <button id="finishScanBtn" class="btn btn-success btn-sm rounded-pill px-3 fw-semibold" disabled>
-                  <i class="bi bi-file-earmark-pdf me-1"></i> Compile PDF
-                </button>
+            <!-- Staged Scans Deck -->
+            <div class="mt-4 pt-3 border-top border-white-50">
+              <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+                <span class="small fw-semibold text-secondary">Staged Pages: <strong id="scanCount" class="text-dark">0</strong></span>
+                <div class="d-flex gap-2">
+                  <button id="sendScanToOrganizeBtn" class="topview-btn topview-btn-secondary btn-sm" disabled>
+                    <i class="bi bi-grid-1x2 me-1"></i> Push to Organize
+                  </button>
+                  <button id="finishScanBtn" class="topview-btn topview-btn-primary btn-sm" disabled>
+                    <i class="bi bi-file-earmark-pdf me-1"></i> Compile &amp; Save PDF
+                  </button>
+                </div>
               </div>
-              <div id="scannedPagesRow" class="d-flex gap-2 overflow-auto py-2 mobile-kinetic-scroll"></div>
+              <div id="scannedPagesRow" class="row g-2 g-md-3 flex-nowrap overflow-auto py-2 custom-scroll"></div>
             </div>
           </div>
 
           <!-- Dynamic Action / Controls Bar -->
-          <div id="controlsBar" class="controls-deck mb-3 mb-md-4 d-none">
+          <div id="controlsBar" class="topview-controls-deck mb-3 mb-md-4 d-none">
             <div class="row g-2 g-md-3 align-items-center" id="controlsContent"></div>
           </div>
 
-          <!-- Loading Spinner -->
+          <!-- Loading Indicator -->
           <div id="loadingStatus" class="text-center my-4 d-none">
-            <div class="spinner-border text-danger spinner-border-sm" role="status"></div>
+            <div class="spinner-border text-primary spinner-border-sm" role="status"></div>
             <span id="loadingText" class="ms-2 small text-muted fw-semibold">Processing...</span>
           </div>
 
-          <!-- Active Workspace Output Container -->
+          <!-- Workspace Output Container -->
           <div id="viewContainer"></div>
 
         </div>
       </main>
 
+    </div>
+  </div>
+
+  <!-- Interactive Cropper Modal -->
+  <div class="modal fade" id="cropModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content topview-glass-card border-0 p-2 p-md-3">
+        <div class="modal-header border-0 pb-2">
+          <div>
+            <h5 class="modal-title fw-bold">Interactive High-DPI Crop</h5>
+            <small class="text-muted">Adjust crop boundary handles; resolution is preserved in full quality.</small>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-1 p-md-2 text-center">
+          <div class="crop-viewport-wrapper">
+            <img id="cropperTargetImage" src="" alt="Target for cropping">
+          </div>
+        </div>
+        <div class="modal-footer border-0 pt-3 d-flex justify-content-between">
+          <div class="d-flex gap-2">
+            <button class="topview-btn topview-btn-secondary btn-sm" id="cropperRotateLeft" title="Rotate Left">
+              <i class="bi bi-arrow-counterclockwise"></i>
+            </button>
+            <button class="topview-btn topview-btn-secondary btn-sm" id="cropperRotateRight" title="Rotate Right">
+              <i class="bi bi-arrow-clockwise"></i>
+            </button>
+            <button class="topview-btn topview-btn-secondary btn-sm" id="cropperReset" title="Reset Crop">
+              <i class="bi bi-arrow-repeat me-1"></i> Reset
+            </button>
+          </div>
+          <button type="button" class="topview-btn topview-btn-primary btn-sm px-4" id="cropperApplyBtn">
+            <i class="bi bi-crop me-1"></i> Apply Crop
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 
