@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF to Image — PDF Studio</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="../../assets/css/pdf-studio.css" rel="stylesheet">
+  <link href="../../assets/css/pdf-components.css" rel="stylesheet">
+  <link href="../../assets/css/pdf-responsive.css" rel="stylesheet">
+</head>
+<body>
+  <header id="appHeader"></header>
+
+  <main class="container-fluid py-4 px-3 px-lg-4 flex-grow-1">
+    <div id="appBreadcrumbs" class="mb-3"></div>
+    <div class="row g-4">
+      <aside class="col-12 col-lg-3 col-xl-2" id="appSidebar"></aside>
+
+      <section class="col-12 col-lg-9 col-xl-10">
+        <div class="ps-workspace-card p-4">
+          <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+            <div>
+              <h1 class="h4 fw-bold mb-1">PDF to Image</h1>
+              <p class="small text-secondary mb-0">View live image sizes, copy any page to clipboard, download single pages immediately, or export all as ZIP.</p>
+            </div>
+            <span id="pdfToImgTotalSizeBadge" class="badge bg-info text-dark fs-6">Total Est: 0 B</span>
+          </div>
+
+          <div id="errorPanel" class="d-none"></div>
+          <div id="progressPanel" class="d-none"></div>
+          <div id="resultPanel" class="d-none"></div>
+
+          <div id="pdfToImgDropzone" class="ps-dropzone" tabindex="0" role="button" aria-label="Select or drop a PDF file to convert to images">
+            <i class="bi bi-file-earmark-image fs-1 text-primary d-block mb-2" aria-hidden="true"></i>
+            <div class="h5 fw-bold">Select or Drop a PDF File</div>
+            <span class="btn btn-primary mt-2"><i class="bi bi-upload me-2"></i>Choose PDF</span>
+            <input type="file" id="pdfToImgFileInput" class="d-none" accept=".pdf,application/pdf">
+          </div>
+
+          <div id="pdfToImgWorkspace" class="d-none">
+            <div class="p-3 bg-body-tertiary rounded-3 border mb-3 d-flex justify-content-between align-items-center">
+              <span class="fw-semibold small" id="pdfToImgSummary"></span>
+              <button type="button" class="btn btn-sm btn-outline-secondary" onclick="location.reload()">Change PDF</button>
+            </div>
+
+            <div class="row g-3 mb-4 p-3 border rounded-3 bg-body-tertiary">
+              <div class="col-6 col-md-2">
+                <label for="imgFormatSelect" class="form-label small fw-semibold">Format</label>
+                <select id="imgFormatSelect" class="form-select form-select-sm">
+                  <option value="jpeg" selected>JPEG</option>
+                  <option value="png">PNG</option>
+                </select>
+              </div>
+              <div class="col-6 col-md-2">
+                <label for="imgDpiSelect" class="form-label small fw-semibold">Resolution (DPI)</label>
+                <select id="imgDpiSelect" class="form-select form-select-sm">
+                  <option value="72">72 DPI</option>
+                  <option value="150" selected>150 DPI</option>
+                  <option value="200">200 DPI</option>
+                  <option value="300">300 DPI</option>
+                </select>
+              </div>
+              <div class="col-6 col-md-2" id="jpegQualityWrap">
+                <label for="imgJpegQuality" class="form-label small fw-semibold">JPEG Quality (%)</label>
+                <input type="number" id="imgJpegQuality" class="form-control form-control-sm" min="20" max="100" value="90">
+              </div>
+              <div class="col-6 col-md-3">
+                <label for="imgPageRange" class="form-label small fw-semibold">Range for Bulk Export</label>
+                <input type="text" id="imgPageRange" class="form-control form-control-sm" placeholder="1-5, 8">
+              </div>
+              <div class="col-12 col-md-3">
+                <label for="imgFilenamePattern" class="form-label small fw-semibold">Filename Pattern</label>
+                <input type="text" id="imgFilenamePattern" class="form-control form-control-sm" value="page-{page}">
+              </div>
+              <div class="col-12 d-flex justify-content-end">
+                <button type="button" class="btn btn-primary fw-semibold" id="exportImagesBtn">
+                  <i class="bi bi-file-earmark-zip me-1"></i>Export Range as ZIP
+                </button>
+              </div>
+            </div>
+
+            <h2 class="h6 fw-bold text-secondary mb-2">Pages (Live Size, Single-Page Copy &amp; Download)</h2>
+            <div id="pdfToImgGrid" class="ps-thumb-grid"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div id="appFooter"></div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script type="module" src="../../assets/js/tools/pdf-to-image.js"></script>
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Image to PDF — PDF Studio</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="../../assets/css/pdf-studio.css" rel="stylesheet">
+  <link href="../../assets/css/pdf-components.css" rel="stylesheet">
+  <link href="../../assets/css/pdf-responsive.css" rel="stylesheet">
+</head>
+<body>
+  <header id="appHeader"></header>
+
+  <main class="container-fluid py-4 px-3 px-lg-4 flex-grow-1">
+    <div id="appBreadcrumbs" class="mb-3"></div>
+    <div class="row g-4">
+      <aside class="col-12 col-lg-3 col-xl-2" id="appSidebar"></aside>
+
+      <section class="col-12 col-lg-9 col-xl-10">
+        <div class="ps-workspace-card p-4">
+          <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+            <div>
+              <h1 class="h4 fw-bold mb-1">Add Image to Existing PDF</h1>
+              <p class="small text-secondary mb-0">Step 1: Select your existing PDF. Step 2: Upload images to insert as new PDF pages or overlay onto an existing page.</p>
+            </div>
+            <div class="d-flex gap-2">
+              <span id="basePdfPageBadge" class="badge bg-secondary fs-6">No PDF Loaded</span>
+              <span id="imgToPdfSummary" class="badge bg-primary fs-6">0 Images</span>
+            </div>
+          </div>
+
+          <div id="errorPanel" class="d-none"></div>
+          <div id="progressPanel" class="d-none"></div>
+          <div id="resultPanel" class="d-none"></div>
+
+          <!-- STEP 1: Required Existing PDF Dropzone -->
+          <div id="basePdfDropzone" class="ps-dropzone mb-3" tabindex="0" role="button" aria-label="Step 1: Select or drop an existing PDF file">
+            <span class="badge bg-primary mb-2">STEP 1 — REQUIRED</span>
+            <i class="bi bi-file-earmark-pdf-fill fs-1 text-primary d-block mb-2" aria-hidden="true"></i>
+            <div class="h5 fw-bold">Select or Drop Your Existing PDF File</div>
+            <p class="small text-secondary mb-3">Choose the PDF document you want to add image pages into</p>
+            <span class="btn btn-primary"><i class="bi bi-folder2-open me-2"></i>Choose Existing PDF</span>
+            <input type="file" id="basePdfInput" class="d-none" accept=".pdf,application/pdf">
+          </div>
+
+          <!-- Active Workspace (Shown once Existing PDF is loaded) -->
+          <div id="pdfLoadedSection" class="d-none">
+            <!-- Loaded PDF Bar & Existing Pages Thumbnail Strip -->
+            <div class="p-3 bg-body-tertiary rounded-3 border mb-3">
+              <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2">
+                <div>
+                  <span class="badge bg-success me-2">Base PDF Loaded</span>
+                  <span class="fw-bold small" id="basePdfStatusText"></span>
+                </div>
+                <button type="button" id="changeBasePdfBtn" class="btn btn-sm btn-outline-secondary">
+                  <i class="bi bi-arrow-repeat me-1"></i>Change Base PDF
+                </button>
+              </div>
+              <div class="small text-secondary mb-2">
+                Click any existing page below to set it as the insertion / overlay target:
+              </div>
+              <div id="basePdfThumbsStrip" class="d-flex gap-2 overflow-x-auto pb-2" role="list" aria-label="Existing PDF Pages"></div>
+            </div>
+
+            <!-- STEP 2: Add Images Dropzone -->
+            <div id="imgToPdfDropzone" class="ps-dropzone mb-3" tabindex="0" role="button" aria-label="Step 2: Select or drop JPG, PNG, or WebP images to add to this PDF">
+              <span class="badge bg-primary mb-2">STEP 2 — ADD IMAGES</span>
+              <i class="bi bi-file-earmark-plus-fill fs-2 text-primary d-block mb-1" aria-hidden="true"></i>
+              <div class="h6 fw-bold mb-1">Drop Images to Add into This PDF (JPG, PNG, WebP)</div>
+              <span class="btn btn-sm btn-primary mt-1"><i class="bi bi-images me-1"></i>Select Images</span>
+              <input type="file" id="imgToPdfFileInput" class="d-none" multiple accept="image/jpeg,image/png,image/webp">
+            </div>
+
+            <!-- Step 3: Configuration & Image Queue -->
+            <div id="imgToPdfWorkspace" class="d-none">
+              <div id="fillCropWarning" class="alert alert-warning small d-none" role="status">
+                <i class="bi bi-crop me-1"></i><strong>Fill Mode Notice:</strong> "Fill" covers the full page area and may crop image edges.
+              </div>
+
+              <div class="row g-3 p-3 bg-body-tertiary rounded-3 border mb-3">
+                <div class="col-12 col-md-4">
+                  <label for="addModeSelect" class="form-label small fw-semibold">Addition Mode</label>
+                  <select id="addModeSelect" class="form-select form-select-sm">
+                    <option value="insert-end" selected>Insert as New Page(s) — At End of PDF</option>
+                    <option value="insert-start">Insert as New Page(s) — At Beginning (Before Page 1)</option>
+                    <option value="insert-after">Insert as New Page(s) — After Specific Page #</option>
+                    <option value="overlay-page">Stamp / Overlay Image(s) Onto Existing Page #</option>
+                  </select>
+                </div>
+
+                <div class="col-6 col-md-2 d-none" id="targetPageNumberWrap">
+                  <label for="targetPageNumber" class="form-label small fw-semibold" id="targetPageLabel">Target Page #</label>
+                  <input type="number" id="targetPageNumber" class="form-control form-control-sm" min="1" value="1">
+                </div>
+
+                <!-- Settings for Inserting New Pages -->
+                <div class="col-6 col-md-2" id="pageSizeWrap">
+                  <label for="imgPageSize" class="form-label small fw-semibold">New Page Size</label>
+                  <select id="imgPageSize" class="form-select form-select-sm">
+                    <option value="MatchBase" selected>Match Base PDF Page</option>
+                    <option value="A4">A4</option>
+                    <option value="A3">A3</option>
+                    <option value="Letter">Letter</option>
+                    <option value="Legal">Legal</option>
+                    <option value="Original">Original Image Size</option>
+                  </select>
+                </div>
+
+                <div class="col-6 col-md-2" id="orientationWrap">
+                  <label for="imgOrientation" class="form-label small fw-semibold">Orientation</label>
+                  <select id="imgOrientation" class="form-select form-select-sm">
+                    <option value="match" selected>Match Base / Auto</option>
+                    <option value="portrait">Portrait</option>
+                    <option value="landscape">Landscape</option>
+                  </select>
+                </div>
+
+                <div class="col-6 col-md-2" id="marginWrap">
+                  <label for="imgMargin" class="form-label small fw-semibold">Margin (pt)</label>
+                  <select id="imgMargin" class="form-select form-select-sm">
+                    <option value="0">0 pt (Full Bleed)</option>
+                    <option value="20" selected>20 pt (Small)</option>
+                    <option value="40">40 pt (Large)</option>
+                  </select>
+                </div>
+
+                <div class="col-6 col-md-2" id="fitModeWrap">
+                  <label for="imgFitMode" class="form-label small fw-semibold">Image Scaling</label>
+                  <select id="imgFitMode" class="form-select form-select-sm">
+                    <option value="contain" selected>Contain (Keep Ratio)</option>
+                    <option value="fit">Fit Inside Margin</option>
+                    <option value="fill">Fill (Cover Page)</option>
+                  </select>
+                </div>
+
+                <div class="col-6 col-md-2" id="perPageWrap">
+                  <label for="imgPerPage" class="form-label small fw-semibold">Images / New Page</label>
+                  <select id="imgPerPage" class="form-select form-select-sm">
+                    <option value="1" selected>1 Image / Page</option>
+                    <option value="2">2 Images / Page</option>
+                    <option value="4">4 Images / Page (2×2)</option>
+                  </select>
+                </div>
+
+                <!-- Settings for Overlay/Stamp onto Existing Page -->
+                <div class="col-6 col-md-2 d-none" id="overlayAnchorWrap">
+                  <label for="overlayAnchor" class="form-label small fw-semibold">Stamp Position</label>
+                  <select id="overlayAnchor" class="form-select form-select-sm">
+                    <option value="center" selected>Center of Page</option>
+                    <option value="bottom-right">Bottom Right</option>
+                    <option value="bottom-left">Bottom Left</option>
+                    <option value="top-right">Top Right</option>
+                    <option value="top-left">Top Left</option>
+                  </select>
+                </div>
+
+                <div class="col-6 col-md-2 d-none" id="overlayScaleWrap">
+                  <label for="overlayScalePct" class="form-label small fw-semibold">Stamp Width (%)</label>
+                  <input type="number" id="overlayScalePct" class="form-control form-control-sm" min="5" max="100" value="40">
+                </div>
+
+                <div class="col-6 col-md-2" id="qualityWrap">
+                  <label for="imgCompressionQuality" class="form-label small fw-semibold">Image Quality</label>
+                  <select id="imgCompressionQuality" class="form-select form-select-sm">
+                    <option value="0.92" selected>High (92%)</option>
+                    <option value="0.80">Balanced (80%)</option>
+                    <option value="0.65">Compact (65%)</option>
+                  </select>
+                </div>
+
+                <div class="col-12 col-md-4">
+                  <label for="imgToPdfFilename" class="form-label small fw-semibold">Output PDF Filename</label>
+                  <input type="text" id="imgToPdfFilename" class="form-control form-control-sm" value="updated-document">
+                </div>
+
+                <div class="col-12 d-flex flex-wrap justify-content-between align-items-center gap-2 pt-2 border-top">
+                  <div class="d-flex gap-2">
+                    <button type="button" class="btn btn-sm btn-outline-primary" id="addMoreImagesBtn">
+                      <i class="bi bi-plus-lg me-1"></i>Add More Images
+                    </button>
+                    <button type="button" class="btn btn-sm btn-outline-danger" id="clearImagesBtn">
+                      Clear Images
+                    </button>
+                  </div>
+                  <button type="button" class="btn btn-primary fw-semibold" id="convertImgToPdfBtn">
+                    <i class="bi bi-file-earmark-check-fill me-1"></i>Add Images to PDF &amp; Download
+                  </button>
+                </div>
+              </div>
+
+              <h2 class="h6 fw-bold text-secondary mb-2">Images Queued to Add (Drag to Reorder, Rotate, Crop, or Copy)</h2>
+              <div id="imgToPdfGrid" class="ps-thumb-grid" role="list" aria-label="Uploaded Images Queue"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div id="appFooter"></div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"></script>
+  <script type="module" src="../../assets/js/tools/image-to-pdf.js"></script>
+</body>
+</html>

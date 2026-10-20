@@ -1,0 +1,775 @@
+/* ==========================================================================
+   PDF STUDIO — CORE LIGHT GLASSMORPHISM DESIGN SYSTEM (pdf-studio.css)
+   Covers: Root Tokens, Dark Mode Tokens, Ambient Mesh Background, Typography,
+   Custom Scrollbars, Top Navbar, Reference-Matched Sidebar, Cards, Forms,
+   Sliders, Checkboxes, Buttons, Breadcrumbs, Footer & Accessibility.
+   ========================================================================== */
+
+:root {
+  /* Core Brand Colors */
+  --ps-navy: #0f172a;
+  --ps-navy-light: #1e293b;
+  --ps-blue: #2563eb;
+  --ps-blue-hover: #1d4ed8;
+  --ps-blue-active: #1e40af;
+  --ps-blue-glow: rgba(37, 99, 235, 0.28);
+  --ps-blue-subtle: rgba(239, 246, 255, 0.82);
+
+  /* Tool Accent Colors (Matched to Reference Image) */
+  --ps-accent-organize: #2563eb;
+  --ps-accent-organize-bg: rgba(37, 99, 235, 0.1);
+  --ps-accent-merge: #7c3aed;
+  --ps-accent-merge-bg: rgba(124, 58, 237, 0.1);
+  --ps-accent-split: #059669;
+  --ps-accent-split-bg: rgba(5, 150, 105, 0.1);
+  --ps-accent-scan: #d97706;
+  --ps-accent-scan-bg: rgba(217, 119, 6, 0.1);
+  --ps-accent-pdf2img: #db2777;
+  --ps-accent-pdf2img-bg: rgba(219, 39, 119, 0.1);
+  --ps-accent-img2pdf: #4f46e5;
+  --ps-accent-img2pdf-bg: rgba(79, 70, 229, 0.1);
+
+  /* Semantic Status Colors */
+  --ps-success: #10b981;
+  --ps-success-bg: rgba(209, 250, 229, 0.85);
+  --ps-warning: #f59e0b;
+  --ps-warning-bg: rgba(254, 243, 199, 0.88);
+  --ps-danger: #ef4444;
+  --ps-danger-bg: rgba(254, 226, 226, 0.88);
+  --ps-info: #0ea5e9;
+  --ps-info-bg: rgba(224, 242, 254, 0.88);
+
+  /* Multi-Tier Light Glassmorphism Surfaces */
+  --ps-bg-mesh:
+    radial-gradient(at 8% 12%, rgba(186, 214, 255, 0.72) 0px, transparent 48%),
+    radial-gradient(at 92% 18%, rgba(224, 231, 255, 0.78) 0px, transparent 52%),
+    radial-gradient(at 85% 88%, rgba(252, 231, 243, 0.45) 0px, transparent 50%),
+    radial-gradient(at 18% 85%, rgba(219, 234, 254, 0.65) 0px, transparent 50%),
+    linear-gradient(135deg, #dceafe 0%, #eef4ff 48%, #f8fafc 100%);
+
+  --ps-glass-tier-1: rgba(255, 255, 255, 0.76);
+  --ps-glass-tier-2: rgba(255, 255, 255, 0.62);
+  --ps-glass-tier-3: rgba(255, 255, 255, 0.94);
+  --ps-glass-border: rgba(255, 255, 255, 0.92);
+  --ps-glass-border-subtle: rgba(148, 163, 184, 0.24);
+  --ps-glass-highlight: inset 0 1.5px 0 0 rgba(255, 255, 255, 0.98);
+
+  /* Elevation Shadows */
+  --ps-shadow-tier-1:
+    0 20px 45px -12px rgba(15, 23, 42, 0.08),
+    0 4px 16px -2px rgba(37, 99, 235, 0.04),
+    var(--ps-glass-highlight);
+  --ps-shadow-tier-2:
+    inset 0 2px 6px rgba(15, 23, 42, 0.03),
+    0 2px 8px rgba(15, 23, 42, 0.03),
+    var(--ps-glass-highlight);
+  --ps-shadow-tier-3:
+    0 10px 25px -5px rgba(15, 23, 42, 0.08),
+    0 4px 10px -2px rgba(37, 99, 235, 0.05),
+    var(--ps-glass-highlight);
+  --ps-shadow-active-nav:
+    0 10px 26px -4px rgba(15, 23, 42, 0.09),
+    0 2px 6px rgba(15, 23, 42, 0.04),
+    var(--ps-glass-highlight);
+
+  /* Blur & Geometry */
+  --ps-blur-strong: blur(22px) saturate(180%);
+  --ps-blur-medium: blur(14px) saturate(150%);
+  --ps-blur-soft: blur(8px);
+
+  --ps-text: #0f172a;
+  --ps-text-secondary: #475569;
+  --ps-text-muted: #64748b;
+
+  --ps-radius-2xl: 1.75rem;
+  --ps-radius-xl: 1.35rem;
+  --ps-radius-lg: 1rem;
+  --ps-radius-md: 0.75rem;
+  --ps-radius-sm: 0.5rem;
+  --ps-focus-ring: 0 0 0 3.5px rgba(37, 99, 235, 0.35);
+}
+
+/* Dark Glassmorphism Theme Override */
+[data-bs-theme="dark"] {
+  --ps-bg-mesh:
+    radial-gradient(at 12% 15%, rgba(30, 58, 138, 0.42) 0px, transparent 50%),
+    radial-gradient(at 88% 82%, rgba(67, 56, 202, 0.32) 0px, transparent 50%),
+    linear-gradient(135deg, #050811 0%, #0b1120 55%, #0f172a 100%);
+
+  --ps-glass-tier-1: rgba(17, 24, 39, 0.76);
+  --ps-glass-tier-2: rgba(30, 41, 59, 0.58);
+  --ps-glass-tier-3: rgba(30, 41, 59, 0.9);
+  --ps-glass-border: rgba(255, 255, 255, 0.11);
+  --ps-glass-border-subtle: rgba(148, 163, 184, 0.18);
+  --ps-glass-highlight: inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+
+  --ps-shadow-tier-1: 0 20px 45px -10px rgba(0, 0, 0, 0.55), var(--ps-glass-highlight);
+  --ps-shadow-tier-2: inset 0 2px 6px rgba(0, 0, 0, 0.35), var(--ps-glass-highlight);
+  --ps-shadow-tier-3: 0 10px 25px -5px rgba(0, 0, 0, 0.5), var(--ps-glass-highlight);
+  --ps-shadow-active-nav: 0 10px 24px -4px rgba(0, 0, 0, 0.6), var(--ps-glass-highlight);
+
+  --ps-blue: #3b82f6;
+  --ps-blue-hover: #60a5fa;
+  --ps-blue-subtle: rgba(59, 130, 246, 0.18);
+  --ps-text: #f8fafc;
+  --ps-text-secondary: #cbd5e1;
+  --ps-text-muted: #94a3b8;
+}
+
+/* Base Document Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--ps-bg-mesh);
+  background-attachment: fixed;
+  color: var(--ps-text);
+  font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+::selection {
+  background-color: rgba(37, 99, 235, 0.2);
+  color: var(--ps-blue-active);
+}
+
+/* Custom Sleek Glass Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.35);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(37, 99, 235, 0.55);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+/* Typography Polish */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  color: var(--ps-text);
+  letter-spacing: -0.022em;
+  font-weight: 700;
+}
+
+.text-secondary {
+  color: var(--ps-text-secondary) !important;
+}
+
+.text-muted {
+  color: var(--ps-text-muted) !important;
+}
+
+/* ==========================================================================
+   TOP NAVBAR (#appHeader / .ps-navbar)
+   ========================================================================== */
+.ps-navbar {
+  background: var(--ps-glass-tier-1) !important;
+  backdrop-filter: var(--ps-blur-strong);
+  -webkit-backdrop-filter: var(--ps-blur-strong);
+  border-bottom: 1.5px solid var(--ps-glass-border);
+  box-shadow: 0 4px 24px -4px rgba(15, 23, 42, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+}
+
+.ps-navbar .navbar-brand {
+  color: var(--ps-text) !important;
+  font-size: 1.22rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  transition: transform 0.15s ease;
+}
+
+.ps-navbar .navbar-brand:hover {
+  transform: translateY(-1px);
+}
+
+.ps-navbar .navbar-brand>span:first-child {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 0.8rem !important;
+  box-shadow: 0 6px 14px -2px var(--ps-blue-glow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.ps-navbar #themeToggleBtn {
+  width: 38px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+  color: var(--ps-text);
+  background: var(--ps-glass-tier-3);
+  border: 1px solid var(--ps-glass-border-subtle);
+  box-shadow: var(--ps-shadow-tier-3);
+  transition: all 0.2s ease;
+}
+
+.ps-navbar #themeToggleBtn:hover {
+  color: var(--ps-blue);
+  border-color: var(--ps-blue);
+  transform: rotate(12deg) scale(1.05);
+}
+
+/* ==========================================================================
+   BREADCRUMBS (#appBreadcrumbs)
+   ========================================================================== */
+.breadcrumb {
+  background: var(--ps-glass-tier-2);
+  backdrop-filter: var(--ps-blur-medium);
+  -webkit-backdrop-filter: var(--ps-blur-medium);
+  border: 1px solid var(--ps-glass-border);
+  box-shadow: var(--ps-shadow-tier-2);
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.breadcrumb-item a {
+  color: var(--ps-blue);
+  font-weight: 600;
+  transition: color 0.15s ease;
+}
+
+.breadcrumb-item a:hover {
+  color: var(--ps-blue-hover);
+}
+
+.breadcrumb-item.active {
+  color: var(--ps-text-secondary);
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   SIDEBAR NAVIGATION (.ps-sidebar & .ps-nav-link) — MATCHED TO IMAGE
+   ========================================================================== */
+.ps-sidebar {
+  background: var(--ps-glass-tier-1);
+  backdrop-filter: var(--ps-blur-strong);
+  -webkit-backdrop-filter: var(--ps-blur-strong);
+  border: 1.5px solid var(--ps-glass-border);
+  border-radius: var(--ps-radius-2xl);
+  box-shadow: var(--ps-shadow-tier-1);
+  padding: 1.25rem !important;
+}
+
+.ps-nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.ps-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.65rem 0.9rem;
+  color: var(--ps-text);
+  text-decoration: none;
+  border-radius: var(--ps-radius-lg);
+  font-weight: 600;
+  font-size: 0.94rem;
+  border: 1px solid transparent;
+  position: relative;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Floating Rounded Icon Tile inside Each Nav Link */
+.ps-nav-link i {
+  width: 2.6rem;
+  height: 2.6rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.8rem;
+  background: var(--ps-glass-tier-3);
+  border: 1px solid var(--ps-glass-border);
+  box-shadow: 0 3px 8px -1px rgba(15, 23, 42, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  font-size: 1.15rem !important;
+  flex-shrink: 0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+/* Individual Tool Icon Colors Matching Reference Image */
+.ps-nav-link[href*="index.html"] i {
+  color: var(--ps-blue);
+}
+
+.ps-nav-link[href*="organize.html"] i {
+  color: var(--ps-accent-organize);
+}
+
+.ps-nav-link[href*="merge.html"] i {
+  color: var(--ps-accent-merge);
+}
+
+.ps-nav-link[href*="split.html"] i {
+  color: var(--ps-accent-split);
+}
+
+.ps-nav-link[href*="scan.html"] i {
+  color: var(--ps-accent-scan);
+}
+
+.ps-nav-link[href*="pdf-to-image.html"] i {
+  color: var(--ps-accent-pdf2img);
+}
+
+.ps-nav-link[href*="image-to-pdf.html"] i {
+  color: var(--ps-accent-img2pdf);
+}
+
+.ps-nav-link:hover,
+.ps-nav-link:focus-visible {
+  background: rgba(255, 255, 255, 0.65);
+  border-color: var(--ps-glass-border);
+  color: var(--ps-text);
+  transform: translateX(2px);
+}
+
+[data-bs-theme="dark"] .ps-nav-link:hover,
+[data-bs-theme="dark"] .ps-nav-link:focus-visible {
+  background: rgba(30, 41, 59, 0.65);
+}
+
+.ps-nav-link:hover i {
+  transform: scale(1.06);
+  box-shadow: 0 6px 14px -2px rgba(15, 23, 42, 0.1);
+}
+
+/* Active Nav Item: Raised White Pill + Left Royal Blue Indicator Bar */
+.ps-nav-link.active {
+  background: var(--ps-glass-tier-3);
+  color: var(--ps-text);
+  font-weight: 700;
+  border: 1px solid var(--ps-glass-border);
+  border-left: 9px solid var(--ps-blue);
+  box-shadow: var(--ps-shadow-active-nav);
+}
+
+.ps-nav-link.active i {
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.12);
+}
+
+[data-bs-theme="dark"] .ps-nav-link.active i {
+  background: #1e293b;
+}
+
+/* ==========================================================================
+   MAIN WORKSPACE CARDS & DASHBOARD TOOL CARDS (.ps-workspace-card)
+   ========================================================================== */
+.ps-workspace-card {
+  background: var(--ps-glass-tier-1);
+  backdrop-filter: var(--ps-blur-strong);
+  -webkit-backdrop-filter: var(--ps-blur-strong);
+  border: 1.5px solid var(--ps-glass-border);
+  border-radius: var(--ps-radius-2xl);
+  box-shadow: var(--ps-shadow-tier-1);
+  transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.24s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.2s ease;
+}
+
+/* Dashboard Interactive Tool Card Hover & Semantic Icon Coloring */
+a.ps-workspace-card {
+  border-radius: var(--ps-radius-xl);
+  background: var(--ps-glass-tier-3);
+}
+
+a.ps-workspace-card:hover,
+a.ps-workspace-card:focus-visible {
+  transform: translateY(-4px);
+  border-color: rgba(37, 99, 235, 0.45);
+  box-shadow: 0 18px 38px -8px rgba(37, 99, 235, 0.14),
+    var(--ps-glass-highlight);
+}
+
+a.ps-workspace-card[href*="organize.html"] .bg-primary {
+  background-color: var(--ps-accent-organize-bg) !important;
+  color: var(--ps-accent-organize) !important;
+}
+
+a.ps-workspace-card[href*="merge.html"] .bg-primary {
+  background-color: var(--ps-accent-merge-bg) !important;
+  color: var(--ps-accent-merge) !important;
+}
+
+a.ps-workspace-card[href*="split.html"] .bg-primary {
+  background-color: var(--ps-accent-split-bg) !important;
+  color: var(--ps-accent-split) !important;
+}
+
+a.ps-workspace-card[href*="scan.html"] .bg-primary {
+  background-color: var(--ps-accent-scan-bg) !important;
+  color: var(--ps-accent-scan) !important;
+}
+
+a.ps-workspace-card[href*="pdf-to-image.html"] .bg-primary {
+  background-color: var(--ps-accent-pdf2img-bg) !important;
+  color: var(--ps-accent-pdf2img) !important;
+}
+
+a.ps-workspace-card[href*="image-to-pdf.html"] .bg-primary {
+  background-color: var(--ps-accent-img2pdf-bg) !important;
+  color: var(--ps-accent-img2pdf) !important;
+}
+
+/* ==========================================================================
+   RECESSED GLASS TOOLBARS & SETTINGS PANELS (.bg-body-tertiary)
+   ========================================================================== */
+.bg-body-tertiary {
+  background: var(--ps-glass-tier-2) !important;
+  backdrop-filter: var(--ps-blur-medium);
+  -webkit-backdrop-filter: var(--ps-blur-medium);
+  border: 1px solid var(--ps-glass-border) !important;
+  border-radius: var(--ps-radius-xl) !important;
+  box-shadow: var(--ps-shadow-tier-2);
+}
+
+/* ==========================================================================
+   ALL FORM CONTROLS (Inputs, Selects, Checkboxes, Range Sliders, Textareas)
+   ========================================================================== */
+.form-label {
+  color: var(--ps-text);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.35rem;
+}
+
+.form-control,
+.form-select {
+  background-color: var(--ps-glass-tier-3);
+  border: 1px solid var(--ps-glass-border-subtle);
+  border-radius: var(--ps-radius-md);
+  color: var(--ps-text);
+  font-weight: 500;
+  padding: 0.5rem 0.8rem;
+  box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.03),
+    0 1px 2px rgba(255, 255, 255, 0.8);
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+}
+
+.form-control-sm,
+.form-select-sm {
+  padding: 0.38rem 0.7rem;
+  font-size: 0.86rem;
+  border-radius: 0.65rem;
+}
+
+.form-control:hover,
+.form-select:hover {
+  border-color: rgba(37, 99, 235, 0.45);
+}
+
+.form-control:focus,
+.form-select:focus {
+  background-color: #ffffff;
+  border-color: var(--ps-blue);
+  color: var(--ps-text);
+  box-shadow: var(--ps-focus-ring);
+}
+
+[data-bs-theme="dark"] .form-control:focus,
+[data-bs-theme="dark"] .form-select:focus {
+  background-color: #1e293b;
+}
+
+/* Custom Checkboxes */
+.form-check-input {
+  width: 1.15em;
+  height: 1.15em;
+  background-color: var(--ps-glass-tier-3);
+  border: 1.5px solid rgba(100, 116, 139, 0.45);
+  border-radius: 0.35rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.form-check-input:checked {
+  background-color: var(--ps-blue);
+  border-color: var(--ps-blue);
+  box-shadow: 0 2px 8px var(--ps-blue-glow);
+}
+
+/* Custom Range Sliders (Brightness, Contrast, Crop Insets) */
+.form-range {
+  height: 1.4rem;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.form-range::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 0.45rem;
+  background: linear-gradient(90deg, rgba(148, 163, 184, 0.35), rgba(37, 99, 235, 0.4));
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.form-range::-webkit-slider-thumb {
+  width: 1.15rem;
+  height: 1.15rem;
+  margin-top: -0.38rem;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  border: 2.5px solid #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 3px 8px rgba(37, 99, 235, 0.4);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  -webkit-appearance: none;
+}
+
+.form-range::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.6);
+}
+
+.form-range::-moz-range-track {
+  width: 100%;
+  height: 0.45rem;
+  background: rgba(148, 163, 184, 0.35);
+  border-radius: 999px;
+}
+
+.form-range::-moz-range-thumb {
+  width: 1.15rem;
+  height: 1.15rem;
+  background: var(--ps-blue);
+  border: 2.5px solid #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 3px 8px rgba(37, 99, 235, 0.4);
+}
+
+/* ==========================================================================
+   BUTTONS & BUTTON GROUPS (All Variants & States)
+   ========================================================================== */
+.btn {
+  border-radius: var(--ps-radius-md);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  padding: 0.5rem 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-sm {
+  padding: 0.35rem 0.7rem;
+  font-size: 0.84rem;
+  border-radius: 0.6rem;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  box-shadow: 0 6px 16px -3px var(--ps-blue-glow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.btn-primary:hover,
+.btn-primary:focus-visible {
+  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+  transform: translateY(-1.5px);
+  box-shadow: 0 10px 22px -4px rgba(37, 99, 235, 0.42);
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  box-shadow: 0 6px 16px -3px rgba(16, 185, 129, 0.3);
+}
+
+.btn-success:hover {
+  transform: translateY(-1.5px);
+  box-shadow: 0 10px 20px -4px rgba(16, 185, 129, 0.4);
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  box-shadow: 0 6px 16px -3px rgba(239, 68, 68, 0.3);
+}
+
+/* Glass Outline Buttons */
+.btn-outline-primary,
+.btn-outline-secondary,
+.btn-outline-info,
+.btn-outline-warning,
+.btn-outline-danger,
+.btn-outline-success {
+  background: var(--ps-glass-tier-3);
+  backdrop-filter: var(--ps-blur-soft);
+  -webkit-backdrop-filter: var(--ps-blur-soft);
+  border: 1px solid var(--ps-glass-border-subtle);
+  box-shadow: 0 2px 5px rgba(15, 23, 42, 0.03),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.btn-outline-secondary {
+  color: var(--ps-text-secondary);
+}
+
+.btn-outline-secondary:hover {
+  background: var(--ps-blue-subtle);
+  color: var(--ps-blue);
+  border-color: rgba(37, 99, 235, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-outline-primary {
+  color: var(--ps-blue);
+  border-color: rgba(37, 99, 235, 0.3);
+}
+
+.btn-outline-primary:hover {
+  background: var(--ps-blue);
+  color: #ffffff;
+  border-color: var(--ps-blue);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px -2px var(--ps-blue-glow);
+}
+
+.btn-outline-danger {
+  color: #dc2626;
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.btn-outline-danger:hover {
+  background: #ef4444;
+  color: #ffffff;
+  border-color: #ef4444;
+}
+
+.btn:disabled,
+.btn.disabled {
+  opacity: 0.42 !important;
+  pointer-events: none;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Segmented Glass Button Groups */
+.btn-group {
+  background: var(--ps-glass-tier-2);
+  border-radius: 0.65rem;
+  padding: 0.15rem;
+  border: 1px solid var(--ps-glass-border);
+  box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.btn-group>.btn {
+  border: none !important;
+  background: transparent;
+  border-radius: 0.5rem !important;
+  box-shadow: none;
+}
+
+.btn-group>.btn:hover:not(:disabled) {
+  background: var(--ps-glass-tier-3);
+  color: var(--ps-blue);
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06);
+}
+
+/* ==========================================================================
+   BADGES & PILLS (.badge)
+   ========================================================================== */
+.badge {
+  padding: 0.42em 0.8em;
+  border-radius: 999px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06);
+}
+
+.badge.bg-primary {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+  box-shadow: 0 4px 10px var(--ps-blue-glow);
+}
+
+.badge.bg-info {
+  background: var(--ps-info-bg) !important;
+  color: #0369a1 !important;
+  border: 1px solid rgba(14, 165, 233, 0.3);
+}
+
+.badge.bg-secondary {
+  background: var(--ps-glass-tier-3) !important;
+  color: var(--ps-text-secondary) !important;
+  border: 1px solid var(--ps-glass-border-subtle);
+}
+
+/* ==========================================================================
+   FOOTER (#appFooter) & FOCUS ACCESSIBILITY
+   ========================================================================== */
+#appFooter footer {
+  background: var(--ps-glass-tier-2);
+  backdrop-filter: var(--ps-blur-medium);
+  -webkit-backdrop-filter: var(--ps-blur-medium);
+  border-top: 1.5px solid var(--ps-glass-border) !important;
+  color: var(--ps-text-secondary);
+}
+
+*:focus-visible {
+  outline: none !important;
+  box-shadow: var(--ps-focus-ring) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
