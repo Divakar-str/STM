@@ -13,7 +13,7 @@ export function initDashboardPage() {
   const recentContainer = document.getElementById('recentToolsSection');
 
   const tools = PDF_CONFIG.TOOLS.filter(t => t.id !== 'dashboard');
-
+ console.log('Dashboard tools:', tools);
   if (grid) {
     grid.innerHTML = tools.map(tool => `
       <div class="col-12 col-md-6 col-xl-4">
@@ -84,9 +84,9 @@ export function initDashboardPage() {
         bodyEl.innerHTML = `
           <p class="mb-3">Selected <strong>${escapeHtml(files[0].name)}</strong>. What would you like to do?</p>
           <div class="d-grid gap-2">
-            <a href="organize.html" class="btn btn-primary"><i class="bi bi-grid-3x3-gap-fill me-2"></i>Organize, Rotate & Delete Pages</a>
-            <a href="split.html" class="btn btn-outline-primary"><i class="bi bi-arrows-angle-expand me-2"></i>Split or Extract Pages</a>
-            <a href="pdf-to-image.html" class="btn btn-outline-primary"><i class="bi bi-file-earmark-image me-2"></i>Export Pages to Images</a>
+            <a href="./tools/organize.html" class="btn btn-primary"><i class="bi bi-grid-3x3-gap-fill me-2"></i>Organize, Rotate & Delete Pages</a>
+            <a href="./tools/split.html" class="btn btn-outline-primary"><i class="bi bi-arrows-angle-expand me-2"></i>Split or Extract Pages</a>
+            <a href="./tools/pdf-to-image.html" class="btn btn-outline-primary"><i class="bi bi-file-earmark-image me-2"></i>Export Pages to Images</a>
           </div>
         `;
       } else {

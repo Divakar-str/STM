@@ -23,7 +23,7 @@ export function renderAppChrome(activeToolId) {
     headerEl.innerHTML = `
       <nav class="navbar navbar-expand-lg ps-navbar navbar-dark py-2 px-3 shadow-sm" aria-label="Main Navigation">
         <div class="container-fluid">
-          <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" href="index.html">
+          <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" href="../../../tools/pdf/pdf.html">
             <span class="bg-primary text-white rounded-3 d-inline-flex align-items-center justify-content-center" style="width:36px;height:36px;">
               <i class="bi bi-file-earmark-pdf-fill fs-5" aria-hidden="true"></i>
             </span>
@@ -45,7 +45,7 @@ export function renderAppChrome(activeToolId) {
       ? `<nav aria-label="breadcrumb"><ol class="breadcrumb mb-0 small"><li class="breadcrumb-item active" aria-current="page">Dashboard</li></ol></nav>`
       : `<nav aria-label="breadcrumb">
           <ol class="breadcrumb mb-0 small">
-            <li class="breadcrumb-item"><a href="index.html" class="text-decoration-none"><i class="bi bi-house-door me-1" aria-hidden="true"></i>Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="../pdf.html" class="text-decoration-none"><i class="bi bi-house-door me-1" aria-hidden="true"></i>Dashboard</a></li>
             <li class="breadcrumb-item active" aria-current="page">${escapeHtml(activeTool.title)}</li>
           </ol>
         </nav>`;
