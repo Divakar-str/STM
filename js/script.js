@@ -111,7 +111,7 @@ const cardData = [
     title: "Tools",
     links: [
       { url: "tools/print.html", text: "Print", class: "link-primary", icon: "fas fa-print" },
-      { url: "/tools/pdf/tools/pdf/index.html", text: "PDF", class: "link-success", icon: "fas fa-file-pdf" },
+      { url: "tools/pdf/tools/pdf/print.html", text: "PDF", class: "link-success", icon: "fas fa-file-pdf" },
       { url: "tools/fancy.html", text: "Fancy Calculator", class: "link-danger", icon: "fas fa-calculator" },
       { url: "tools/compressor.html", text: "File Compressor", class: "link-info", icon: "fas fa-compress" }
     ]
